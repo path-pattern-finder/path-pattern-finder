@@ -21,7 +21,7 @@ where {0} is a varying integer.
 
 ## Example
 
-For example this is the output from a directory (with several nested sub-directories) of pictures from a holiday in Italy.
+For example, this is the output from a directory (with several nested sub-directories) of pictures from a holiday in Italy.
 
 Files take the form:
 ```
