@@ -1,4 +1,4 @@
-Anchor
+path-pattern-finder
 
 The MIT License (MIT)
 
