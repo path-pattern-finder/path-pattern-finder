@@ -36,7 +36,7 @@ somedir/somefilename_{0}.txt
 
 ```
 
-where {0} is a varying integer.
+where {0} indexes each component.
 
 
 
