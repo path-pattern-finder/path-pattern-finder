@@ -98,7 +98,7 @@ Either as a Java library, or a command-line tool.
 
 Being pure Java, it works on Windows, Linux, Mac and several other operating systems.
 
-
+A distribution (including a .exe launcher) is available for [download](https://bitbucket.org/path-pattern-finder/path-pattern-finder/downloads/).
 
 ### As a library
 
