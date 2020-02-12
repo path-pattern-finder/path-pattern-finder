@@ -114,13 +114,9 @@
 	
   
 	<distributionManagement>
-        <snapshotRepository>
-            <id>anchor-snapshots</id>
-            <url>http://maven.anchoranalysis.org:8081/repository/anchor-snapshots</url>
-        </snapshotRepository>
 		 <repository>
-            <id>anchor-releases</id>
-            <url>http://maven.anchoranalysis.org:8081/repository/anchor-releases</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
         </repository>
 	</distributionManagement>
      
