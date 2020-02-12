@@ -46,7 +46,7 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
 
     private UnresolvedPatternElementFactory factory;
 
-    public TrimCommonPathRoot(UnresolvedPatternElementFactory factory ) {
+    public TrimCommonPathRoot(UnresolvedPatternElementFactory factory) {
         this.factory = factory;
     }
 
@@ -70,17 +70,20 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
 
         // If we have at least one common element... we convert
         if (commonElements.size() > 0) {
-            Pattern pattern = new Pattern();
-            addPatternsTo( commonElements, pattern );
-            factory.addUnresolvedPathsTo(
-               removeFrom(source, commonElements ),
-               pattern
-            );
-            return pattern;
-
+            return createPatternFromCommonElements(commonElements, source, factory);
         } else {
             return null;
         }
+    }
+    
+    private static Pattern createPatternFromCommonElements( CommonSubset commonElements, List<Path> source, UnresolvedPatternElementFactory factory ) {
+    	Pattern pattern = new Pattern();
+        addPatternsTo( commonElements, pattern );
+        factory.addUnresolvedPathsTo(
+           removeFrom(source, commonElements ),
+           pattern
+        );
+        return pattern;
     }
 
     private static void addPatternsTo( CommonSubset commonElements, Pattern pattern ) {
