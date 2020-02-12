@@ -54,8 +54,8 @@ public abstract class VariableElement extends ResolvedPatternElement {
         this.values = StringUtilities.reverseStringsInList(values);
     }
 
-    protected FrequencyMap createFrequencyMap() {
-        return new FrequencyMap(values);
+    protected FrequencyMap<String> createFrequencyMap() {
+        return new FrequencyMap<String>(values);
     }
 
     protected List<String> getValues() {

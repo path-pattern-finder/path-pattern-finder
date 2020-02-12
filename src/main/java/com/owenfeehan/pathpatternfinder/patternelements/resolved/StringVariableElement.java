@@ -44,9 +44,9 @@ class StringVariableElement extends VariableElement {
     @Override
     public String describe(int widthToDescribe) {
 
-        FrequencyMap freq = createFrequencyMap();
+        FrequencyMap<String> freq = createFrequencyMap();
 
-        DescribeFrequencyMap df = new DescribeFrequencyMap(freq);
+        DescribeFrequencyMap<String> df = new DescribeFrequencyMap<>(freq);
 
         if (df.canDescribeAllWithin(widthToDescribe, SEP_ALL.length())) {
             return describeAll(df, widthToDescribe);
@@ -55,11 +55,11 @@ class StringVariableElement extends VariableElement {
         }
     }
 
-    private static String describeAll( DescribeFrequencyMap freq, int widthToDescribe  ) {
+    private static String describeAll( DescribeFrequencyMap<String> freq, int widthToDescribe  ) {
         return freq.describeAllWithin(widthToDescribe, "", SEP_ALL);
     }
 
-    private static String describeWithMaybeExamples(DescribeFrequencyMap freq, int widthToDescribe ) {
+    private static String describeWithMaybeExamples(DescribeFrequencyMap<String> freq, int widthToDescribe ) {
         String intro = String.format("%d unique strings", freq.numUniqueValues() );
         return intro + freq.describeAllWithin(widthToDescribe - intro.length(), " e.g. ", SEP_SOME );
     }

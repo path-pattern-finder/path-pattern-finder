@@ -42,7 +42,7 @@ public class IntegerFrequencyMap {
     private FrequencyMap<Integer> map;
 
     public IntegerFrequencyMap( List<Integer> list ) {
-        this.map = new FrequencyMap(list);
+        this.map = new FrequencyMap<>(list);
     }
 
     public int lowest() {

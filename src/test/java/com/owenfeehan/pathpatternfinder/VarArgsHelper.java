@@ -31,9 +31,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Helps create Patterns, Elements, Paths etc. based upon elements passed as variable arguments
@@ -49,7 +47,7 @@ class VarArgsHelper {
     }
 
     public static List<Path> pathList(String... args) {
-        List<Path> list = new ArrayList();
+        List<Path> list = new ArrayList<>();
         for (String str : args) {
             list.add(
                     Paths.get(str)

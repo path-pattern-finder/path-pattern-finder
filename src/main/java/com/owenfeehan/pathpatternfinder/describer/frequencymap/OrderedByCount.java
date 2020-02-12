@@ -36,7 +36,8 @@ class OrderedByCount<T extends Comparable<T>> implements Iterable<KeyFrequency<T
 
     private TreeSet<KeyFrequency<T>> set;
 
-    public OrderedByCount(TreeBag bag) {
+    @SuppressWarnings("unchecked")
+	public OrderedByCount(TreeBag<T> bag) {
         this.set = new TreeSet<>();
         for( Object key : bag.uniqueSet().toArray() ) {
             set.add(

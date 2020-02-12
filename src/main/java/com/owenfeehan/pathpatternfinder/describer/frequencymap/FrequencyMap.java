@@ -38,13 +38,13 @@ import java.util.*;
 public class FrequencyMap<T extends Comparable<T>> {
 
     // Maps the item to the count (ordered by the key)
-    private TreeBag bag;
+    private TreeBag<T> bag;
 
     // Ordered by the count (rather than the key)
     private OrderedByCount<T> orderedCounts;
 
     public FrequencyMap( List<T> list ) {
-        bag = new TreeBag(list);
+        bag = new TreeBag<T>(list);
         orderedCounts = new OrderedByCount<>(bag);
     }
 

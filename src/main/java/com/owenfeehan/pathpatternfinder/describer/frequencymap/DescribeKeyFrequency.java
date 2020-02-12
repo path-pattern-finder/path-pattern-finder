@@ -37,16 +37,16 @@ class DescribeKeyFrequency {
     
     /** The total number of characters needed to describe the key and the count,
      *  assuming a pattern of  "KEY" (COUNT)  as in describe() */
-    public static int numCharsToDescribe( KeyFrequency kf ) {
+    public static <T extends Comparable<T>> int numCharsToDescribe( KeyFrequency<T> kf ) {
         return describe(kf).length();
     }
 
-    public static String describeWithPrefix(KeyFrequency kf, String prefix ) {
+    public static <T extends Comparable<T>> String describeWithPrefix(KeyFrequency<T> kf, String prefix ) {
         return prefix + describe(kf);
     }
 
     /// Describes a
-    private static String describe( KeyFrequency kf ) {
+    private static <T extends Comparable<T>> String describe( KeyFrequency<T> kf ) {
         return String.format("\"%s\" (%d)", kf.getKey(), kf.getCount() );
     }
 }

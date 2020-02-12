@@ -43,7 +43,8 @@ public class FindFilesRecursively {
         private PathMatcher matcher;
         private List<Path> list;
 
-        private Visitor() {}
+        @SuppressWarnings("unused")
+		private Visitor() {}
 
         public Visitor( PathMatcher matcher, List<Path> list ) {
             this.matcher = matcher;
