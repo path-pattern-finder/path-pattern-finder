@@ -32,7 +32,6 @@ import org.apache.commons.io.IOCase;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -90,28 +89,24 @@ public class PathPatternFinder {
      */
     public static void main(String[] args){
 
-        if (args.length==1) {
+        if (args.length>0) {
             try {
-                findFilesAndPattern( args[0] );
+            	List<Path> paths = PathsFromArguments.pathsFromArgs( args );
+                findFilesAndPattern( paths );
             } catch (IOException e) {
                 System.err.println("An exception occurred");
                 e.printStackTrace();
             }
         } else {
-            System.err.println("This command expects exactly 1 argument, a wildcard filter like *.jpg or *.* or * to find files ");
+            System.err.println("This command expects at least 1 argument, either a wildcard filter like *.jpg or paths to files/directories");
         }
     }
-
-    private static void findFilesAndPattern( String filterStr ) throws IOException {
-
-        List<Path> files = FindFilesRecursively.findFiles(
-                Paths.get(""),
-                filterStr
-        );
+    
+    private static void findFilesAndPattern( List<Path> files ) throws IOException {
 
         printFiles(files);
 
-        if (!files.isEmpty()) {
+        if (files.size() > 1) {
             Pattern pp = findPatternPath(files, IOCase.SYSTEM);
             System.out.printf(
                     "Pattern is: %s%n",
