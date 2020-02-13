@@ -20,7 +20,7 @@
 	<url>http://www.owenfeehan.com</url>
       </organization>
       
-      <version>1.1</version>
+      <version>1.1-SNAPSHOT</version>
         <build>
             <plugins>
                 <plugin>
@@ -106,14 +106,18 @@
       </properties>
       
       	<scm>
-		<connection>scm:git:ssh://git@bitbucket.org/path-pattern-finder/path-pattern-finder.git</connection>
-		<developerConnection>scm:git:ssh://git@bitbucket.org/path-pattern-finder/path-pattern-finder.git</developerConnection>
-		<url>https://git@bitbucket.org/path-pattern-finder/path-pattern-finder.git</url>
+		<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
+		<url>https://git@github.com/path-pattern-finder/path-pattern-finder.git</url>
 		<tag>path-pattern-finder-1.0</tag>
 	</scm>
 	
   
 	<distributionManagement>
+        <snapshotRepository>
+            <id>anchor-snapshots</id>
+            <url>http://maven.anchoranalysis.org:8081/repository/anchor-snapshots</url>
+        </snapshotRepository>	
 		 <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
