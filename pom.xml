@@ -106,9 +106,9 @@
       </properties>
       
       	<scm>
-		<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
-		<url>https://git@github.com/path-pattern-finder/path-pattern-finder.git</url>
+		<connection>scm:git:ssh://github.com/path-pattern-finder/path-pattern-finder.git</connection>
+		<developerConnection>scm:git:ssh://github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
+		<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
 		<tag>path-pattern-finder-1.0</tag>
 	</scm>
 	
