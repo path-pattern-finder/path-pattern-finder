@@ -59,7 +59,7 @@ class IntegerVariableElement extends VariableElement {
 
         if (freq.testIfContiguous()) {
             return String.format(
-                    "am integer sequence from %d to %d inclusive",
+                    "an integer sequence from %d to %d inclusive",
                     freq.lowest(),
                     freq.highest()
             );
