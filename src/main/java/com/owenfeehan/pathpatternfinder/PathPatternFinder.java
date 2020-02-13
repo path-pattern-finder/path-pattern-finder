@@ -35,8 +35,9 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * Finds a pattern in a list of paths through the following rules
+ * Finds a pattern in a list of paths via a set of rules.
  *
+ * The rules are (in order):
  * 1. finds any common file-path roots
  * 2. then treats the remaining file-paths as a list of strings with / or \ as directory seperators (OS dependent)
  * 3. repeat until no more operations possible
@@ -82,7 +83,7 @@ public class PathPatternFinder {
     }
 
     /**
-     * Derives a pattern from the paths passed as command-line arguments
+     * Derives a pattern from the paths passed as command-line arguments.
      * 
      * 1. Accepts a globs or file/directory paths as command-line arguments
      * 2. Derives a list of paths from these parameters
