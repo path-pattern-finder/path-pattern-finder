@@ -82,7 +82,9 @@ public class PathPatternFinder {
     }
 
     /**
-     * 1. Accepts a globs or file/directory paths as command-line parameters
+     * Derives a pattern from the paths passed as command-line arguments
+     * 
+     * 1. Accepts a globs or file/directory paths as command-line arguments
      * 2. Derives a list of paths from these parameters
      * 3. Derives a pattern from the list of paths
      *
