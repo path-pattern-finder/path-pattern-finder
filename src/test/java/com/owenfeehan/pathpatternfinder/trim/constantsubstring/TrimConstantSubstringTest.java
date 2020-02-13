@@ -122,7 +122,7 @@ public class TrimConstantSubstringTest {
 
         ConstantStringsFixture fixture = new ConstantStringsFixture(factory);
 
-        List<String> source = fixture.genSource(mixedCase, prependFirst);
+        List<String> source = ConstantStringsFixture.genSource(mixedCase, prependFirst);
 
         TrimConstantSubstring op = new TrimConstantSubstring(factory);
 

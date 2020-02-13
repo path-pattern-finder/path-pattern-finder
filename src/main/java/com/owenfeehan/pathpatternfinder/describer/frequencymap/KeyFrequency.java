@@ -55,7 +55,8 @@ class KeyFrequency<T extends Comparable<T> > implements Comparable<KeyFrequency<
         if (obj.getClass() != getClass()) {
             return false;
         }
-        KeyFrequency<T> rhs = (KeyFrequency<T>) obj;
+        @SuppressWarnings("unchecked")
+		KeyFrequency<T> rhs = (KeyFrequency<T>) obj;
 
         return new EqualsBuilder()
             .append(count, rhs.key)

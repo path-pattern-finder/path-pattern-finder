@@ -33,8 +33,6 @@ import org.junit.Test;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -59,7 +57,7 @@ public class PatternTest {
             return pattern;
         }
 
-        public static Pattern patternReserved() {
+        public static Pattern patternReversed() {
             Pattern pattern = new Pattern();
             pattern.add(element3_reversed);
             pattern.add(element2_reversed);
@@ -90,7 +88,7 @@ public class PatternTest {
         pattern.reverse();
 
         assertEquals(
-            PatternFixture.patternReserved(),
+            PatternFixture.patternReversed(),
             pattern
         );
     }

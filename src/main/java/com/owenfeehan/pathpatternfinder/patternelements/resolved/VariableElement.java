@@ -34,7 +34,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.List;
 
 /**
- * A pattern-element that is resolved and varies across the list of values
+ * A pattern-element that is resolved and varies across the list of values.
  */
 public abstract class VariableElement extends ResolvedPatternElement {
 
@@ -54,8 +54,8 @@ public abstract class VariableElement extends ResolvedPatternElement {
         this.values = StringUtilities.reverseStringsInList(values);
     }
 
-    protected FrequencyMap createFrequencyMap() {
-        return new FrequencyMap(values);
+    protected FrequencyMap<String> createFrequencyMap() {
+        return new FrequencyMap<>(values);
     }
 
     protected List<String> getValues() {

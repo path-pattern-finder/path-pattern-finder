@@ -35,26 +35,32 @@ import java.util.List;
  */
 public class IntegerFrequencyMap {
 
-    public int numUniqueValues() {
-        return map.numUniqueValues();
-    }
-
     private FrequencyMap<Integer> map;
 
     public IntegerFrequencyMap( List<Integer> list ) {
-        this.map = new FrequencyMap(list);
+        this.map = new FrequencyMap<>(list);
     }
 
+    /** @return Lowest-value key */
     public int lowest() {
         return map.lowestKey();
     }
 
+    /** @return Highest-value key */
     public int highest() {
         return map.highestKey();
     }
+    
+    /** @return Number of unique values (number of keys */
+    public int numUniqueValues() {
+        return map.numUniqueValues();
+    }
 
-    /** Does it contain exactly one integer (and only one) for every integer between lowest() and highest() inclusive
-     * @return TRUE if the map fulfills above condition */
+    /**
+     * Does it contain exactly one integer (and only one) for every integer between lowest() and highest() inclusive
+     * 
+     * @return TRUE if the map fulfills above condition
+     **/
     public boolean testIfContiguous() {
         int highest = highest();
         for( int i=lowest(); i<=highest; i++ ) {

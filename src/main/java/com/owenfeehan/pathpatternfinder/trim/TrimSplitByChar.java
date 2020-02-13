@@ -35,12 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Attempts to split a string by finding a common special character in all strings, and creating
- *   two new UnresolvedStringList elements to the left, and right of the character, as well as a
- *   ConstantElement representating the character itself
+ * Attempts to split a string by finding a common special character in all strings.
+ * 
+ * <p>It then creates two new UnresolvedStringList elements to the left, and right of the character, as well as a
+ *   ConstantElement representating the character itself.</p>
  *
- *   Note that we do not perform any case-sensitive matching on the assumption that the characters used in splitChar
- *    will typically be special characters for which case is irrelevant
+ * <p>Note that we do not perform any case-sensitive matching on the assumption that the characters used in splitChar
+ *    will typically be special characters for which case is irrelevant.</p>
  */
 public class TrimSplitByChar implements TrimOperation<String> {
 

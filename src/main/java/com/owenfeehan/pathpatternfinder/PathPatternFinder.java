@@ -32,23 +32,30 @@ import org.apache.commons.io.IOCase;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
- * Finds a pattern in a list of paths through the following rules
+ * Finds a pattern in a list of paths via a set of rules.
  *
- * 1. finds any common file-path roots
- * 2. then treats the remaining file-paths as a list of strings with / or \ as directory seperators (OS dependent)
- * 3. repeat until no more operations possible
- *    a) from the left:
- *      a) looks for maximum-constant strings
- *      b) looks for maximally-sized integer patterns
- *      c) looks for any variable strings, which are ended by constant character always at the same index
- *    b) do the same from the right
- * 4. if there is a remaining "unmatched" strings, consider splitting by special characters _ or - or ( or ) into tokens
- * 5. apply step 3 to each of the split tokens
- *
+ * The rules are (in order):
+ * <ol>
+ * <li>finds any common file-path roots</li>
+ * <li>then treats the remaining file-paths as a list of strings with / or \ as directory seperators (OS dependent)</li>
+ * <li>repeat until no more operations possible
+ * 	<ol>
+ *    <li>from the left:
+ *    	<ol>
+ *      	<li>looks for maximum-constant strings</li>
+ *      	<li>looks for maximally-sized integer patterns</li>
+ *      	<li>looks for any variable strings, which are ended by constant character always at the same index</li>
+ *      </ol>
+ *     </li>
+ *     <li>do the same from the right</li>
+ *   </ol>
+ * </li>
+ * <li>if there is a remaining "unmatched" strings, consider splitting by special characters _ or - or ( or ) into tokens</li>
+ * <li>apply step 3 to each of the split tokens</li>
+ * </ol>
  */
 public class PathPatternFinder {
 
@@ -83,35 +90,34 @@ public class PathPatternFinder {
     }
 
     /**
-     * Accepts a glob as the first command line parameter, and applies the pattern
-     *  to all the files that match the glob
+     * Derives a pattern from the paths passed as command-line arguments.
+     * 
+     * 1. Accepts a globs or file/directory paths as command-line arguments
+     * 2. Derives a list of paths from these parameters
+     * 3. Derives a pattern from the list of paths
      *
      * @param args command-line arguments
      */
     public static void main(String[] args){
 
-        if (args.length==1) {
+        if (args.length>0) {
             try {
-                findFilesAndPattern( args[0] );
+            	List<Path> paths = PathsFromArguments.pathsFromArgs( args );
+                findFilesAndPattern( paths );
             } catch (IOException e) {
                 System.err.println("An exception occurred");
                 e.printStackTrace();
             }
         } else {
-            System.err.println("This command expects exactly 1 argument, a wildcard filter like *.jpg or *.* or * to find files ");
+            System.err.println("This command expects at least 1 argument, either a wildcard filter like *.jpg or paths to files/directories");
         }
     }
-
-    private static void findFilesAndPattern( String filterStr ) throws IOException {
-
-        List<Path> files = FindFilesRecursively.findFiles(
-                Paths.get(""),
-                filterStr
-        );
+    
+    private static void findFilesAndPattern( List<Path> files ) {
 
         printFiles(files);
 
-        if (!files.isEmpty()) {
+        if (files.size() > 1) {
             Pattern pp = findPatternPath(files, IOCase.SYSTEM);
             System.out.printf(
                     "Pattern is: %s%n",

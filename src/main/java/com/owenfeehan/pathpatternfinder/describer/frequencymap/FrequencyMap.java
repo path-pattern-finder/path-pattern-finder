@@ -38,33 +38,43 @@ import java.util.*;
 public class FrequencyMap<T extends Comparable<T>> {
 
     // Maps the item to the count (ordered by the key)
-    private TreeBag bag;
+    private TreeBag<T> bag;
 
     // Ordered by the count (rather than the key)
     private OrderedByCount<T> orderedCounts;
 
     public FrequencyMap( List<T> list ) {
-        bag = new TreeBag(list);
+        bag = new TreeBag<>(list);
         orderedCounts = new OrderedByCount<>(bag);
     }
 
+    /** 
+     * Count for a given key
+     *
+     *  @param key the key to find a count for
+     *  @return the count for the key
+     */
     public int getCount( T key ) {
         return bag.getCount( key );
     }
 
+    /** @return The number of unique-values that are being counted (i.e. number of keys) */
     public int numUniqueValues() {
         return bag.uniqueSet().size();
     }
 
+    /** @return A view of the frequency-map ordered by counts */
     protected OrderedByCount<T> byCount() {
         return orderedCounts;
     }
 
+    /** @return The key with lowest-value */
     public T lowestKey() {
-        return (T) bag.first();
+        return bag.first();
     }
 
+    /** @return The key with highest-value */
     public T highestKey() {
-        return (T) bag.last();
+        return bag.last();
     }
 }

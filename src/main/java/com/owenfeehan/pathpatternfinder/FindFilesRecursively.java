@@ -43,8 +43,15 @@ public class FindFilesRecursively {
         private PathMatcher matcher;
         private List<Path> list;
 
-        private Visitor() {}
+        @SuppressWarnings("unused")
+		private Visitor() {}
 
+        /**
+         * Visits each file during a traversal
+         * 
+         * @param matcher if non-null a file must match this condition. if null, ignored
+         * @param list list to which visited paths are added
+         */
         public Visitor( PathMatcher matcher, List<Path> list ) {
             this.matcher = matcher;
             this.list = list;
@@ -52,7 +59,7 @@ public class FindFilesRecursively {
 
         @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-            if (matcher.matches(file.getFileName())) {
+            if (matcher==null || matcher.matches(file.getFileName())) {
                 list.add(file);
             }
             return FileVisitResult.CONTINUE;
@@ -65,7 +72,7 @@ public class FindFilesRecursively {
      * Finds a list of files recursively in a directory that matches a pattern
      *
      * @param root the directory in which (as well as it's sub-directories) we search for files.
-     * @param fileFilterPattern glob-style pattern: *.jpg or *.* or * or similar. See java.nio.file.PathMatcher docs
+     * @param fileFilterPattern if non-null, glob-style pattern: *.jpg or *.* or * or similar. See java.nio.file.PathMatcher docs, if null, ignored.
      * @return list of all paths found
      * @throws IOException if root isn't a valid directory, or something goes wrong while walking the three
      */
@@ -83,13 +90,21 @@ public class FindFilesRecursively {
 
         List<Path> list = new ArrayList<>();
 
-        PathMatcher matcher = root.getFileSystem().getPathMatcher("glob:" + fileFilterPattern);
-
-        Files.walkFileTree(
-                root,
-                new Visitor(matcher, list)
+        Visitor visitor = new Visitor(
+        	matcherFromPattern(root, fileFilterPattern),
+        	list
         );
 
+        Files.walkFileTree(root, visitor);
+
         return list;
+    }
+    
+    private static PathMatcher matcherFromPattern( Path root, String fileFilterPattern ) {
+    	if (fileFilterPattern != null) {
+    		return root.getFileSystem().getPathMatcher("glob:" + fileFilterPattern);
+    	} else {
+    		return null;
+    	}
     }
 }
