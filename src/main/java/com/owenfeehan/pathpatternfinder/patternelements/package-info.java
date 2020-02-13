@@ -1,9 +1,9 @@
 /**
  * A pattern-element is one part of a pattern after fitting against a list of paths/strings.
  *
- * Different types of patterns exist that may be constant (identical) or non-constant (varying across elements).
+ * <p>Different types of patterns exist that may be constant (identical) or non-constant (varying across elements).</p>
  *
- * Pattern-elements may be resolved (cannot be divided further) or unresolved (open to be being further broken down).
+ * <p>Pattern-elements may be resolved (cannot be divided further) or unresolved (open to be being further broken down).</p>
  */
 package com.owenfeehan.pathpatternfinder.patternelements;
 /*-
