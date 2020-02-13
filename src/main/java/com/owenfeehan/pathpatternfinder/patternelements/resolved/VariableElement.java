@@ -55,7 +55,7 @@ public abstract class VariableElement extends ResolvedPatternElement {
     }
 
     protected FrequencyMap<String> createFrequencyMap() {
-        return new FrequencyMap<String>(values);
+        return new FrequencyMap<>(values);
     }
 
     protected List<String> getValues() {

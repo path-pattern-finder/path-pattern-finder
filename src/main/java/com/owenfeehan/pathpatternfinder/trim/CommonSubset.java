@@ -48,7 +48,12 @@ class CommonSubset implements Iterable<String> {
     }
     
     public static int numDirectoriesIn(Path path) {
-        assert( path.getNameCount() >0 );   // Should never be used with just a root element
+        if( path.getNameCount() == 0 ) {
+        	// Should never be used with just a root element
+        	throw new IllegalArgumentException(
+        		String.format("Path must have more than the root element: %s", path )
+        	);
+        }
         return path.getNameCount() - 1;
     }
 
