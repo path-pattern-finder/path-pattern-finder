@@ -60,7 +60,8 @@ import java.util.List;
 public class PathPatternFinder {
 
     /**
-     * Finds the pattern in a list of paths, using rules outlined above
+     * Finds the pattern in a list of paths, using rules outlined above.
+     * 
      * @param paths a list of paths to match against
      * @param ioCase how to treat the case in paths
      * @return the pattern-found
@@ -76,7 +77,8 @@ public class PathPatternFinder {
 
 
     /**
-     * Finds the pattern in a list of strs, using rules outlined above (from Step 3 onwards)
+     * Finds the pattern in a list of strs, using rules outlined above (from Step 3 onwards).
+     * 
      * @param strs a list of strs to match against
      * @param ioCase how to treat the case in paths
      * @return the pattern-found
@@ -92,9 +94,11 @@ public class PathPatternFinder {
     /**
      * Derives a pattern from the paths passed as command-line arguments.
      * 
-     * 1. Accepts a globs or file/directory paths as command-line arguments
-     * 2. Derives a list of paths from these parameters
-     * 3. Derives a pattern from the list of paths
+     * <ol>
+     * <li>Accepts a globs or file/directory paths as command-line arguments</li>
+     * <li>Derives a list of paths from these parameters</li>
+     * <li>Derives a pattern from the list of paths</li>
+     * </ol>
      *
      * @param args command-line arguments
      */
