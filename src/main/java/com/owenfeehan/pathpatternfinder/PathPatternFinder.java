@@ -105,7 +105,7 @@ public class PathPatternFinder {
         }
     }
     
-    private static void findFilesAndPattern( List<Path> files ) throws IOException {
+    private static void findFilesAndPattern( List<Path> files ) {
 
         printFiles(files);
 

@@ -1,7 +1,6 @@
 package com.owenfeehan.pathpatternfinder;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,6 +20,10 @@ import java.util.TreeSet;
  */
 class PathsFromArguments {
 
+	private PathsFromArguments() {
+		// Unused
+	}
+	
     /** 
      * Converts all the command-line arguments into a list of unique files
      * 
@@ -46,10 +49,10 @@ class PathsFromArguments {
 		}
 		
 		Path path = Paths.get(arg).toAbsolutePath();
-		if (Files.isDirectory(path)) {
+		if (path.toFile().isDirectory()) {
 			// Directory
 			return pathsInDirectory(path);
-		} else if (Files.exists(path)) {
+		} else if (path.toFile().exists()) {
 			// Single file
 			return Arrays.asList(path);
 		} else {

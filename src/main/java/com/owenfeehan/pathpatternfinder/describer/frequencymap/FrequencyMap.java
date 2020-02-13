@@ -44,7 +44,7 @@ public class FrequencyMap<T extends Comparable<T>> {
     private OrderedByCount<T> orderedCounts;
 
     public FrequencyMap( List<T> list ) {
-        bag = new TreeBag<T>(list);
+        bag = new TreeBag<>(list);
         orderedCounts = new OrderedByCount<>(bag);
     }
 
@@ -61,10 +61,10 @@ public class FrequencyMap<T extends Comparable<T>> {
     }
 
     public T lowestKey() {
-        return (T) bag.first();
+        return bag.first();
     }
 
     public T highestKey() {
-        return (T) bag.last();
+        return bag.last();
     }
 }
