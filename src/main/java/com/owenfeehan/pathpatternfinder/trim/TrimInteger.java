@@ -34,9 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Reads an integer from the left-side of the string (greedy, it grabs an integer of maximally possible length)
+ * Reads an integer from the left-side of the string (greedy, it grabs an integer of maximally possible length).
  *
- * Only succeeds if every string has an integer at the left, otherwise returns NULL
+ * <p>Only succeeds if every string has an integer at the left, otherwise returns NULL.</p>
  */
 public class TrimInteger implements TrimOperation<String> {
 

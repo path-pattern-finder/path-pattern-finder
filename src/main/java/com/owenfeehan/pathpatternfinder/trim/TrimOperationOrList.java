@@ -30,7 +30,7 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 
 import java.util.List;
 
-/** Tries to apply each operation in a list until one is successful */
+/** Tries to apply each operation in a list until one is successful. */
 public class TrimOperationOrList<T> implements TrimOperation<T> {
 
     private List<TrimOperation<T>> listOps;

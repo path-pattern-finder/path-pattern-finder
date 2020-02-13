@@ -35,12 +35,15 @@ import java.util.stream.Collectors;
 
 
 /**
- * Looks for a constant common substring (from left-size, as maximal as possible) and turns it into
- *   a Constant pattern-element, and otherwise removing
+ * Looks for a constant common substring (from left-size, as maximal as possible).
+ * 
+ * <p>This is turned into a Constant pattern-element, and otherwise removing</p>
  *
- *   e.g.
+ * <pre>
+ * e.g.
  *   input:   ["the boy went to school", "the boy went to a party"]
  *   pattern: ["the boy went to "]
+ * </pre>
  *
  */
 public class TrimConstantString implements TrimOperation<String> {

@@ -38,9 +38,9 @@ import java.util.stream.Collectors;
 
 /**
  * Considers each element of a file-path (between directory seperators) as an ordered list
- * and finds a the maximally constant sublist from the left size
+ * and finds a the maximally constant sublist from the left size.
  *
- * Only directories are considired. The file-name (the final element in a path) is ignored.
+ * <p>Only directories are considired. The file-name (the final element in a path) is ignored.</p>
  */
 public class TrimCommonPathRoot implements TrimOperation<Path> {
 

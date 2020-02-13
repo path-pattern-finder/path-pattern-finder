@@ -31,20 +31,21 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * Abstract base class for any PatternElements
+ * Abstract base class for any PatternElements.
  *
- * A PatternElement is one part of the pattern that is fitted against a list of strings/paths
+ * <p>A PatternElement is one part of the pattern that is fitted against a list of strings/paths.</p>
  *
- * It can have a constant-value (identical value for all items in the list) or can have a varying value.
+ * <p>It can have a constant-value (identical value for all items in the list) or can have a varying value.</p>
  */
 public abstract class PatternElement {
 
     /** @return TRUE iff this element CANNOT be broken down further into smaller units. */
     public abstract boolean isResolved();
 
-    /** Converts this PathPattern into smaller units
+    /** 
+     * Converts this PathPattern into smaller units
      *
-     *   If isResolved()==true, this method should always return NULL
+     * <p>If isResolved()==true, this method should always return NULL</p>
      *
      * @return a PathPattern if successfully broken into smaller units, or NULL if this isn't possible
      */

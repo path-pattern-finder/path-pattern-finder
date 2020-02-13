@@ -28,7 +28,7 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
 
 /**
  * Describes the contents of a frequency-map with user-friendly strings
- *  containing examples
+ *  containing examples.
  */
 public class DescribeFrequencyMap<T extends Comparable<T>> {
 

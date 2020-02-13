@@ -48,22 +48,32 @@ public class FrequencyMap<T extends Comparable<T>> {
         orderedCounts = new OrderedByCount<>(bag);
     }
 
+    /** 
+     * Count for a given key
+     *
+     *  @param key the key to find a count for
+     *  @return the count for the key
+     */
     public int getCount( T key ) {
         return bag.getCount( key );
     }
 
+    /** @return The number of unique-values that are being counted (i.e. number of keys) */
     public int numUniqueValues() {
         return bag.uniqueSet().size();
     }
 
+    /** @return A view of the frequency-map ordered by counts */
     protected OrderedByCount<T> byCount() {
         return orderedCounts;
     }
 
+    /** @return The key with lowest-value */
     public T lowestKey() {
         return bag.first();
     }
 
+    /** @return The key with highest-value */
     public T highestKey() {
         return bag.last();
     }

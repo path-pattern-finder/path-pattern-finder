@@ -38,17 +38,24 @@ import java.util.List;
  * Finds a pattern in a list of paths via a set of rules.
  *
  * The rules are (in order):
- * 1. finds any common file-path roots
- * 2. then treats the remaining file-paths as a list of strings with / or \ as directory seperators (OS dependent)
- * 3. repeat until no more operations possible
- *    a) from the left:
- *      a) looks for maximum-constant strings
- *      b) looks for maximally-sized integer patterns
- *      c) looks for any variable strings, which are ended by constant character always at the same index
- *    b) do the same from the right
- * 4. if there is a remaining "unmatched" strings, consider splitting by special characters _ or - or ( or ) into tokens
- * 5. apply step 3 to each of the split tokens
- *
+ * <ol>
+ * <li>finds any common file-path roots</li>
+ * <li>then treats the remaining file-paths as a list of strings with / or \ as directory seperators (OS dependent)</li>
+ * <li>repeat until no more operations possible
+ * 	<ol>
+ *    <li>from the left:
+ *    	<ol>
+ *      	<li>looks for maximum-constant strings</li>
+ *      	<li>looks for maximally-sized integer patterns</li>
+ *      	<li>looks for any variable strings, which are ended by constant character always at the same index</li>
+ *      </ol>
+ *     </li>
+ *     <li>do the same from the right</li>
+ *   </ol>
+ * </li>
+ * <li>if there is a remaining "unmatched" strings, consider splitting by special characters _ or - or ( or ) into tokens</li>
+ * <li>apply step 3 to each of the split tokens</li>
+ * </ol>
  */
 public class PathPatternFinder {
 

@@ -29,7 +29,7 @@ package com.owenfeehan.pathpatternfinder.trim;
 import org.apache.commons.io.IOCase;
 
 /**
- * Performs (maybe) case-sensitive matching based upon current setting of IOCase
+ * Performs (maybe) case-sensitive matching based upon current setting of IOCase.
  */
 public class CasedStringComparer {
 

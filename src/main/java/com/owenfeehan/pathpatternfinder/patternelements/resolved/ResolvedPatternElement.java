@@ -30,7 +30,7 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
 /**
- * A pattern-element that has been resolved
+ * A pattern-element that has been resolved.
  */
 public abstract class ResolvedPatternElement extends PatternElement {
 

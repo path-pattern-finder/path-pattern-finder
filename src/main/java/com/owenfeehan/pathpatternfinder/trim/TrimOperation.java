@@ -31,14 +31,14 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import java.util.List;
 
 /**
- * Attempts to trim the list of objects from left or right
+ * Attempts to trim the list of objects from left or right.
  *
  * @param <T> type of objects the trimmer works upon
  */
 public interface TrimOperation<T> {
 
     /***
-     * Attempts to trim the list of objects by finding a pattern
+     * Attempts to trim the list of objects by finding a pattern.
      *
      * @param source list of objects
      * @return if successful, a pattern with the trimmed elements (and what remains to be resolved) as elements, otherwise NULL if unsuccessful
