@@ -80,7 +80,7 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
     	Pattern pattern = new Pattern();
         addPatternsTo( commonElements, pattern );
         factory.addUnresolvedPathsTo(
-           removeFrom(source, commonElements ),
+           removeFrom(source, commonElements.size() ),
            pattern
         );
         return pattern;
@@ -95,14 +95,15 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
 
     }
 
-    private static List<Path> removeFrom( List<Path> source,  CommonSubset commonElements ) {
+    /** Immutably removes the first n-elements from a list */
+    private static List<Path> removeFrom( List<Path> source, int numElements ) {
         return source.stream().map(
-            path -> removeFirstNItemsElements(path, commonElements.size() )
+            path -> removeFirstNItemsElements(path, numElements)
         ).collect( Collectors.toList() );
     }
 
     /** Removes the first n elements from a path */
-    private static Path removeFirstNItemsElements(Path path, int n ) {
+    private static Path removeFirstNItemsElements(Path path, int n) {
         if (n>0) {
             return path.subpath(n, path.getNameCount());
         } else {
@@ -110,6 +111,7 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
         }
     }
 
+    /** A list of elements from a path, including a root of it exists */
     private static List<String> pathElements( Path path ) {
 
         List<String> elements = new ArrayList<>();
