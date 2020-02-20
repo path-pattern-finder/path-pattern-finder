@@ -31,6 +31,8 @@ import com.owenfeehan.pathpatternfinder.describer.frequencymap.FrequencyMap;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 /** A varying string */
 class StringVariableElement extends VariableElement {
 
@@ -39,6 +41,11 @@ class StringVariableElement extends VariableElement {
 
     public StringVariableElement(List<String> values) {
         super(values);
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
