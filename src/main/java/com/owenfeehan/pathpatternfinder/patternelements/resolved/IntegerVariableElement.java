@@ -27,6 +27,9 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  */
 
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.integer.IntegerFrequencyMap;
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
+
+import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -73,6 +76,33 @@ class IntegerVariableElement extends VariableElement {
             );
         }
     }
+    
+
+	@Override
+	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+
+		int firstNonDigit = findIndexFirstNonDigitChar(str);
+		
+		if (firstNonDigit>0) {
+			return new ExtractedElement(str, firstNonDigit);
+		}
+		
+		return null;
+	}
+	
+	
+	/** Returns the index of the first non-digit character (from left-most side) or -1 if no digit is found */
+	private static int findIndexFirstNonDigitChar( String str ) {
+		for( int i=0; i<str.length(); i++ ) {
+			char c = str.charAt(i);
+			
+			if (!Character.isDigit(c)) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 
     private List<Integer> extractIntegerList() {
         return getValues()

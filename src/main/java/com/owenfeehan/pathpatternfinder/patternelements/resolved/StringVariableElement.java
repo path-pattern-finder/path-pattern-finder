@@ -28,9 +28,12 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.DescribeFrequencyMap;
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.FrequencyMap;
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractElementFrom;
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 
 import java.util.List;
 
+import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /** A varying string */
@@ -39,6 +42,9 @@ class StringVariableElement extends VariableElement {
     private static final String SEP_ALL = " | ";
     private static final String SEP_SOME = ", ";
 
+    // Lazy initialization
+    private FrequencyMap<String> freqMap = null;
+    
     public StringVariableElement(List<String> values) {
         super(values);
     }
@@ -51,7 +57,7 @@ class StringVariableElement extends VariableElement {
     @Override
     public String describe(int widthToDescribe) {
 
-        FrequencyMap<String> freq = createFrequencyMap();
+        FrequencyMap<String> freq = frequencyMap();
 
         DescribeFrequencyMap<String> df = new DescribeFrequencyMap<>(freq);
 
@@ -60,6 +66,30 @@ class StringVariableElement extends VariableElement {
         } else {
             return describeWithMaybeExamples(df, widthToDescribe);
         }
+    }
+
+	@Override
+	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+		
+		FrequencyMap<String> freq = frequencyMap();
+		
+		// Search for the first key that can be extracted
+		for( String key : freq.keys() ) {
+			ExtractedElement elem = ExtractElementFrom.extractStrIfPossible(key, str, ioCase);
+			if (elem!=null) {
+				return elem;
+			}
+		}
+		
+		return null;
+	}
+
+	// Lazy creation of the frequency-map
+    private FrequencyMap<String> frequencyMap() {
+    	if (freqMap==null) {
+    		return new FrequencyMap<>( getValues() );
+    	}
+    	return freqMap;
     }
 
     private static String describeAll( DescribeFrequencyMap<String> freq, int widthToDescribe  ) {

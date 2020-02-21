@@ -27,6 +27,8 @@ package com.owenfeehan.pathpatternfinder.patternelements;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
+
+import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -50,7 +52,7 @@ public abstract class PatternElement {
      * @return a PathPattern if successfully broken into smaller units, or NULL if this isn't possible
      */
     public abstract Pattern resolve();
-
+    
     /** @return TRUE iff this element have a constant value. Otherwise the element has multiple possible values.
      * Iff TRUE, describe() should return this constant value */
     public abstract boolean hasConstantValue();
@@ -81,6 +83,15 @@ public abstract class PatternElement {
         reverse();
         return this;
     }
+    
+    
+    /** Extracts the element from the left-most side of a string
+     * 
+     * @param str the string to extract the element from
+     * @param ioCase TODO
+     * @return null if element cannot be extracted, otherwise the string split into two components (extracted, and remainder)
+     * */
+    public abstract ExtractedElement extractElementFrom( String str, IOCase ioCase );
 
     /** Describe the element.
      * @param widthToDescribe the maximum width that should be used to describe the pattern

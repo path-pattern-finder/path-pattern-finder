@@ -77,4 +77,9 @@ public class FrequencyMap<T extends Comparable<T>> {
     public T highestKey() {
         return bag.last();
     }
+    
+    /** @return Set of keys */
+    public Set<T> keys() {
+    	return bag.uniqueSet();
+    }
 }

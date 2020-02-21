@@ -1,5 +1,8 @@
 package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractElementFrom;
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -27,6 +30,8 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  */
 
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
+
+import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -64,4 +69,9 @@ class ConstantElement extends ResolvedPatternElement {
     public boolean hasConstantValue() {
         return true;
     }
+
+	@Override
+	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+		return ExtractElementFrom.extractStrIfPossible(value, str, ioCase);
+	}
 }

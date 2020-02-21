@@ -28,6 +28,8 @@ package com.owenfeehan.pathpatternfinder;
 
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
+
+import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
 import java.io.File;
@@ -91,6 +93,8 @@ public class PatternTest {
             PatternFixture.patternReversed(),
             pattern
         );
+        
+        pattern.reverse();
     }
 
     @Test
@@ -116,6 +120,18 @@ public class PatternTest {
 
         assertTrue( lines[1].contains("${0}") );
         assertTrue( lines[1].contains("integer") );
+    }
+    
+    
+    @Test
+    public void testFitAgainst() {
+    	Pattern pattern = PatternFixture.pattern();
+    	String ret[] = pattern.fitAgainst("34343fRiDay" + File.separator, IOCase.INSENSITIVE );
+    	
+    	assertTrue( ret!=null );
+    	assertTrue( ret[0].equals("34343") );
+    	assertTrue( ret[1].equals("fRiDay") );
+    	assertTrue( ret[2].equals(File.separator) );
     }
 
 
