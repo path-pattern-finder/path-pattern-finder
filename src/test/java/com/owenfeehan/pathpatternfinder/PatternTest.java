@@ -43,19 +43,23 @@ public class PatternTest {
 
     private static class PatternFixture {
 
-        private static PatternElement element1 = createIntegerElement();
+        private static PatternElement element1 = createIntegerVariableElement();
         private static PatternElement element2 = createConstantElement();
         private static PatternElement element3 = createDirectorySeperator();
+        private static PatternElement element4 = createStringVariableElement();
 
-        private static PatternElement element1_reversed = createIntegerElement().reverseReturn();
+        private static PatternElement element1_reversed = createIntegerVariableElement().reverseReturn();
         private static PatternElement element2_reversed = createConstantElement().reverseReturn();
         private static PatternElement element3_reversed = createDirectorySeperator().reverseReturn();
 
-        public static Pattern pattern() {
+        public static Pattern pattern( boolean includeStringVariableElement ) {
             Pattern pattern = new Pattern();
             pattern.add(element1);
             pattern.add(element2);
             pattern.add(element3);
+            if (includeStringVariableElement) {
+            	pattern.add(element4);
+            }
             return pattern;
         }
 
@@ -75,18 +79,25 @@ public class PatternTest {
             return ResolvedPatternElementFactory.constant("friday");
         }
 
-        private static PatternElement createIntegerElement() {
+        private static PatternElement createIntegerVariableElement() {
             List<String> list = new ArrayList<>();
             list.add("56");
             list.add("561");
             return ResolvedPatternElementFactory.integer(list);
+        }
+        
+        private static PatternElement createStringVariableElement() {
+            List<String> list = new ArrayList<>();
+            list.add("green");
+            list.add("blue");
+            return ResolvedPatternElementFactory.string(list);
         }
     }
 
     @Test
     public void testReverse() {
 
-        Pattern pattern = PatternFixture.pattern();
+        Pattern pattern = PatternFixture.pattern(false);
         pattern.reverse();
 
         assertEquals(
@@ -100,14 +111,14 @@ public class PatternTest {
     @Test
     public void testDescribeShort() {
 
-        Pattern pattern = PatternFixture.pattern();
+        Pattern pattern = PatternFixture.pattern(false);
         checkPatternStr( pattern.describeShort() );
     }
 
     @Test
     public void testDescribeDetailed() {
 
-        Pattern pattern = PatternFixture.pattern();
+        Pattern pattern = PatternFixture.pattern(false);
 
         String[] lines = pattern.describeDetailed().split( System.lineSeparator() );
 
@@ -125,13 +136,18 @@ public class PatternTest {
     
     @Test
     public void testFitAgainst() {
-    	Pattern pattern = PatternFixture.pattern();
-    	String ret[] = pattern.fitAgainst("34343fRiDay" + File.separator, IOCase.INSENSITIVE );
+    	Pattern pattern = PatternFixture.pattern(true);
+    	
+    	String ret[] = pattern.fitAgainst(
+			String.format("34343fRiDay%sGREEN", File.separator),
+			IOCase.INSENSITIVE
+		);
     	
     	assertTrue( ret!=null );
     	assertTrue( ret[0].equals("34343") );
     	assertTrue( ret[1].equals("fRiDay") );
     	assertTrue( ret[2].equals(File.separator) );
+    	assertTrue( ret[3].equals("GREEN") );
     }
 
 
