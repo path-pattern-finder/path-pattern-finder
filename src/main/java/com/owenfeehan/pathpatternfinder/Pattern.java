@@ -27,7 +27,10 @@ package com.owenfeehan.pathpatternfinder;
  */
 
 import com.owenfeehan.pathpatternfinder.describer.DescribePattern;
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
+
+import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -146,6 +149,33 @@ public class Pattern implements Iterable<PatternElement> {
                 .collect(Collectors.toList());
         Collections.reverse(listWithReversedElements);
         this.elements = listWithReversedElements;
+    }
+    
+    
+    /**
+     * Fits a string against the pattern
+     * 
+     * @param str the string to fit
+     * @return an array with a string for each corresponding element of the pattern, or NULL if a string cannot be fit
+     */
+    public String[] fitAgainst( String str, IOCase ioCase ) {
+    	
+    	String[] out = new String[ elements.size() ];
+    	
+    	for (int i=0; i<elements.size(); i++) {
+    		PatternElement element = elements.get(i);
+    		
+    		// Extract an element matching the pattern, or give up if it fails
+    		ExtractedElement extracted = element.extractElementFrom(str, ioCase);
+    		if (extracted!=null) {
+    			out[i] = extracted.getExtracted();
+    			str = extracted.getRemainder();
+    		} else {
+    			return null;
+    		}
+    	}
+    	
+    	return out;
     }
 
 

@@ -1,5 +1,9 @@
 package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 
+import org.apache.commons.io.IOCase;
+
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -39,4 +43,9 @@ abstract class UnresolvedPatternElement extends PatternElement {
     public boolean hasConstantValue() {
         return false;
     }
+    
+	@Override
+	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+		throw new RuntimeException("extractElementFrom operation is usupported un unresolved path elements");
+	}
 }

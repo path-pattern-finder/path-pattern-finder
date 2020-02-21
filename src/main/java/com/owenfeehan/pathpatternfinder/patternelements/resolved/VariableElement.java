@@ -26,7 +26,6 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * #L%
  */
 
-import com.owenfeehan.pathpatternfinder.describer.frequencymap.FrequencyMap;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -52,10 +51,6 @@ public abstract class VariableElement extends ResolvedPatternElement {
     @Override
     public void reverse() {
         this.values = StringUtilities.reverseStringsInList(values);
-    }
-
-    protected FrequencyMap<String> createFrequencyMap() {
-        return new FrequencyMap<>(values);
     }
 
     protected List<String> getValues() {

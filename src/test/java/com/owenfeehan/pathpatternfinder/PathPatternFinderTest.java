@@ -62,6 +62,26 @@ public class PathPatternFinderTest {
             true
         );
     }
+    
+
+    @Test
+    public void testNestedSubdir() {
+
+        applyTest(
+            pathList(
+                    "D:\\Users\\owen\\Pictures\\P1210940.JPG",
+                    "D:\\Users\\owen\\Pictures\\Album\\P1210904.JPG"
+            ),
+            pattern(
+                constant("D:\\Users\\owen\\Pictures\\"),
+                string("","Album\\"),
+                constant("P"),
+                integer(1210940,1210904),
+                constant(".JPG")
+            ),
+            true
+        );
+    }
 
     private static void applyTest( List<Path> paths, Pattern expectedPattern, boolean caseSensitive ) {
         Pattern pattern = PathPatternFinder.findPatternPath(

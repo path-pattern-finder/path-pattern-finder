@@ -69,7 +69,7 @@ public class StringUtilities {
      * @return TRUE iff there's at least one non-empty string */
     public static boolean atLeastOneNonEmptyStr( List<String> list ) {
         for( int i=0; i<list.size(); i++) {
-            if (!list.get(0).isEmpty()) {
+            if (!list.get(i).isEmpty()) {
                 return true;
             }
         }

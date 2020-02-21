@@ -28,6 +28,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.trim.TrimCommonPathRoot;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -58,7 +59,7 @@ class UnresolvedPathList extends UnresolvedPatternElement {
            convert(list)
         );
     }
-
+	
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
