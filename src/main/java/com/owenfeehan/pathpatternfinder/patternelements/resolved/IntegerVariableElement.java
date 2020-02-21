@@ -85,13 +85,16 @@ class IntegerVariableElement extends VariableElement {
 		
 		if (firstNonDigit>0) {
 			return new ExtractedElement(str, firstNonDigit);
+		} else if (firstNonDigit==0){
+			// The first character was non-digit
+			return null;	
+		} else {
+			// The -1 case, where all the string were digits
+			return new ExtractedElement(str, "");
 		}
-		
-		return null;
 	}
 	
-	
-	/** Returns the index of the first non-digit character (from left-most side) or -1 if no digit is found */
+	/** Returns the index of the first non-digit character (from left-most side) or -1 if all are digits */
 	private static int findIndexFirstNonDigitChar( String str ) {
 		for( int i=0; i<str.length(); i++ ) {
 			char c = str.charAt(i);

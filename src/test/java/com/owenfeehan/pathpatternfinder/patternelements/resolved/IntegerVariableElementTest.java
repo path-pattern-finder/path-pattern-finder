@@ -1,5 +1,7 @@
 package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
+import org.apache.commons.io.IOCase;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -28,6 +30,9 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 import org.junit.Test;
 
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
+
 import java.util.Arrays;
 import static org.junit.Assert.*;
 
@@ -42,15 +47,42 @@ public class IntegerVariableElementTest {
     public void testDescribeNotSequence() {
         testDescribeSequence("6", false);
     }
+    
+	/** Checks that it can an integer string without problems */
+	@Test
+	public void testIntegerString_All() {
+		testExtractElement("444","444");
+	}
+	
+	/** Checks that it can an integer string with text at the end */
+	@Test
+	public void testIntegerString_Partial() {
+		testExtractElement("444a","444");
+	}
+	
+	/** Checks that a null is returned if there are no digits at the beginning of the string */
+	@Test
+	public void testIntegerString_Failure() {
+		testExtractElement("a444", null);
+	}
 
     private static void testDescribeSequence( String firstItem, boolean expectToBeSequence ) {
         IntegerVariableElement element = new IntegerVariableElement(
-                Arrays.asList(firstItem, "2", "3", "4")
+        	Arrays.asList(firstItem, "2", "3", "4")
         );
 
         assertEquals(
             expectToBeSequence,
             element.describe(80).contains("sequence")
         );
+    }
+    
+    private static void testExtractElement( String srcStr, String expectedExtract ) {
+    	PatternElement element = ResolvedPatternElementFactory.integer(1, 8, 1000);
+		ExtractedElement extracted = element.extractElementFrom(srcStr, IOCase.SENSITIVE);
+		assertEquals(
+			expectedExtract,
+			extracted != null ? extracted.getExtracted() : null
+		);
     }
 }
