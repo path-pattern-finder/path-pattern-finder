@@ -31,7 +31,10 @@ import com.owenfeehan.pathpatternfinder.describer.frequencymap.FrequencyMap;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractElementFrom;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -71,10 +74,15 @@ class StringVariableElement extends VariableElement {
 	@Override
 	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
 		
-		FrequencyMap<String> freq = frequencyMap();
+		// The order is important to make sure that smaller strings are checked after their longer ones
+		//  e.g.  first "going" then "go" then ""
+		// This makes it a greedy extraction rather risking the empty or smaller-string being preferred.
+		List<String> keys = reverseSortedKeys(
+			frequencyMap().keys()
+		);
 		
 		// Search for the first key that can be extracted
-		for( String key : freq.keys() ) {
+		for( String key : keys ) {
 			ExtractedElement elem = ExtractElementFrom.extractStrIfPossible(key, str, ioCase);
 			if (elem!=null) {
 				return elem;
@@ -82,6 +90,12 @@ class StringVariableElement extends VariableElement {
 		}
 		
 		return null;
+	}
+	
+	private List<String> reverseSortedKeys( Set<String> keys ) {
+		List<String> list = new ArrayList<>(keys);
+		Collections.sort(list, Collections.reverseOrder());
+		return list;
 	}
 
 	// Lazy creation of the frequency-map
