@@ -74,4 +74,8 @@ class ConstantElement extends ResolvedPatternElement {
 	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
 		return ExtractElementFrom.extractStrIfPossible(value, str, ioCase);
 	}
+
+	public String getValue() {
+		return value;
+	}
 }
