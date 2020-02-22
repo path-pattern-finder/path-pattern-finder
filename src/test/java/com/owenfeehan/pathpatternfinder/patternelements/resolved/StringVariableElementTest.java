@@ -38,10 +38,21 @@ public class StringVariableElementTest {
 
 	/** Checks that it tries to fit the longer keys first, with empty keys last */
 	@Test
-	public void testFitInCorrectOder() {
+	public void testFitInCorrectOrder_Sensitive() {
 		PatternElement element = ResolvedPatternElementFactory.string("going", "go", "");
-		ExtractedElement extracted = element.extractElementFrom("goingaway", IOCase.SENSITIVE);
-		assertEquals( "going", extracted.getExtracted() );
+		testPattern("going", "goingaway", element, IOCase.SENSITIVE);
+	}
+
+	/** Checks that it tries to fit the longer keys first, with empty keys last */
+	@Test
+	public void testFitInCorrectOrder_Insensitive() {
+		PatternElement element = ResolvedPatternElementFactory.string("aax", "AAaa", "Aa");
+		testPattern("aaaa", "aaaab", element, IOCase.INSENSITIVE);
+	}
+	
+	private static void testPattern( String expected, String fromStr, PatternElement element, IOCase ioCase ) {
+		ExtractedElement extracted = element.extractElementFrom(fromStr, ioCase);
+		assertEquals( expected, extracted.getExtracted() );
 	}
 
 }
