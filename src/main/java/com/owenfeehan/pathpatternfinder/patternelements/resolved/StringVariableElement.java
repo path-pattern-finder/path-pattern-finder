@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -78,7 +79,8 @@ class StringVariableElement extends VariableElement {
 		//  e.g.  first "going" then "go" then ""
 		// This makes it a greedy extraction rather risking the empty or smaller-string being preferred.
 		List<String> keys = reverseSortedKeys(
-			frequencyMap().keys()
+			frequencyMap().keys(),
+			ioCase
 		);
 		
 		// Search for the first key that can be extracted
@@ -91,12 +93,6 @@ class StringVariableElement extends VariableElement {
 		
 		return null;
 	}
-	
-	private List<String> reverseSortedKeys( Set<String> keys ) {
-		List<String> list = new ArrayList<>(keys);
-		Collections.sort(list, Collections.reverseOrder());
-		return list;
-	}
 
 	// Lazy creation of the frequency-map
     private FrequencyMap<String> frequencyMap() {
@@ -104,6 +100,23 @@ class StringVariableElement extends VariableElement {
     		return new FrequencyMap<>( getValues() );
     	}
     	return freqMap;
+    }
+	
+	private static List<String> reverseSortedKeys( Set<String> keys, IOCase ioCase ) {
+		
+		if (!ioCase.isCaseSensitive()) {
+			// first make all keys lower-case, so that different cases don't 
+			//  mess up the ordering that is key to the greedy extraction
+			keys = makeSetLowercase(keys);
+		}
+		
+		List<String> list = new ArrayList<>(keys);
+		Collections.sort(list, Collections.reverseOrder());
+		return list;
+	}
+	
+    private static Set<String> makeSetLowercase( Set<String> set ) {
+    	return set.stream().map( s->s.toLowerCase() ).collect( Collectors.toSet() );
     }
 
     private static String describeAll( DescribeFrequencyMap<String> freq, int widthToDescribe  ) {
