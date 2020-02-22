@@ -20,7 +20,7 @@
 	<url>http://www.owenfeehan.com</url>
       </organization>
       
-      <version>1.4.3</version>
+      <version>1.4.4-SNAPSHOT</version>
         <build>
             <plugins>
                 <plugin>
@@ -112,7 +112,7 @@
 		<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
 		<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
-		<tag>path-pattern-finder-1.4.3</tag>
+		<tag>path-pattern-finder-1.1</tag>
 	</scm>
 	
   
