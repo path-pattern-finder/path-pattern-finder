@@ -77,8 +77,8 @@ public class DescribePattern {
                         ? new PatternDescriberWithVariableLines(prefixForVariablesLine)
                         : new PatternDescriber();
 
-        for (PatternElement e : pattern) {
-            describer.addElement(e, maxLineWidth);
+        for (PatternElement element : pattern) {
+            describer.addElement(element, maxLineWidth);
         }
 
         return describer.toString();

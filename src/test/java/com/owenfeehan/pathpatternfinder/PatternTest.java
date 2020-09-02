@@ -34,6 +34,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPattern
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
@@ -131,15 +132,17 @@ public class PatternTest {
     public void testFitAgainst() {
         Pattern pattern = PatternFixture.pattern(true);
 
-        String ret[] =
+        Optional<String[]> elementsOptional =
                 pattern.fitAgainst(
                         String.format("34343fRiDay%sGREEN", File.separator), IOCase.INSENSITIVE);
 
-        assertTrue(ret != null);
-        assertTrue(ret[0].equals("34343"));
-        assertTrue(ret[1].equals("fRiDay"));
-        assertTrue(ret[2].equals(File.separator));
-        assertTrue(ret[3].equals("GREEN"));
+        assertTrue(elementsOptional.isPresent());
+        
+        String[] elements = elementsOptional.get();
+        assertEquals("34343", elements[0]);
+        assertEquals("fRiDay", elements[1]);
+        assertEquals(File.separator, elements[2]);
+        assertEquals("GREEN", elements[3]);
     }
 
     private void checkPatternStr(String str) {
