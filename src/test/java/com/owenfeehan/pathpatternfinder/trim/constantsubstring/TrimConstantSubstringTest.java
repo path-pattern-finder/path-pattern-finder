@@ -92,9 +92,9 @@ public class TrimConstantSubstringTest {
     /**
      * Runs a test by generating a list of 2 strings and applying the operation
      *
-     * @param mixedCase iff TRUE an string with some altered case character (STR2_mixed_case) is
+     * @param mixedCase iff true an string with some altered case character (STR2_mixed_case) is
      *     substituted for STR2_lower_vase
-     * @param prependFirst iff TRUE an underscore is prepended to the first string
+     * @param prependFirst iff true an underscore is prepended to the first string
      * @param expectedPattern a function supplying the pattern expected
      */
     private static void applyTest(

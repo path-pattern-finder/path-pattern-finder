@@ -1,6 +1,6 @@
 /**
  * Classes for tracking a a frequency-map (a histogram data structure that stores a set of values
- * and associated counts)
+ * and associated counts).
  */
 package com.owenfeehan.pathpatternfinder.describer.frequencymap;
 /*-

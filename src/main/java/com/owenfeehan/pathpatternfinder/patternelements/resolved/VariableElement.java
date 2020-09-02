@@ -1,5 +1,7 @@
 package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -31,7 +33,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** A pattern-element that is resolved and varies across the list of values. */
+/** A {@link PatternElement} that is resolved and varies across the list of values. */
 public abstract class VariableElement extends ResolvedPatternElement {
 
     private List<String> values;

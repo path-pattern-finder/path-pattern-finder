@@ -28,7 +28,6 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.DescribeFrequencyMap;
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.FrequencyMap;
-import com.owenfeehan.pathpatternfinder.patternelements.ExtractElementFrom;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,7 +81,7 @@ class StringVariableElement extends VariableElement {
 
         // Search for the first key that can be extracted
         for (String key : keys) {
-            ExtractedElement elem = ExtractElementFrom.extractStrIfPossible(key, str, ioCase);
+            ExtractedElement elem = ExtractElementFrom.extractStringIfPossible(key, str, ioCase);
             if (elem != null) {
                 return elem;
             }

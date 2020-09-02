@@ -1,4 +1,4 @@
-package com.owenfeehan.pathpatternfinder.patternelements;
+package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 /*-
  * #%L
@@ -27,8 +27,9 @@ package com.owenfeehan.pathpatternfinder.patternelements;
  */
 
 import org.apache.commons.io.IOCase;
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 
-public class ExtractElementFrom {
+class ExtractElementFrom {
 
     private ExtractElementFrom() {
         // NOTHING TO DO
@@ -42,7 +43,7 @@ public class ExtractElementFrom {
      * @param ioCase whether to be case-sensitive or not
      * @return the extracted-string (and the remainder) or null if the left-most-side doesn't match
      */
-    public static ExtractedElement extractStrIfPossible(
+    public static ExtractedElement extractStringIfPossible(
             String strToExtract, String strToSearch, IOCase ioCase) {
 
         if (ioCase.checkStartsWith(strToSearch, strToExtract)) {

@@ -33,12 +33,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** A pattern that has been extracted, containing 0 or more PatternElements */
+/** 
+ * A pattern that has been extracted, containing 0 or more {@link PatternElement}s.
+ **/
 public class Pattern implements Iterable<PatternElement> {
 
     private List<PatternElement> elements;
@@ -62,10 +65,10 @@ public class Pattern implements Iterable<PatternElement> {
     }
 
     /**
-     * Returns true iff the element at index is unresolved
+     * Returns true iff the element at index is unresolved.
      *
      * @param index index of element
-     * @return the PatternElement corresponding to the index
+     * @return the {@link PatternElement} corresponding to the index
      */
     public PatternElement get(int index) {
         return elements.get(index);
@@ -92,17 +95,24 @@ public class Pattern implements Iterable<PatternElement> {
     }
 
     /**
-     * @return a description of the pattern in a single line, where variable patterns are replaced
-     *     with indexed symbols
+     * A description of the pattern in a single line.
+     * 
+     * <p>Variable patterns are replaced with indexed symbols.
+     * 
+     * @return the description
      */
     public String describeShort() {
         return DescribePattern.apply(this, false);
     }
 
     /**
-     * @return a description of the pattern in one or more lines, where variable patterns are
+     * A description of the pattern in one or more lines.
+     *
+     * <p>Variable patterns are
      *     replaced with indexed symbols AND each variable pattern is further detailed on an
-     *     additional line
+     *     additional line.
+     *     
+     * @return the description
      */
     public String describeDetailed() {
         return DescribePattern.apply(this, true);
@@ -112,7 +122,7 @@ public class Pattern implements Iterable<PatternElement> {
      * Recursively convert any unresolved elements into resolved elements. This continues until all
      * elements are resolved (i.e. broken into the maximally atomic units).
      *
-     * @return TRUE iff at least one change has been made to the pattern
+     * @return true iff at least one change has been made to the pattern
      */
     public boolean resolve() {
 
@@ -142,9 +152,11 @@ public class Pattern implements Iterable<PatternElement> {
     }
 
     /**
-     * Reversed the PathPattern i.e. the order of elements is reversed, and the reverse() operation
-     * is applied to each element Note that as reverse() operation of each element occurs inplace,
-     * the contents of existing pattern
+     * Reverse the pattern.
+     * 
+     * <p>Specifically, the order of elements is reversed, and {@link PatternElement#reverse} is applied to each element.
+     * 
+     * <p>Note that {@link PatternElement#reverse} occurs inplace in the element i.e. it's a mutable operation.
      */
     public void reverse() {
         List<PatternElement> listWithReversedElements =
@@ -154,13 +166,14 @@ public class Pattern implements Iterable<PatternElement> {
     }
 
     /**
-     * Fits a string against the pattern
+     * Fits a string against the pattern.
      *
      * @param str the string to fit
-     * @return an array with a string for each corresponding element of the pattern, or NULL if a
+     * @param ioCase how to handle case-sensitivity
+     * @return an array with a string for each corresponding element of the pattern, or {@code Optional.empty()} if a
      *     string cannot be fit
      */
-    public String[] fitAgainst(String str, IOCase ioCase) {
+    public Optional<String[]> fitAgainst(String str, IOCase ioCase) {
 
         String[] out = new String[elements.size()];
 
@@ -173,11 +186,11 @@ public class Pattern implements Iterable<PatternElement> {
                 out[i] = extracted.getExtracted();
                 str = extracted.getRemainder();
             } else {
-                return null;
+                return Optional.empty();
             }
         }
 
-        return out;
+        return Optional.of(out);
     }
 
     /** Replaces the element at a particular index, with all the elements in toReplace */

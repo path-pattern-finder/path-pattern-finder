@@ -35,8 +35,8 @@ import java.util.List;
 import org.apache.commons.io.IOCase;
 
 /**
- * Creates Patterns or Elements which have yet to be resolved OR adds a new such unresolved Element
- * to an existing Pattern
+ * Creates {@link Pattern}s or {@link PatternElement}s which have yet to be resolved <i>or</i> adds a new such unresolved Element
+ * to an existing {@link Pattern}.
  */
 public class UnresolvedPatternElementFactory {
 

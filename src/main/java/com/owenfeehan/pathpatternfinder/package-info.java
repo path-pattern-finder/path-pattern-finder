@@ -1,6 +1,6 @@
 /**
  * Top-level package for all classes for finding a pattern in paths or strings in accordance to
- * certain rules
+ * certain rules.
  */
 package com.owenfeehan.pathpatternfinder;
 /*-

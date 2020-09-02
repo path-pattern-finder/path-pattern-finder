@@ -38,26 +38,39 @@ public class IntegerFrequencyMap {
         this.map = new FrequencyMap<>(list);
     }
 
-    /** @return Lowest-value key */
+    /** 
+     * The lowest-value in the map.
+     * 
+     * @return the lowest-value. 
+     * 
+     **/
     public int lowest() {
         return map.lowestKey();
     }
 
-    /** @return Highest-value key */
+    /** 
+     * The highest-value in the map.
+     * 
+     * @return the highest-value.
+     * */
     public int highest() {
         return map.highestKey();
     }
 
-    /** @return Number of unique values (number of keys */
-    public int numUniqueValues() {
-        return map.numUniqueValues();
+    /** 
+     * Number of unique values.
+     * 
+     * @return number of unique values. 
+     **/
+    public int numberUniqueValues() {
+        return map.numberUniqueValues();
     }
 
     /**
      * Does it contain exactly one integer (and only one) for every integer between lowest() and
      * highest() inclusive
      *
-     * @return TRUE if the map fulfills above condition
+     * @return true if the map fulfills above condition
      */
     public boolean testIfContiguous() {
         int highest = highest();

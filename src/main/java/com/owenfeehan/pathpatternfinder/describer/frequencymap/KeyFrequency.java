@@ -29,7 +29,9 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** Stores a key and its associated frequency, implementing an ordering on the count */
+/** 
+ * Stores a key and its associated frequency, implementing an ordering on the count.
+ **/
 class KeyFrequency<T extends Comparable<T>> implements Comparable<KeyFrequency<T>> {
     private T key;
     private int count;

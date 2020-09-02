@@ -29,21 +29,23 @@ package com.owenfeehan.pathpatternfinder.describer;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
-/** Describes a pattern by generating a user-readable string representation of a pattern */
+/** 
+ * Describes a pattern by generating a user-readable string representation of a pattern.
+ */
 public class DescribePattern {
 
     private DescribePattern() {}
 
     /**
-     * Generates a user-readable string describing a pattern
+     * Generates a user-readable string describing a pattern.
      *
      * <p>A string is always returned showing constant-value elements as text, and replacing
-     * varliable-value elements with a string like ${3} where the number is an index
+     * variable-value elements with a string like {@code ${3}} where the number is an index.
      *
      * @param pattern the pattern to describe
      * @param includeVariableDescription whether to append additional lines describing each
      *     variable-value element, one for each element
-     * @return a user-readable stirng
+     * @return a user-readable string
      */
     public static String apply(Pattern pattern, boolean includeVariableDescription) {
         return apply(
@@ -54,7 +56,7 @@ public class DescribePattern {
     }
 
     /**
-     * Like apply(pattern, includeVariableDescription) but with additional parameterization
+     * Like {@link #apply(Pattern, boolean)} but with additional parameterization.
      *
      * @param pattern the pattern to describe
      * @param includeVariableDescription whether to append additional lines describing each
@@ -62,7 +64,7 @@ public class DescribePattern {
      * @param prefixForVariablesLine a prefix prepended to each line that describes a variable (e.g.
      *     useful for implementing bullet points)
      * @param maxLineWidth maximum number of characters in a line
-     * @return a user-readable stirng
+     * @return a user-readable string
      */
     public static String apply(
             Pattern pattern,

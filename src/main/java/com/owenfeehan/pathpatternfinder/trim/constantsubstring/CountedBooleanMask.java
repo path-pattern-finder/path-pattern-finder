@@ -42,7 +42,7 @@ class CountedBooleanMask {
         countTrueValues = size;
     }
 
-    // Makes sure the mask is FALSE at a given index, changing variable if necessary
+    // Makes sure the mask is false at a given index, changing variable if necessary
     public void ensureFalse(int index) {
         if (mask[index]) {
             countTrueValues--;
@@ -55,7 +55,7 @@ class CountedBooleanMask {
     }
 
     /**
-     * Finds the first set of TRUEs (values that are all TRUE contiguously) in the mask
+     * Finds the first set of trues (values that are all true contiguously) in the mask
      *
      * <p>If none can be found, null is returned
      */
@@ -71,8 +71,8 @@ class CountedBooleanMask {
                 }
                 indexLastTrue = i;
             } else {
-                // If we haven't found a TRUE yet, this is fine
-                // But if we've already encountered a TRUE, then we should exit
+                // If we haven't found a true yet, this is fine
+                // But if we've already encountered a true, then we should exit
                 if (indexFirstTrue != -1) {
                     break;
                 }

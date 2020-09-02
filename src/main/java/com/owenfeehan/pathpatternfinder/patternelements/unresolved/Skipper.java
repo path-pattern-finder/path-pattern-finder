@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * If we already know certain operations will fail, as they've been tried before, then they can be
- * deliberately skipped to save computation
+ * deliberately skipped to save computation.
  */
 public class Skipper {
     /**

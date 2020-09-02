@@ -26,7 +26,7 @@ package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
  * #L%
  */
 
-/** A range of indices in an array */
+/** A range of indices in an array. */
 public class IndexRange {
 
     private int startIndex;

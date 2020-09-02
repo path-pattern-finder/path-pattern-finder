@@ -57,13 +57,13 @@ class CommonCharsTracker {
         }
     }
 
-    /** The number of common characters (i.e. mask values which are TRUE) to all strings */
+    /** The number of common characters (i.e. mask values which are true) to all strings */
     public int numCommonChars() {
         return mask.countTrueValues();
     }
 
     /**
-     * Finds the first set of TRUEs (values that are all TRUE contiguously) in the mask
+     * Finds the first set of trues (values that are all true contiguously) in the mask
      *
      * <p>If none can be found, null is returned
      */

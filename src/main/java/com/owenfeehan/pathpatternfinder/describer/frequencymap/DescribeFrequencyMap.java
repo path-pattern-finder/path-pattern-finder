@@ -36,7 +36,7 @@ public class DescribeFrequencyMap<T extends Comparable<T>> {
     }
 
     public int numUniqueValues() {
-        return frequencyMap.numUniqueValues();
+        return frequencyMap.numberUniqueValues();
     }
 
     // Can all values be described within a certain width?

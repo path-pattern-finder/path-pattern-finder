@@ -1,6 +1,6 @@
 /**
- * A trim-operation attempts to find one or more new Pattern-Elements by fitting against a string or
- * a path
+ * A trim-operation attempts to find one or more new {@link com.owenfeehan.pathpatternfinder.patternelements.PatternElement}s by fitting against a string or
+ * a path.
  */
 package com.owenfeehan.pathpatternfinder.trim;
 /*-

@@ -71,7 +71,7 @@ public class StringUtilities {
      * Checks if there is any non-empty string in a list
      *
      * @param list input-list
-     * @return TRUE iff there's at least one non-empty string
+     * @return true iff there's at least one non-empty string
      */
     public static boolean atLeastOneNonEmptyStr(List<String> list) {
         for (int i = 0; i < list.size(); i++) {

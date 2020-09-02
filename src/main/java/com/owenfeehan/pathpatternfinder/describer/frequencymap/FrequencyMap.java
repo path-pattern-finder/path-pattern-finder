@@ -29,7 +29,9 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
 import java.util.*;
 import org.apache.commons.collections4.bag.TreeBag;
 
-/** Constructs a frequency map for a list of values */
+/** 
+ * Constructs a frequency map for a list of values
+ **/
 public class FrequencyMap<T extends Comparable<T>> {
 
     // Maps the item to the count (ordered by the key)
@@ -53,27 +55,47 @@ public class FrequencyMap<T extends Comparable<T>> {
         return bag.getCount(key);
     }
 
-    /** @return The number of unique-values that are being counted (i.e. number of keys) */
-    public int numUniqueValues() {
+    /** 
+     * The number of unique-values that are being counted (i.e. number of keys).
+     * 
+     * @return the number of unique-values
+     */
+    public int numberUniqueValues() {
         return bag.uniqueSet().size();
     }
 
-    /** @return A view of the frequency-map ordered by counts */
+    /** 
+     * A view of the frequency-map ordered by counts
+     *
+     * @return the view
+     **/
     protected OrderedByCount<T> byCount() {
         return orderedCounts;
     }
 
-    /** @return The key with lowest-value */
+    /** 
+     * The key with lowest-value
+     * 
+     * @return the key
+     **/
     public T lowestKey() {
         return bag.first();
     }
 
-    /** @return The key with highest-value */
+    /** 
+     * The key with highest-value
+     * 
+     * @return the key
+     **/
     public T highestKey() {
         return bag.last();
     }
 
-    /** @return Set of keys */
+    /** 
+     * All keys in the map.
+     * 
+     * @return the keys
+     **/
     public Set<T> keys() {
         return bag.uniqueSet();
     }

@@ -1,4 +1,4 @@
-/** A specialised frequency-map for integer-values */
+/** A specialised frequency-map for integer-values. */
 package com.owenfeehan.pathpatternfinder.describer.frequencymap.integer;
 /*-
  * #%L

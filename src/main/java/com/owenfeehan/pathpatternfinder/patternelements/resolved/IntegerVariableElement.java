@@ -63,7 +63,7 @@ class IntegerVariableElement extends VariableElement {
 
             return String.format(
                     "%d unique integers between %d and %d inclusive",
-                    freq.numUniqueValues(), freq.lowest(), freq.highest());
+                    freq.numberUniqueValues(), freq.lowest(), freq.highest());
         }
     }
 

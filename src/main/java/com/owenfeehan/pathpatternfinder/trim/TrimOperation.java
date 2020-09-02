@@ -37,10 +37,10 @@ import java.util.List;
 public interface TrimOperation<T> {
 
     /***
-     * Attempts to trim the list of objects by finding a pattern.
+     * Attempts to trim the list of objects by finding a {@link Pattern}.
      *
      * @param source list of objects
-     * @return if successful, a pattern with the trimmed elements (and what remains to be resolved) as elements, otherwise NULL if unsuccessful
+     * @return if successful, a pattern with the trimmed elements (and what remains to be resolved) as elements, otherwise null if unsuccessful
      */
     public abstract Pattern trim(List<T> source);
 }

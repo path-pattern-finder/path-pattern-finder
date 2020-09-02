@@ -29,7 +29,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
-/** A pattern-element that has been resolved. */
+/** A {@link PatternElement} that has been resolved. */
 public abstract class ResolvedPatternElement extends PatternElement {
 
     @Override

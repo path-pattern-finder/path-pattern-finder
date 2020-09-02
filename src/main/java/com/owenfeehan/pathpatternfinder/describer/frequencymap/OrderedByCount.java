@@ -30,7 +30,13 @@ import java.util.Iterator;
 import java.util.TreeSet;
 import org.apache.commons.collections4.bag.TreeBag;
 
-// Ordered by the count
+/**
+ * A set of {@link KeyFrequency} ordered by their counts.
+ * 
+ * @author Owen Feehan
+ *
+ * @param <T>
+ */
 class OrderedByCount<T extends Comparable<T>> implements Iterable<KeyFrequency<T>> {
 
     private TreeSet<KeyFrequency<T>> set;
@@ -39,7 +45,7 @@ class OrderedByCount<T extends Comparable<T>> implements Iterable<KeyFrequency<T
     public OrderedByCount(TreeBag<T> bag) {
         this.set = new TreeSet<>();
         for (Object key : bag.uniqueSet().toArray()) {
-            set.add(new KeyFrequency<T>((T) key, bag.getCount(key)));
+            set.add(new KeyFrequency<>((T) key, bag.getCount(key)));
         }
     }
 

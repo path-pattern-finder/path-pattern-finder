@@ -29,8 +29,9 @@ package com.owenfeehan.pathpatternfinder.describer;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
 /**
- * Adds an extra line for each variable-value element describing its contents in a form like ${1} =
- * set of 986 unique integers (considered as strings)
+ * Adds an extra line for each variable-value element describing its contents.
+ * 
+ * <p>This takes a form like {@code ${1} = set of 986 unique integers (considered as strings)}.
  */
 class PatternDescriberWithVariableLines extends PatternDescriber {
 

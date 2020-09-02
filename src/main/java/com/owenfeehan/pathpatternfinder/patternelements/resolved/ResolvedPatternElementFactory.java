@@ -30,9 +30,12 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-/** Creation of the different types of resolved elements */
+/** 
+ * Creation of the different types of resolved elements.
+ */
 public class ResolvedPatternElementFactory {
 
     private ResolvedPatternElementFactory() {}
@@ -44,8 +47,7 @@ public class ResolvedPatternElementFactory {
     public static PatternElement constant(String value) {
 
         // Special case where we create a constant with a directory seperator only, then we convert
-        // it into
-        //  a DirectorySeperator class for consistency in output patterns
+        // it into a DirectorySeperator class for consistency in output patterns
         if (value.equals(File.separator)) {
             return directorySeperator();
         }
@@ -66,11 +68,7 @@ public class ResolvedPatternElementFactory {
     }
 
     public static PatternElement string(String... args) {
-        List<String> list = new ArrayList<>();
-        for (String s : args) {
-            list.add(s);
-        }
-        return string(list);
+        return string( Arrays.asList(args) );
     }
 
     public static PatternElement string(List<String> values) {
