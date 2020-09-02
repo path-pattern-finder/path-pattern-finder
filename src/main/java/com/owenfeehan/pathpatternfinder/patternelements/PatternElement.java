@@ -85,8 +85,9 @@ public abstract class PatternElement {
     }
 
     /**
-     * Inverts the current pathElement i.e. if the string was previously applied from left to right
-     * it is now, right to left and vice-versa
+     * Reverses the current pathElement.
+     * 
+     * <p>i.e. if the string was previously applied from left to right it is now, right to left and vice-versa
      */
     public abstract void reverse();
 
