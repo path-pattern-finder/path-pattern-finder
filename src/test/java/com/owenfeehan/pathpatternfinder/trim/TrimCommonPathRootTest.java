@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,20 +26,19 @@ package com.owenfeehan.pathpatternfinder.trim;
  * #L%
  */
 
+import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
+import static org.junit.Assert.assertEquals;
+
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-import org.apache.commons.io.IOCase;
-import org.junit.Test;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
-import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
+import org.apache.commons.io.IOCase;
+import org.junit.Test;
 
 public class TrimCommonPathRootTest {
 
@@ -63,7 +62,7 @@ public class TrimCommonPathRootTest {
             return PATH1;
         }
 
-        public static List<Path> genSource( boolean caseSensitive ) {
+        public static List<Path> genSource(boolean caseSensitive) {
             if (caseSensitive) {
                 return new ArrayList<>(Arrays.asList(PATH1, PATH2, PATH3));
             } else {
@@ -82,7 +81,7 @@ public class TrimCommonPathRootTest {
         applyTest(IOCase.SENSITIVE);
     }
 
-    private static void applyTest( IOCase ioCase ) {
+    private static void applyTest(IOCase ioCase) {
 
         UnresolvedPatternElementFactory factory = new UnresolvedPatternElementFactory(ioCase);
 
@@ -90,31 +89,29 @@ public class TrimCommonPathRootTest {
 
         TrimCommonPathRoot common = new TrimCommonPathRoot(factory);
 
-        Pattern pattern = common.trim( source );
+        Pattern pattern = common.trim(source);
 
         // assert statements
-        assertEquals(
-                expectedPattern(ConstantPathsFixture.first(), 2, source, factory),
-                pattern
-        );
+        assertEquals(expectedPattern(ConstantPathsFixture.first(), 2, source, factory), pattern);
     }
 
-    private static Pattern expectedPattern(Path path, int firstNumItems, List<Path> source, UnresolvedPatternElementFactory factory ) {
+    private static Pattern expectedPattern(
+            Path path,
+            int firstNumItems,
+            List<Path> source,
+            UnresolvedPatternElementFactory factory) {
         Pattern expected = new Pattern();
-        for (int i=0; i<firstNumItems; i++) {
-            addConstantTo( path.getName(i).toString(), expected );
-            addDirectorySeperatorTo( expected );
+        for (int i = 0; i < firstNumItems; i++) {
+            addConstantTo(path.getName(i).toString(), expected);
+            addDirectorySeperatorTo(expected);
         }
-        factory.addUnresolvedPathsTo(
-            expectedTrimmedPaths(source, firstNumItems),
-            expected
-        );
+        factory.addUnresolvedPathsTo(expectedTrimmedPaths(source, firstNumItems), expected);
         return expected;
     }
 
-    private static List<Path> expectedTrimmedPaths( List<Path> source, int firstNumItemsToRemove) {
-        return source.stream().map(
-                path -> path.subpath( firstNumItemsToRemove, path.getNameCount() )
-        ).collect(Collectors.toList());
+    private static List<Path> expectedTrimmedPaths(List<Path> source, int firstNumItemsToRemove) {
+        return source.stream()
+                .map(path -> path.subpath(firstNumItemsToRemove, path.getNameCount()))
+                .collect(Collectors.toList());
     }
 }

@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,9 +28,7 @@ package com.owenfeehan.pathpatternfinder.trim;
 
 import org.apache.commons.io.IOCase;
 
-/**
- * Performs (maybe) case-sensitive matching based upon current setting of IOCase.
- */
+/** Performs (maybe) case-sensitive matching based upon current setting of IOCase. */
 public class CasedStringComparer {
 
     private IOCase ioCase;
@@ -46,15 +44,15 @@ public class CasedStringComparer {
      * @param str2 second string
      * @return whether the strings are equal (depending on caseSensitive flag)
      */
-    public boolean match( String str1, String str2 ) {
+    public boolean match(String str1, String str2) {
         return ioCase.checkEquals(str1, str2);
     }
 
-    public boolean match( char c1, char c2 ) {
+    public boolean match(char c1, char c2) {
         if (ioCase.isCaseSensitive()) {
-            return c1==c2;
+            return c1 == c2;
         } else {
-            return c1==c2 || Character.toLowerCase(c1)==Character.toLowerCase(c2);
+            return c1 == c2 || Character.toLowerCase(c1) == Character.toLowerCase(c2);
         }
     }
 }

@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,7 +28,6 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +38,13 @@ public class ResolvedPatternElementFactory {
     private ResolvedPatternElementFactory() {}
 
     public static PatternElement constant(char value) {
-        return constant(
-            Character.toString(value)
-        );
+        return constant(Character.toString(value));
     }
 
     public static PatternElement constant(String value) {
 
-        // Special case where we create a constant with a directory seperator only, then we convert it into
+        // Special case where we create a constant with a directory seperator only, then we convert
+        // it into
         //  a DirectorySeperator class for consistency in output patterns
         if (value.equals(File.separator)) {
             return directorySeperator();
@@ -55,31 +53,27 @@ public class ResolvedPatternElementFactory {
         return new ConstantElement(value);
     }
 
-
     public static PatternElement integer(int... args) {
         List<String> list = new ArrayList<>();
         for (int val : args) {
-            list.add(
-                Integer.toString(val)
-            );
+            list.add(Integer.toString(val));
         }
         return integer(list);
     }
 
-    public static PatternElement integer(List<String> values ) {
+    public static PatternElement integer(List<String> values) {
         return new IntegerVariableElement(values);
     }
 
-
     public static PatternElement string(String... args) {
         List<String> list = new ArrayList<>();
-        for( String s : args ) {
+        for (String s : args) {
             list.add(s);
         }
         return string(list);
     }
 
-    public static PatternElement string(List<String> values ) {
+    public static PatternElement string(List<String> values) {
         return new StringVariableElement(values);
     }
 
@@ -88,14 +82,14 @@ public class ResolvedPatternElementFactory {
     }
 
     public static void addConstantTo(String value, Pattern pattern) {
-        pattern.add( constant(value) );
+        pattern.add(constant(value));
     }
 
     public static void addConstantTo(char value, Pattern pattern) {
-        pattern.add( constant(value) );
+        pattern.add(constant(value));
     }
 
     public static void addDirectorySeperatorTo(Pattern pattern) {
-        pattern.add( directorySeperator() );
+        pattern.add(directorySeperator());
     }
 }

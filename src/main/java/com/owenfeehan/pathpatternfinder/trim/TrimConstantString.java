@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,22 +29,19 @@ package com.owenfeehan.pathpatternfinder.trim;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
  * Looks for a constant common substring (from left-size, as maximal as possible).
- * 
- * <p>This is turned into a Constant pattern-element, and otherwise removing</p>
+ *
+ * <p>This is turned into a Constant pattern-element, and otherwise removing
  *
  * <pre>
  * e.g.
  *   input:   ["the boy went to school", "the boy went to a party"]
  *   pattern: ["the boy went to "]
  * </pre>
- *
  */
 public class TrimConstantString implements TrimOperation<String> {
 
@@ -59,20 +56,17 @@ public class TrimConstantString implements TrimOperation<String> {
 
         String common = findCommonString(source);
 
-        if (common==null) {
+        if (common == null) {
             return null;
         }
 
-        return createPattern(
-                source,
-                common
-        );
+        return createPattern(source, common);
     }
 
-    private String findCommonString( List<String> source ) {
+    private String findCommonString(List<String> source) {
         String common = source.get(0);
 
-        for( int i=1; i<source.size(); i++) {
+        for (int i = 1; i < source.size(); i++) {
 
             // Find the maximum intersection
             common = intersect(common, source.get(i));
@@ -86,37 +80,36 @@ public class TrimConstantString implements TrimOperation<String> {
         return common;
     }
 
-    private Pattern createPattern(List<String> source, String common ) {
-        // If successful, then we create a pattern out of the commonality, and remove it from each string
+    private Pattern createPattern(List<String> source, String common) {
+        // If successful, then we create a pattern out of the commonality, and remove it from each
+        // string
         return factory.createUnresolvedString(
                 ResolvedPatternElementFactory.constant(common),
-                removeFirstNCharsFrom( source, common.length() )
-        );
+                removeFirstNCharsFrom(source, common.length()));
     }
 
-    private static List<String> removeFirstNCharsFrom(List<String> source, int n ) {
-        return source.stream().map(
-                s -> s.substring(n)
-        ).collect( Collectors.toList() );
+    private static List<String> removeFirstNCharsFrom(List<String> source, int n) {
+        return source.stream().map(s -> s.substring(n)).collect(Collectors.toList());
     }
 
-    /** Returns as many characters as possible (from the left) that are equal between source and to intersect
-     *  An empty string is returned if the left-most character is different in both strings
-     * */
-    private String intersect( String source, String toIntersect ) {
+    /**
+     * Returns as many characters as possible (from the left) that are equal between source and to
+     * intersect An empty string is returned if the left-most character is different in both strings
+     */
+    private String intersect(String source, String toIntersect) {
 
         CasedStringComparer comparer = factory.stringComparer();
 
-        for( int i=0;i<source.length(); i++) {
+        for (int i = 0; i < source.length(); i++) {
 
-            if (i==toIntersect.length()) {
+            if (i == toIntersect.length()) {
                 // our intersection string is smaller, and it entirely matches
                 return toIntersect;
             }
 
-            if( !comparer.match(source.charAt(i), toIntersect.charAt(i)) ) {
+            if (!comparer.match(source.charAt(i), toIntersect.charAt(i))) {
 
-                if (i==0) {
+                if (i == 0) {
                     return "";
                 }
 

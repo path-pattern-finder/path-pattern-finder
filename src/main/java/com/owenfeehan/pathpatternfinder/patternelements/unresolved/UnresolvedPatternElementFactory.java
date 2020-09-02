@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,14 +30,13 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
 import com.owenfeehan.pathpatternfinder.trim.CasedStringComparer;
-import org.apache.commons.io.IOCase;
-
 import java.nio.file.Path;
 import java.util.List;
+import org.apache.commons.io.IOCase;
 
 /**
- * Creates Patterns or Elements which have yet to be resolved
- * OR adds a new such unresolved Element to an existing Pattern
+ * Creates Patterns or Elements which have yet to be resolved OR adds a new such unresolved Element
+ * to an existing Pattern
  */
 public class UnresolvedPatternElementFactory {
 
@@ -51,22 +50,28 @@ public class UnresolvedPatternElementFactory {
         return comparer;
     }
 
-    /** Creates a PathPattern with a single-unresolved-string as element
+    /**
+     * Creates a {@link Pattern} with a single-unresolved-string as element
+     *
      * @param list input-list
-     * @return the newly created pattern */
-    public Pattern createUnresolvedString(List<String> list ) {
+     * @return the newly created pattern
+     */
+    public Pattern createUnresolvedString(List<String> list) {
         Pattern pattern = new Pattern();
         addUnresolvedStringsTo(list, pattern);
         return pattern;
     }
 
-    /** Creates a PathPattern with an element on the left, and a UnresolvedString list on the right
+    /**
+     * Creates a {@link Pattern} with an element on the left, and a UnresolvedString list on the right
+     *
      * @param left left-most element
      * @param right right-most element
-     * @return the newly created pattern */
-    public Pattern createUnresolvedString(PatternElement left, List<String> right ) {
+     * @return the newly created pattern
+     */
+    public Pattern createUnresolvedString(PatternElement left, List<String> right) {
         Pattern pattern = new Pattern();
-        pattern.add( left );
+        pattern.add(left);
         if (StringUtilities.atLeastOneNonEmptyStr(right)) {
             addUnresolvedStringsTo(right, pattern);
         }
@@ -75,35 +80,33 @@ public class UnresolvedPatternElementFactory {
 
     /**
      * Adds unresolved-paths to the pattern
+     *
      * @param list paths to add
      * @param pattern pattern to add them to
      */
     public void addUnresolvedPathsTo(List<Path> list, Pattern pattern) {
-        pattern.add(
-                new UnresolvedPathList(list, this)
-        );
+        pattern.add(new UnresolvedPathList(list, this));
     }
 
     /**
      * Adds unresolved-strings to the pattern
+     *
      * @param list strings to add
      * @param pattern pattern to add them to
      */
     public void addUnresolvedStringsTo(List<String> list, Pattern pattern) {
-        pattern.add(
-                new UnresolvedStringList(list, this)
-        );
+        pattern.add(new UnresolvedStringList(list, this));
     }
 
     /**
-     * Adds unresolved-strings to the pattern with additional instructions to skip certain types of operations (Skipper)
+     * Adds unresolved-strings to the pattern with additional instructions to skip certain types of
+     * operations (Skipper)
+     *
      * @param list strings to add
      * @param pattern pattern to add them to
      * @param skipper which types of operations to skip
      */
     public void addUnresolvedStringsTo(List<String> list, Pattern pattern, Skipper skipper) {
-        pattern.add(
-                new UnresolvedStringList(list, this, skipper)
-        );
+        pattern.add(new UnresolvedStringList(list, this, skipper));
     }
 }

@@ -12,4 +12,3 @@ See `findPatternPath` in [`com.owenfeehan.pathpatternfinder.PathPatternFinder`](
 ## Author
 
 [Owen Feehan](http://www.owenfeehan.com) distributed under MIT license.
-

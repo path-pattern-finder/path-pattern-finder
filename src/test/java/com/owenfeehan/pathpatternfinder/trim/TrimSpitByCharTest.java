@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,17 +26,16 @@ package com.owenfeehan.pathpatternfinder.trim;
  * #L%
  */
 
+import static org.junit.Assert.assertEquals;
+
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-import org.apache.commons.io.IOCase;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import org.apache.commons.io.IOCase;
+import org.junit.Test;
 
 public class TrimSpitByCharTest {
 
@@ -45,71 +44,62 @@ public class TrimSpitByCharTest {
         private static String STR1 = "aaa_bbb_ccc_dddd-eeee";
         private static String STR2 = "four_three_two-one";
 
-        public static List<String> genSource(boolean includeWithoutUnderscores, boolean includeWithoutAny ) {
-            return new ArrayList<>(Arrays.asList(STR1,STR2));
+        public static List<String> genSource(
+                boolean includeWithoutUnderscores, boolean includeWithoutAny) {
+            return new ArrayList<>(Arrays.asList(STR1, STR2));
         }
 
         public static Pattern expectedUnderscoreSplit() {
             Pattern pattern = new Pattern();
             FixtureHelper.addUnresolved("aaa", "four", pattern, false, true, factory);
             ResolvedPatternElementFactory.addConstantTo("_", pattern);
-            FixtureHelper.addUnresolved("bbb_ccc_dddd-eeee", "three_two-one", pattern, true, false, factory);
+            FixtureHelper.addUnresolved(
+                    "bbb_ccc_dddd-eeee", "three_two-one", pattern, true, false, factory);
             return pattern;
         }
 
         public static Pattern expectedHyphenSplit() {
             Pattern pattern = new Pattern();
-            FixtureHelper.addUnresolved("aaa_bbb_ccc_dddd", "four_three_two", pattern, false, true, factory);
+            FixtureHelper.addUnresolved(
+                    "aaa_bbb_ccc_dddd", "four_three_two", pattern, false, true, factory);
             ResolvedPatternElementFactory.addConstantTo("-", pattern);
             FixtureHelper.addUnresolved("eeee", "one", pattern, true, false, factory);
             return pattern;
         }
     }
 
-    private static UnresolvedPatternElementFactory factory = new UnresolvedPatternElementFactory(IOCase.SENSITIVE);
+    private static UnresolvedPatternElementFactory factory =
+            new UnresolvedPatternElementFactory(IOCase.SENSITIVE);
 
     @Test
     public void testCase_UnderscoreSplit() {
-        applyTest(
-                '_',
-                false,
-                false,
-                ConstantStringsFixture.expectedUnderscoreSplit()
-        );
+        applyTest('_', false, false, ConstantStringsFixture.expectedUnderscoreSplit());
     }
 
     @Test
     public void testCase_HyphenSplit() {
-        applyTest(
-                '-',
-                false,
-                false,
-                ConstantStringsFixture.expectedHyphenSplit()
-        );
+        applyTest('-', false, false, ConstantStringsFixture.expectedHyphenSplit());
     }
 
     @Test
     public void testCase_CommaSplit() {
-        applyTest(
-                ',',
-                false,
-                false,
-                null
-        );
+        applyTest(',', false, false, null);
     }
 
-    private static void applyTest( char splitChar, boolean includeWithoutUnderscores, boolean includeWithoutAny, Pattern expectedPattern ) {
+    private static void applyTest(
+            char splitChar,
+            boolean includeWithoutUnderscores,
+            boolean includeWithoutAny,
+            Pattern expectedPattern) {
 
-        List<String> source = ConstantStringsFixture.genSource(includeWithoutUnderscores, includeWithoutAny);
+        List<String> source =
+                ConstantStringsFixture.genSource(includeWithoutUnderscores, includeWithoutAny);
 
         TrimSplitByChar op = new TrimSplitByChar(splitChar, 0, factory);
 
-        Pattern pattern = op.trim( source );
+        Pattern pattern = op.trim(source);
 
         // assert statements
-        assertEquals(
-                expectedPattern,
-                pattern
-        );
+        assertEquals(expectedPattern, pattern);
     }
 }

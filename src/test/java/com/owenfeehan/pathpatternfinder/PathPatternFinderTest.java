@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,15 +26,14 @@ package com.owenfeehan.pathpatternfinder;
  * #L%
  */
 
-import org.apache.commons.io.IOCase;
-import org.junit.Test;
+import static com.owenfeehan.pathpatternfinder.VarArgsHelper.*;
+import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
+import static org.junit.Assert.assertEquals;
 
 import java.nio.file.Path;
 import java.util.List;
-
-import static com.owenfeehan.pathpatternfinder.VarArgsHelper.*;
-import static org.junit.Assert.assertEquals;
-import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
+import org.apache.commons.io.IOCase;
+import org.junit.Test;
 
 /** Tests various combinations of inputs to the PathPatternFinder */
 public class PathPatternFinderTest {
@@ -43,52 +42,44 @@ public class PathPatternFinderTest {
     public void testMixture1() {
 
         applyTest(
-            pathList(
-                    "commonFirst/PREFIX_5671_aaaa/file21.txt",
-                    "commonFirst/PREFIX_2991_bbb/file23.txt",
-                    "commonFirst/PREFIX_43_ccc/VERYDIFFERENTNAME.txt"
-            ),
-            pattern(
-                constant("commonFirst"),
-                directorySeperator(),
-                constant("PREFIX_"),
-                integer(5671, 2991, 43),
-                constant("_"),
-                string("aaaa", "bbb", "ccc"),
-                directorySeperator(),
-                string("file21", "file23", "VERYDIFFERENTNAME"),
-                constant(".txt")
-            ),
-            true
-        );
+                pathList(
+                        "commonFirst/PREFIX_5671_aaaa/file21.txt",
+                        "commonFirst/PREFIX_2991_bbb/file23.txt",
+                        "commonFirst/PREFIX_43_ccc/VERYDIFFERENTNAME.txt"),
+                pattern(
+                        constant("commonFirst"),
+                        directorySeperator(),
+                        constant("PREFIX_"),
+                        integer(5671, 2991, 43),
+                        constant("_"),
+                        string("aaaa", "bbb", "ccc"),
+                        directorySeperator(),
+                        string("file21", "file23", "VERYDIFFERENTNAME"),
+                        constant(".txt")),
+                true);
     }
-    
 
     @Test
     public void testNestedSubdir() {
 
         applyTest(
-            pathList(
-                    "D:\\Users\\owen\\Pictures\\P1210940.JPG",
-                    "D:\\Users\\owen\\Pictures\\Album\\P1210904.JPG"
-            ),
-            pattern(
-                constant("D:\\Users\\owen\\Pictures\\"),
-                string("","Album\\"),
-                constant("P"),
-                integer(1210940,1210904),
-                constant(".JPG")
-            ),
-            true
-        );
+                pathList(
+                        "D:\\Users\\owen\\Pictures\\P1210940.JPG",
+                        "D:\\Users\\owen\\Pictures\\Album\\P1210904.JPG"),
+                pattern(
+                        constant("D:\\Users\\owen\\Pictures\\"),
+                        string("", "Album\\"),
+                        constant("P"),
+                        integer(1210940, 1210904),
+                        constant(".JPG")),
+                true);
     }
 
-    private static void applyTest( List<Path> paths, Pattern expectedPattern, boolean caseSensitive ) {
-        Pattern pattern = PathPatternFinder.findPatternPath(
-                paths,
-                caseSensitive ? IOCase.SENSITIVE : IOCase.INSENSITIVE
-        );
-        assertEquals( expectedPattern, pattern );
+    private static void applyTest(
+            List<Path> paths, Pattern expectedPattern, boolean caseSensitive) {
+        Pattern pattern =
+                PathPatternFinder.findPatternPath(
+                        paths, caseSensitive ? IOCase.SENSITIVE : IOCase.INSENSITIVE);
+        assertEquals(expectedPattern, pattern);
     }
-
 }

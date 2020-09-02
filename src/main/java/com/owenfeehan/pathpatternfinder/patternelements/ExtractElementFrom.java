@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,27 +30,26 @@ import org.apache.commons.io.IOCase;
 
 public class ExtractElementFrom {
 
-	private ExtractElementFrom() {
-		// NOTHING TO DO
-	}
-	
-	
-	/**
-	 * Extracts a string (trims it from the left-side) if possible
-	 * 
-	 * @param strToExtract string to extract
-	 * @param strToSearch string to search from
-	 * @param ioCase whether to be case-sensitive or not
-	 * @return the extracted-string (and the remainder) or null if the left-most-side doesn't match
-	 */
-	public static ExtractedElement extractStrIfPossible( String strToExtract, String strToSearch, IOCase ioCase ) {
-		
-		if (ioCase.checkStartsWith(strToSearch, strToExtract)) {
-			return new ExtractedElement(
-				strToSearch.substring(0, strToExtract.length()),
-				strToSearch.substring(strToExtract.length())
-			);
-		}
-		return null;
-	}
+    private ExtractElementFrom() {
+        // NOTHING TO DO
+    }
+
+    /**
+     * Extracts a string (trims it from the left-side) if possible
+     *
+     * @param strToExtract string to extract
+     * @param strToSearch string to search from
+     * @param ioCase whether to be case-sensitive or not
+     * @return the extracted-string (and the remainder) or null if the left-most-side doesn't match
+     */
+    public static ExtractedElement extractStrIfPossible(
+            String strToExtract, String strToSearch, IOCase ioCase) {
+
+        if (ioCase.checkStartsWith(strToSearch, strToExtract)) {
+            return new ExtractedElement(
+                    strToSearch.substring(0, strToExtract.length()),
+                    strToSearch.substring(strToExtract.length()));
+        }
+        return null;
+    }
 }

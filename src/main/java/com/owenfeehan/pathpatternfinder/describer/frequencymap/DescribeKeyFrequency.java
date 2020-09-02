@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,27 +26,26 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * #L%
  */
 
-/**
- * Generates a string that describes an individual KeyFrequency item alone
- */
+/** Generates a string that describes an individual KeyFrequency item alone */
 class DescribeKeyFrequency {
 
-    private DescribeKeyFrequency() {
+    private DescribeKeyFrequency() {}
 
-    }
-    
-    /** The total number of characters needed to describe the key and the count,
-     *  assuming a pattern of  "KEY" (COUNT)  as in describe() */
-    public static <T extends Comparable<T>> int numCharsToDescribe( KeyFrequency<T> kf ) {
+    /**
+     * The total number of characters needed to describe the key and the count, assuming a pattern
+     * of "KEY" (COUNT) as in describe()
+     */
+    public static <T extends Comparable<T>> int numCharsToDescribe(KeyFrequency<T> kf) {
         return describe(kf).length();
     }
 
-    public static <T extends Comparable<T>> String describeWithPrefix(KeyFrequency<T> kf, String prefix ) {
+    public static <T extends Comparable<T>> String describeWithPrefix(
+            KeyFrequency<T> kf, String prefix) {
         return prefix + describe(kf);
     }
 
     /// Describes a
-    private static <T extends Comparable<T>> String describe( KeyFrequency<T> kf ) {
-        return String.format("\"%s\" (%d)", kf.getKey(), kf.getCount() );
+    private static <T extends Comparable<T>> String describe(KeyFrequency<T> kf) {
+        return String.format("\"%s\" (%d)", kf.getKey(), kf.getCount());
     }
 }

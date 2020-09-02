@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,28 +29,32 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** If we already know certain operations will fail, as they've been tried before, then they can be deliberately skipped to save computation */
+/**
+ * If we already know certain operations will fail, as they've been tried before, then they can be
+ * deliberately skipped to save computation
+ */
 public class Skipper {
     /**
-     * Whether to try to resolve from the left. We can disable this operation, if we've already tried without success, and don't wish to repeat needlessly.
+     * Whether to try to resolve from the left. We can disable this operation, if we've already
+     * tried without success, and don't wish to repeat needlessly.
      */
     private boolean includeLeftResolve;
 
     /**
-     * Whether to try to resolve from the right. We can disable this operation, if we've already tried without success, and don't wish to repeat needlessly.
+     * Whether to try to resolve from the right. We can disable this operation, if we've already
+     * tried without success, and don't wish to repeat needlessly.
      */
     private boolean includeRightResolve;
 
-    /**
-     * The minimum index from which we start attempting to split characters, to avoid repeating
-     */
+    /** The minimum index from which we start attempting to split characters, to avoid repeating */
     private int startSplitCharIndex;
 
     public Skipper() {
         this(true, true, 0);
     }
 
-    public Skipper(boolean includeLeftResolve, boolean includeRightResolve, int startSplitCharIndex) {
+    public Skipper(
+            boolean includeLeftResolve, boolean includeRightResolve, int startSplitCharIndex) {
         this.includeLeftResolve = includeLeftResolve;
         this.includeRightResolve = includeRightResolve;
         this.startSplitCharIndex = startSplitCharIndex;
@@ -75,9 +79,13 @@ public class Skipper {
     }
 
     @Override
-    public boolean equals(Object obj)  {
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
         if (obj.getClass() != getClass()) {
             return false;
         }

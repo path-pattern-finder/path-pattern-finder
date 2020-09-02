@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.describer;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,9 +40,11 @@ public class ConsoleWidthGuesser {
     private ConsoleWidthGuesser() {}
 
     public static int determineConsoleWidth() {
-        // With reference to https://stackoverflow.com/questions/1286461/can-i-find-the-console-width-with-java
+        // With reference to
+        // https://stackoverflow.com/questions/1286461/can-i-find-the-console-width-with-java
         try {
-            // We avoid warning messages when the terminal cannot be setup (as seems to happen in the console of IDEs).
+            // We avoid warning messages when the terminal cannot be setup (as seems to happen in
+            // the console of IDEs).
             // See https://github.com/jline/jline3/issues/291
             System.setProperty("org.jline.terminal.dumb", "true");
 

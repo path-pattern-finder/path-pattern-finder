@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,10 +32,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Finds a list of files recursively in a directory
- */
+/** Finds a list of files recursively in a directory */
 public class FindFilesRecursively {
 
     private static class Visitor extends SimpleFileVisitor<Path> {
@@ -44,22 +41,22 @@ public class FindFilesRecursively {
         private List<Path> list;
 
         @SuppressWarnings("unused")
-		private Visitor() {}
+        private Visitor() {}
 
         /**
          * Visits each file during a traversal
-         * 
+         *
          * @param matcher if non-null a file must match this condition. if null, ignored
          * @param list list to which visited paths are added
          */
-        public Visitor( PathMatcher matcher, List<Path> list ) {
+        public Visitor(PathMatcher matcher, List<Path> list) {
             this.matcher = matcher;
             this.list = list;
         }
 
         @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-            if (matcher==null || matcher.matches(file.getFileName())) {
+            if (matcher == null || matcher.matches(file.getFileName())) {
                 list.add(file);
             }
             return FileVisitResult.CONTINUE;
@@ -72,9 +69,11 @@ public class FindFilesRecursively {
      * Finds a list of files recursively in a directory that matches a pattern
      *
      * @param root the directory in which (as well as it's sub-directories) we search for files.
-     * @param fileFilterPattern if non-null, glob-style pattern: *.jpg or *.* or * or similar. See java.nio.file.PathMatcher docs, if null, ignored.
+     * @param fileFilterPattern if non-null, glob-style pattern: *.jpg or *.* or * or similar. See
+     *     java.nio.file.PathMatcher docs, if null, ignored.
      * @return list of all paths found
-     * @throws IOException if root isn't a valid directory, or something goes wrong while walking the three
+     * @throws IOException if root isn't a valid directory, or something goes wrong while walking
+     *     the three
      */
     public static List<Path> findFiles(Path root, String fileFilterPattern) throws IOException {
 
@@ -83,28 +82,23 @@ public class FindFilesRecursively {
         }
 
         if (!root.toFile().isDirectory()) {
-            throw new IOException(
-                String.format("Path '%s' is not a directory", root )
-            );
+            throw new IOException(String.format("Path '%s' is not a directory", root));
         }
 
         List<Path> list = new ArrayList<>();
 
-        Visitor visitor = new Visitor(
-        	matcherFromPattern(root, fileFilterPattern),
-        	list
-        );
+        Visitor visitor = new Visitor(matcherFromPattern(root, fileFilterPattern), list);
 
         Files.walkFileTree(root, visitor);
 
         return list;
     }
-    
-    private static PathMatcher matcherFromPattern( Path root, String fileFilterPattern ) {
-    	if (fileFilterPattern != null) {
-    		return root.getFileSystem().getPathMatcher("glob:" + fileFilterPattern);
-    	} else {
-    		return null;
-    	}
+
+    private static PathMatcher matcherFromPattern(Path root, String fileFilterPattern) {
+        if (fileFilterPattern != null) {
+            return root.getFileSystem().getPathMatcher("glob:" + fileFilterPattern);
+        } else {
+            return null;
+        }
     }
 }

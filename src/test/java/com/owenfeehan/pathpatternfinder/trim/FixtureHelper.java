@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,17 +29,21 @@ package com.owenfeehan.pathpatternfinder.trim;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.Skipper;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FixtureHelper {
 
-    public static void addUnresolved(String first, String second, Pattern pattern, boolean includeLeftResolve, boolean includeRightResolve, UnresolvedPatternElementFactory factory ) {
+    public static void addUnresolved(
+            String first,
+            String second,
+            Pattern pattern,
+            boolean includeLeftResolve,
+            boolean includeRightResolve,
+            UnresolvedPatternElementFactory factory) {
         factory.addUnresolvedStringsTo(
                 new ArrayList<>(Arrays.asList(first, second)),
                 pattern,
-                new Skipper(includeLeftResolve, includeRightResolve, 0)
-        );
+                new Skipper(includeLeftResolve, includeRightResolve, 0));
     }
 }

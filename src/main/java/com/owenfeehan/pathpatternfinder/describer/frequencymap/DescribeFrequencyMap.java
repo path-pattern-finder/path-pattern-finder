@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,10 +26,7 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * #L%
  */
 
-/**
- * Describes the contents of a frequency-map with user-friendly strings
- *  containing examples.
- */
+/** Describes the contents of a frequency-map with user-friendly strings containing examples. */
 public class DescribeFrequencyMap<T extends Comparable<T>> {
 
     private FrequencyMap<T> frequencyMap;
@@ -43,10 +40,10 @@ public class DescribeFrequencyMap<T extends Comparable<T>> {
     }
 
     // Can all values be described within a certain width?
-    public boolean canDescribeAllWithin( int maxWidth, int sepNumChars ) {
+    public boolean canDescribeAllWithin(int maxWidth, int sepNumChars) {
         int runningCount = 0;
 
-        for( KeyFrequency<T> ke : frequencyMap.byCount() ) {
+        for (KeyFrequency<T> ke : frequencyMap.byCount()) {
             runningCount += DescribeKeyFrequency.numCharsToDescribe(ke);
 
             if (runningCount > maxWidth) {
@@ -59,17 +56,14 @@ public class DescribeFrequencyMap<T extends Comparable<T>> {
         return true;
     }
 
-    public String describeAllWithin( int maxWidth, String prefix, String separator ) {
+    public String describeAllWithin(int maxWidth, String prefix, String separator) {
         StringBuilder sb = new StringBuilder();
         int runningCount = 0;
 
         boolean first = true;
-        for( KeyFrequency<T> ke : frequencyMap.byCount() ) {
+        for (KeyFrequency<T> ke : frequencyMap.byCount()) {
 
-            String dscr = DescribeKeyFrequency.describeWithPrefix(
-                ke,
-                first ? prefix : separator
-            );
+            String dscr = DescribeKeyFrequency.describeWithPrefix(ke, first ? prefix : separator);
 
             runningCount += dscr.length();
 
@@ -83,5 +77,4 @@ public class DescribeFrequencyMap<T extends Comparable<T>> {
 
         return sb.toString();
     }
-
 }

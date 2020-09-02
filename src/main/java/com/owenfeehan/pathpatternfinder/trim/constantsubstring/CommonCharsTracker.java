@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,18 +36,18 @@ class CommonCharsTracker {
 
     public CommonCharsTracker(String firstItem, CasedStringComparer comparer) {
         this.firstItem = firstItem;
-        this.mask = new CountedBooleanMask( firstItem.length() );
+        this.mask = new CountedBooleanMask(firstItem.length());
         this.comparer = comparer;
     }
 
     /** Another string that is masked with the existing string */
-    public void maskWith( String str ) {
+    public void maskWith(String str) {
 
-        for( int i=0; i<firstItem.length(); i++) {
+        for (int i = 0; i < firstItem.length(); i++) {
 
-            if (i<str.length()) {
+            if (i < str.length()) {
 
-                if( !comparer.match(str.charAt(i),firstItem.charAt(i)) ) {
+                if (!comparer.match(str.charAt(i), firstItem.charAt(i))) {
                     mask.ensureFalse(i);
                 }
 
@@ -63,9 +63,9 @@ class CommonCharsTracker {
     }
 
     /**
-     *  Finds the first set of TRUEs (values that are all TRUE contiguously) in the mask
+     * Finds the first set of TRUEs (values that are all TRUE contiguously) in the mask
      *
-     *  If none can be found, null is returned
+     * <p>If none can be found, null is returned
      */
     public IndexRange indexOfFirstTrueRange() {
         return mask.indexOfFirstTrueRange();

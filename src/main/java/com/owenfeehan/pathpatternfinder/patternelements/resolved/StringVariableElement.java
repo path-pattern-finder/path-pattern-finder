@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,13 +30,11 @@ import com.owenfeehan.pathpatternfinder.describer.frequencymap.DescribeFrequency
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.FrequencyMap;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractElementFrom;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
@@ -48,11 +46,11 @@ class StringVariableElement extends VariableElement {
 
     // Lazy initialization
     private FrequencyMap<String> freqMap = null;
-    
+
     public StringVariableElement(List<String> values) {
         super(values);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
@@ -72,59 +70,59 @@ class StringVariableElement extends VariableElement {
         }
     }
 
-	@Override
-	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
-		
-		// The order is important to make sure that smaller strings are checked after their longer ones
-		//  e.g.  first "going" then "go" then ""
-		// This makes it a greedy extraction rather risking the empty or smaller-string being preferred.
-		List<String> keys = reverseSortedKeys(
-			frequencyMap().keys(),
-			ioCase
-		);
-		
-		// Search for the first key that can be extracted
-		for( String key : keys ) {
-			ExtractedElement elem = ExtractElementFrom.extractStrIfPossible(key, str, ioCase);
-			if (elem!=null) {
-				return elem;
-			}
-		}
-		
-		return null;
-	}
+    @Override
+    public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
 
-	// Lazy creation of the frequency-map
+        // The order is important to make sure that smaller strings are checked after their longer
+        // ones
+        //  e.g.  first "going" then "go" then ""
+        // This makes it a greedy extraction rather risking the empty or smaller-string being
+        // preferred.
+        List<String> keys = reverseSortedKeys(frequencyMap().keys(), ioCase);
+
+        // Search for the first key that can be extracted
+        for (String key : keys) {
+            ExtractedElement elem = ExtractElementFrom.extractStrIfPossible(key, str, ioCase);
+            if (elem != null) {
+                return elem;
+            }
+        }
+
+        return null;
+    }
+
+    // Lazy creation of the frequency-map
     private FrequencyMap<String> frequencyMap() {
-    	if (freqMap==null) {
-    		return new FrequencyMap<>( getValues() );
-    	}
-    	return freqMap;
-    }
-	
-	private static List<String> reverseSortedKeys( Set<String> keys, IOCase ioCase ) {
-		
-		if (!ioCase.isCaseSensitive()) {
-			// first make all keys lower-case, so that different cases don't 
-			//  mess up the ordering that is key to the greedy extraction
-			keys = makeSetLowercase(keys);
-		}
-		
-		List<String> list = new ArrayList<>(keys);
-		Collections.sort(list, Collections.reverseOrder());
-		return list;
-	}
-	
-    private static Set<String> makeSetLowercase( Set<String> set ) {
-    	return set.stream().map( s->s.toLowerCase() ).collect( Collectors.toSet() );
+        if (freqMap == null) {
+            return new FrequencyMap<>(getValues());
+        }
+        return freqMap;
     }
 
-    private static String describeAll( DescribeFrequencyMap<String> freq, int widthToDescribe  ) {
+    private static List<String> reverseSortedKeys(Set<String> keys, IOCase ioCase) {
+
+        if (!ioCase.isCaseSensitive()) {
+            // first make all keys lower-case, so that different cases don't
+            //  mess up the ordering that is key to the greedy extraction
+            keys = makeSetLowercase(keys);
+        }
+
+        List<String> list = new ArrayList<>(keys);
+        Collections.sort(list, Collections.reverseOrder());
+        return list;
+    }
+
+    private static Set<String> makeSetLowercase(Set<String> set) {
+        return set.stream().map(s -> s.toLowerCase()).collect(Collectors.toSet());
+    }
+
+    private static String describeAll(DescribeFrequencyMap<String> freq, int widthToDescribe) {
         return freq.describeAllWithin(widthToDescribe, "", SEP_ALL);
     }
 
-    private static String describeWithMaybeExamples(DescribeFrequencyMap<String> freq, int widthToDescribe ) {
-        String intro = String.format("%d unique strings", freq.numUniqueValues() );
-        return intro + freq.describeAllWithin(widthToDescribe - intro.length(), " e.g. ", SEP_SOME );
+    private static String describeWithMaybeExamples(
+            DescribeFrequencyMap<String> freq, int widthToDescribe) {
+        String intro = String.format("%d unique strings", freq.numUniqueValues());
+        return intro + freq.describeAllWithin(widthToDescribe - intro.length(), " e.g. ", SEP_SOME);
     }
 }
