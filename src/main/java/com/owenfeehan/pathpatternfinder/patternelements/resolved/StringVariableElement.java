@@ -51,7 +51,7 @@ class StringVariableElement extends VariableElement {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) { // NOSONAR
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
@@ -112,7 +112,7 @@ class StringVariableElement extends VariableElement {
     }
 
     private static Set<String> makeSetLowercase(Set<String> set) {
-        return set.stream().map(s -> s.toLowerCase()).collect(Collectors.toSet());
+        return set.stream().map(String::toLowerCase).collect(Collectors.toSet());
     }
 
     private static String describeAll(DescribeFrequencyMap<String> freq, int widthToDescribe) {

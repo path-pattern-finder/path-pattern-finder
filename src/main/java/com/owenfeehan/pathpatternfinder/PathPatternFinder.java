@@ -109,11 +109,11 @@ public class PathPatternFinder {
                 List<Path> paths = PathsFromArguments.pathsFromArgs(args);
                 findFilesAndPattern(paths);
             } catch (IOException e) {
-                System.err.println("An exception occurred");
+                System.err.println("An exception occurred");    // NOSONAR
                 e.printStackTrace();
             }
         } else {
-            System.err.println(
+            System.err.println( // NOSONAR
                     "This command expects at least 1 argument, either a wildcard filter like *.jpg or paths to files/directories");
         }
     }
@@ -124,15 +124,15 @@ public class PathPatternFinder {
 
         if (files.size() > 1) {
             Pattern pp = findPatternPath(files, IOCase.SYSTEM);
-            System.out.printf("Pattern is: %s%n", DescribePattern.apply(pp, true));
+            System.out.printf("Pattern is: %s%n", DescribePattern.apply(pp, true)); // NOSONAR
         }
     }
 
     private static void printFiles(List<Path> paths) {
         for (Path p : paths) {
-            System.out.println(p);
+            System.out.println(p);  // NOSONAR
         }
-        System.out.printf("There are %d input paths in total%n", paths.size());
+        System.out.printf("There are %d input paths in total%n", paths.size());     // NOSONAR
     }
 
     private static UnresolvedPatternElementFactory createFactory(IOCase ioCase) {

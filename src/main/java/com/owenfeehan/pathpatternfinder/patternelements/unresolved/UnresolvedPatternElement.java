@@ -44,7 +44,7 @@ abstract class UnresolvedPatternElement extends PatternElement {
 
     @Override
     public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
-        throw new RuntimeException(
+        throw new UnsupportedOperationException(
                 "extractElementFrom operation is usupported un unresolved path elements");
     }
 }
