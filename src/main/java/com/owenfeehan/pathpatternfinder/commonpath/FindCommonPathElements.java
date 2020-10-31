@@ -34,7 +34,7 @@ public class FindCommonPathElements {
     }
     
     /**
-     * Finds the common (left-most) elements among paths that are guaranteed to refer to files, never to directories - - with a customizable means of comparing strings.
+     * Finds the common (left-most) elements among paths that are guaranteed to refer to files, never to directories - with a customizable means of comparing strings.
      * 
      * @param pathsToFiles paths to files (but never to directories).
      * @param ioCase whether to be case-sensitive or not in comparisons.
