@@ -30,14 +30,26 @@ public class FindCommonPathElements {
      * @throws IllegalArgumentException if {@code pathsToFiles} is empty.
      */
     public static Optional<PathElements> findForFilePaths(Iterable<Path> pathsToFiles) {
-        return findForFilePaths(pathsToFiles, new CasedStringComparer(IOCase.SYSTEM) );
+        return findForFilePaths(pathsToFiles, IOCase.SYSTEM);
+    }
+    
+    /**
+     * Finds the common (left-most) elements among paths that are guaranteed to refer to files, never to directories - - with a customizable means of comparing strings.
+     * 
+     * @param pathsToFiles paths to files (but never to directories).
+     * @param ioCase whether to be case-sensitive or not in comparisons.
+     * @return the common path-elements among all of {@code pathsToFiles}, if any common elements exist.
+     * @throws IllegalArgumentException if {@code pathsToFiles} is empty.
+     */
+    public static Optional<PathElements> findForFilePaths(Iterable<Path> pathsToFiles, IOCase ioCase) {
+        return findForFilePaths(pathsToFiles, new CasedStringComparer(ioCase) );
     }
     
     /**
      * Finds the common (left-most) elements among paths that are guaranteed to refer to files, never to directories - with a customizable means of comparing strings.
      * 
      * @param pathsToFiles paths to files (but never to directories).
-     * @param comparer how to compare two strings (whether to be case=sensitive or not).
+     * @param comparer how to compare two strings (whether to be case-sensitive or not).
      * @return the common path-elements among all of {@code pathsToFiles}, if any common elements exist.
      * @throws IllegalArgumentException if {@code pathsToFiles} is empty.
      */

@@ -67,7 +67,7 @@ public class PathPatternFinder {
      * @param ioCase how to treat the case in paths
      * @return the pattern-found
      */
-    public static Pattern findPatternPath(List<Path> paths, IOCase ioCase) {
+    public static Pattern findPatternPaths(List<Path> paths, IOCase ioCase) {
 
         // This pattern grows, as we apply the algorithm
         Pattern pattern = new Pattern();
@@ -79,14 +79,14 @@ public class PathPatternFinder {
     /**
      * Finds the pattern in a list of strings, using rules outlined above (from Step 3 onwards).
      *
-     * @param strs a list of strings to match against
+     * @param strings a list of strings to match against
      * @param ioCase how to treat the case in paths
      * @return the pattern-found
      */
-    public static Pattern findPatternStr(List<String> strs, IOCase ioCase) {
+    public static Pattern findPatternStrings(List<String> strings, IOCase ioCase) {
 
         Pattern pattern = new Pattern();
-        createFactory(ioCase).addUnresolvedStringsTo(strs, pattern);
+        createFactory(ioCase).addUnresolvedStringsTo(strings, pattern);
         pattern.resolve();
         return pattern;
     }
@@ -123,7 +123,7 @@ public class PathPatternFinder {
         printFiles(files);
 
         if (files.size() > 1) {
-            Pattern pp = findPatternPath(files, IOCase.SYSTEM);
+            Pattern pp = findPatternPaths(files, IOCase.SYSTEM);
             System.out.printf("Pattern is: %s%n", DescribePattern.apply(pp, true)); // NOSONAR
         }
     }

@@ -78,7 +78,7 @@ public class PathPatternFinderTest {
     private static void applyTest(
             List<Path> paths, Pattern expectedPattern, boolean caseSensitive) {
         Pattern pattern =
-                PathPatternFinder.findPatternPath(
+                PathPatternFinder.findPatternPaths(
                         paths, caseSensitive ? IOCase.SENSITIVE : IOCase.INSENSITIVE);
         assertEquals(expectedPattern, pattern);
     }
