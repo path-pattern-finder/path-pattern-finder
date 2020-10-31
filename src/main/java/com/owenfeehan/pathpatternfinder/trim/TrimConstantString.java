@@ -1,5 +1,7 @@
 package com.owenfeehan.pathpatternfinder.trim;
 
+import com.owenfeehan.pathpatternfinder.CasedStringComparer;
+
 /*-
  * #%L
  * path-pattern-finder

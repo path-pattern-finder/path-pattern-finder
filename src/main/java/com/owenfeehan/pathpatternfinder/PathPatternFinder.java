@@ -77,9 +77,9 @@ public class PathPatternFinder {
     }
 
     /**
-     * Finds the pattern in a list of strs, using rules outlined above (from Step 3 onwards).
+     * Finds the pattern in a list of strings, using rules outlined above (from Step 3 onwards).
      *
-     * @param strs a list of strs to match against
+     * @param strs a list of strings to match against
      * @param ioCase how to treat the case in paths
      * @return the pattern-found
      */

@@ -27,18 +27,20 @@ package com.owenfeehan.pathpatternfinder.trim;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
+import com.owenfeehan.pathpatternfinder.commonpath.FindCommonPathElements;
+import com.owenfeehan.pathpatternfinder.commonpath.PathElements;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Considers each element of a file-path (between directory seperators) as an ordered list and finds
+ * Considers each element of a file-path (between directory separators) as an ordered list and finds
  * a the maximally constant sublist from the left size.
  *
- * <p>Only directories are considired. The file-name (the final element in a path) is ignored.
+ * <p>Only directories are considered. The file-name (the final element in a path) is ignored.
  */
 public class TrimCommonPathRoot implements TrimOperation<Path> {
 
@@ -51,29 +53,18 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
     @Override
     public Pattern trim(List<Path> source) {
 
-        if (source.isEmpty()) {
-            throw new IllegalArgumentException("Source must have at least one path.");
-        }
-
-        // All elements of the first string are considered common
-        CommonSubset commonElements =
-                new CommonSubset(pathElements(source.get(0)), factory.stringComparer());
-
-        // We check every remaining string, to see if consistent
-        for (int i = 1; i < source.size(); i++) {
-            commonElements.intersect(source.get(i));
-        }
+        Optional<PathElements> commonElements = FindCommonPathElements.findForFilePaths(source, factory.stringComparer());
 
         // If we have at least one common element... we convert
-        if (commonElements.size() > 0) {
-            return createPatternFromCommonElements(commonElements, source, factory);
+        if (commonElements.isPresent()) {
+            return createPatternFromCommonElements(commonElements.get(), source, factory);
         } else {
             return null;
         }
     }
 
     private static Pattern createPatternFromCommonElements(
-            CommonSubset commonElements,
+            PathElements commonElements,
             List<Path> source,
             UnresolvedPatternElementFactory factory) {
         Pattern pattern = new Pattern();
@@ -82,7 +73,7 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
         return pattern;
     }
 
-    private static void addPatternsTo(CommonSubset commonElements, Pattern pattern) {
+    private static void addPatternsTo(PathElements commonElements, Pattern pattern) {
 
         for (String element : commonElements) {
             ResolvedPatternElementFactory.addConstantTo(element, pattern);
@@ -104,22 +95,5 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
         } else {
             return path;
         }
-    }
-
-    /** A list of elements from a path, including a root of it exists */
-    private static List<String> pathElements(Path path) {
-
-        List<String> elements = new ArrayList<>();
-
-        // If it has a root we include it
-        if (path.getRoot() != null) {
-            elements.add(path.getRoot().toString());
-        }
-
-        // We skip the file-name, and only consider directories
-        for (int i = 0; i < CommonSubset.numDirectoriesIn(path); i++) {
-            elements.add(path.getName(i).toString());
-        }
-        return elements;
     }
 }

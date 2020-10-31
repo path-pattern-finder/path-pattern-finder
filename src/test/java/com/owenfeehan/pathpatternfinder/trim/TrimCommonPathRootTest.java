@@ -28,13 +28,10 @@ package com.owenfeehan.pathpatternfinder.trim;
 
 import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
 import static org.junit.Assert.assertEquals;
-
+import com.owenfeehan.pathpatternfinder.PathListFixture;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
@@ -42,70 +39,52 @@ import org.junit.Test;
 
 public class TrimCommonPathRootTest {
 
-    private static class ConstantPathsFixture {
-
-        private static String DIR1_l = "dir1";
-        private static String DIR1_u = "DIR1";
-        private static String DIR2 = "dir2";
-        private static String DIR3a = "dir3a";
-        private static String DIR3b = "dir3b";
-        private static String DIR4a = "dir4a";
-        private static String DIR4b = "dir4b";
-        private static String FILENAME = "filename";
-
-        private static Path PATH1 = Paths.get(DIR1_l, DIR2, DIR3a, DIR4a, FILENAME);
-        private static Path PATH2 = Paths.get(DIR1_l, DIR2, DIR3a, DIR4b, FILENAME);
-        private static Path PATH3 = Paths.get(DIR1_l, DIR2, DIR3b, DIR4b, FILENAME);
-        private static Path PATH3_UPPER = Paths.get(DIR1_u, DIR2, DIR3b, DIR4b, FILENAME);
-
-        public static Path first() {
-            return PATH1;
-        }
-
-        public static List<Path> genSource(boolean caseSensitive) {
-            if (caseSensitive) {
-                return new ArrayList<>(Arrays.asList(PATH1, PATH2, PATH3));
-            } else {
-                return new ArrayList<>(Arrays.asList(PATH1, PATH2, PATH3_UPPER));
-            }
-        }
-    }
-
     @Test
     public void testCaseInsensitive() {
-        applyTest(IOCase.INSENSITIVE);
+        applyTest(IOCase.INSENSITIVE, 2);
     }
 
     @Test
     public void testCaseSensitive() {
-        applyTest(IOCase.SENSITIVE);
+        applyTest(IOCase.SENSITIVE, 1);
     }
 
-    private static void applyTest(IOCase ioCase) {
+    private static void applyTest(IOCase ioCase, int expectedDirectoriesCommon) {
 
         UnresolvedPatternElementFactory factory = new UnresolvedPatternElementFactory(ioCase);
 
-        List<Path> source = ConstantPathsFixture.genSource(ioCase.isCaseSensitive());
+        PathListFixture fixture = new PathListFixture(false, ioCase.isCaseSensitive(), false);
+        List<Path> source = fixture.createPaths();
 
         TrimCommonPathRoot common = new TrimCommonPathRoot(factory);
 
         Pattern pattern = common.trim(source);
 
         // assert statements
-        assertEquals(expectedPattern(ConstantPathsFixture.first(), 2, source, factory), pattern);
+        assertEquals(expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture), pattern);
     }
 
+    /** 
+     * Constructs an the expected-pattern given a path and the number of elements expected.
+     * 
+     * @param path the path from which constant elements are extracted
+     * @param numberElementsFromPath how many constant elements to expect in the pattern
+     * @param paths all paths (to construct unresolved-elements)
+     * @param factory the factory to use for creating unresolved elements.
+     * @param fixture the fixture used to create {@code paths}.
+     */
     private static Pattern expectedPattern(
             Path path,
-            int firstNumItems,
-            List<Path> source,
-            UnresolvedPatternElementFactory factory) {
+            int numberElementsFromPath,
+            List<Path> paths,
+            UnresolvedPatternElementFactory factory,
+            PathListFixture fixture) {
         Pattern expected = new Pattern();
-        for (int i = 0; i < firstNumItems; i++) {
+        for (int i = 0; i < numberElementsFromPath; i++) {
             addConstantTo(path.getName(i).toString(), expected);
             addDirectorySeperatorTo(expected);
         }
-        factory.addUnresolvedPathsTo(expectedTrimmedPaths(source, firstNumItems), expected);
+        factory.addUnresolvedPathsTo(expectedTrimmedPaths(paths, numberElementsFromPath), expected);
         return expected;
     }
 

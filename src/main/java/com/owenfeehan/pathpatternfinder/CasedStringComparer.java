@@ -1,4 +1,4 @@
-package com.owenfeehan.pathpatternfinder.trim;
+package com.owenfeehan.pathpatternfinder;
 
 /*-
  * #%L
@@ -28,7 +28,11 @@ package com.owenfeehan.pathpatternfinder.trim;
 
 import org.apache.commons.io.IOCase;
 
-/** Performs (maybe) case-sensitive matching based upon current setting of IOCase. */
+/** 
+ * Performs (maybe) case-sensitive matching based upon current setting of {@link IOCase}.
+ * 
+ * @author Owen Feehan
+ */
 public class CasedStringComparer {
 
     private IOCase ioCase;

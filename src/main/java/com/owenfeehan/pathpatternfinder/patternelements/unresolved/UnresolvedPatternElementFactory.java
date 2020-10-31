@@ -1,5 +1,7 @@
 package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 
+import com.owenfeehan.pathpatternfinder.CasedStringComparer;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -29,7 +31,6 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
-import com.owenfeehan.pathpatternfinder.trim.CasedStringComparer;
 import java.nio.file.Path;
 import java.util.List;
 import org.apache.commons.io.IOCase;
