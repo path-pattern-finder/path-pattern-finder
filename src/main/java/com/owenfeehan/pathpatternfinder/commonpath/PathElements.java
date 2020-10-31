@@ -62,7 +62,7 @@ public class PathElements implements Iterable<String> {
     /**
      * Takes only a maximal subset (from the left) between existing elements and this new path
      *
-     * @param path the path to intersect wit hthe existing prefix.
+     * @param path the path to intersect with the existing prefix.
      */
     public void intersect(Path path) {
         
