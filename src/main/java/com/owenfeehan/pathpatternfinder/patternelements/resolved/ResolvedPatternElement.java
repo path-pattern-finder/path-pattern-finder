@@ -29,7 +29,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
-/** 
+/**
  * A {@link PatternElement} that has been resolved.
  *
  * @author Owen Feehan

@@ -32,7 +32,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
  * Adds an extra line for each variable-value element describing its contents.
  *
  * <p>This takes a form like {@code ${1} = set of 986 unique integers (considered as strings)}.
- * 
+ *
  * @author Owen Feehan
  */
 class PatternDescriberWithVariableLines extends PatternDescriber {

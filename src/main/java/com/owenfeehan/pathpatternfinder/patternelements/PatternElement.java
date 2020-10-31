@@ -39,7 +39,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  *
  * <p>It can have a constant-value (identical value for all items in the list) or can have a varying
  * value.
- * 
+ *
  * @author Owen Feehan
  */
 public abstract class PatternElement {
@@ -89,7 +89,7 @@ public abstract class PatternElement {
     }
 
     /**
-     * Reverses the current pathElement.
+     * Reverses the current element.
      *
      * <p>i.e. if the string was previously applied from left to right it is now, right to left and
      * vice-versa

@@ -37,7 +37,7 @@ import org.apache.commons.io.IOCase;
 /**
  * Creates {@link Pattern}s or {@link PatternElement}s which have yet to be resolved <i>or</i> adds
  * a new such unresolved Element to an existing {@link Pattern}.
- * 
+ *
  * @author Owen Feehan
  */
 public class UnresolvedPatternElementFactory {
@@ -46,7 +46,7 @@ public class UnresolvedPatternElementFactory {
 
     /**
      * Creates with a particular case-sensitivity.
-     * 
+     *
      * @param ioCase specifies the case-sensitivity to use when comparing strings.
      */
     public UnresolvedPatternElementFactory(IOCase ioCase) {
@@ -55,7 +55,7 @@ public class UnresolvedPatternElementFactory {
 
     /**
      * The comparer uses for strings, with particular case-sensitivity specified.
-     * 
+     *
      * @return the comparer
      */
     public CasedStringComparer stringComparer() {

@@ -41,7 +41,7 @@ import org.junit.Test;
 
 /**
  * Tests the {@link TrimConstantSubstring} operation.
- * 
+ *
  * @author Owen Feehan
  */
 public class TrimConstantSubstringTest {
@@ -59,7 +59,8 @@ public class TrimConstantSubstringTest {
         }
 
         public static List<String> genSource(boolean mixedCase, boolean prependFirst) {
-            return new ArrayList<>(Arrays.asList(multiplexFirst(prependFirst), multiplexSecond(mixedCase)));
+            return new ArrayList<>(
+                    Arrays.asList(multiplexFirst(prependFirst), multiplexSecond(mixedCase)));
         }
 
         public Pattern expectedPattern() {
@@ -79,25 +80,19 @@ public class TrimConstantSubstringTest {
         }
     }
 
-    /**
-     * Test <i>non mixed case</i> expecting a successful outcome.
-     */
+    /** Test <i>non mixed case</i> expecting a successful outcome. */
     @Test
     public void testCaseIdenticalCase() {
         applyTest(false, false, fixture -> fixture.expectedPattern());
     }
 
-    /**
-     * Test <i>mixed case</i> expecting a successful outcome.
-     */
+    /** Test <i>mixed case</i> expecting a successful outcome. */
     @Test
     public void testCaseMixedCase() {
         applyTest(true, false, fixture -> fixture.expectedPattern());
     }
 
-    /**
-     * Test expecting failure.
-     */
+    /** Test expecting failure. */
     @Test
     public void testCaseFailure() {
         applyTest(false, true, fixture -> null);

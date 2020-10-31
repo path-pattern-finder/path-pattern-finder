@@ -59,7 +59,8 @@ class CountedBooleanMask {
     /**
      * Finds the first set of trues (values that are all true contiguously) in the mask
      *
-     * @return the range of indices that fulfills the condition, or {@link Optional#empty} if none can be found.
+     * @return the range of indices that fulfills the condition, or {@link Optional#empty} if none
+     *     can be found.
      */
     public Optional<IndexRange> indexOfFirstTrueRange() {
 
@@ -85,6 +86,6 @@ class CountedBooleanMask {
             return Optional.empty();
         }
 
-        return Optional.of( new IndexRange(indexFirstTrue, indexLastTrue - indexFirstTrue + 1) );
+        return Optional.of(new IndexRange(indexFirstTrue, indexLastTrue - indexFirstTrue + 1));
     }
 }

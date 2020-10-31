@@ -40,7 +40,7 @@ import org.junit.Test;
 
 /**
  * Tests the {@link TrimConstantString} operation.
- * 
+ *
  * @author Owen Feehan
  */
 public class TrimConstantStringTest {
@@ -63,7 +63,8 @@ public class TrimConstantStringTest {
         }
 
         public static List<String> generateSource(boolean changeCase) {
-            return new ArrayList<>(Arrays.asList(generateString(changeCase, false), generateString(false, true)));
+            return new ArrayList<>(
+                    Arrays.asList(generateString(changeCase, false), generateString(false, true)));
         }
 
         private static String generateString(boolean differentCase, boolean ending) {
@@ -79,25 +80,19 @@ public class TrimConstantStringTest {
         }
     }
 
-    /**
-     * Tests with <i>case-insensitivity</i> expecting a match.
-     */
+    /** Tests with <i>case-insensitivity</i> expecting a match. */
     @Test
     public void testCaseInsensitiveExpectMatch() {
         applyTest_ExpectMatch(true, IOCase.INSENSITIVE);
     }
 
-    /**
-     * Tests with <i>case-sensitivity</i> expecting a match.
-     */
+    /** Tests with <i>case-sensitivity</i> expecting a match. */
     @Test
     public void testCaseSensitiveExpectMatch() {
         applyTest_ExpectMatch(false, IOCase.SENSITIVE);
     }
 
-    /**
-     * Tests with <i>case-sensitivity</i> expecting a match only of a single-character.
-     */
+    /** Tests with <i>case-sensitivity</i> expecting a match only of a single-character. */
     @Test
     public void testCaseSensitiveExpectSingleCharMatchOnly() {
         applyTest(true, IOCase.SENSITIVE, ConstantStringsFixture.commonString1(), 1);

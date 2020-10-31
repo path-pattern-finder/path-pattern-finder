@@ -6,7 +6,7 @@ import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** 
+/**
  * A directory seperator (/ in Linux, \ in Windows etc.).
  *
  * @author Owen Feehan

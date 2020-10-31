@@ -1,7 +1,7 @@
 package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
 
-import java.util.Optional;
 import com.owenfeehan.pathpatternfinder.CasedStringComparer;
+import java.util.Optional;
 
 class CommonCharsTracker {
 
@@ -15,9 +15,9 @@ class CommonCharsTracker {
         this.comparer = comparer;
     }
 
-    /** 
+    /**
      * Another string that is combined with the existing string.
-     * 
+     *
      * @param toMask the string to combine
      */
     public void combineWith(String toMask) {
@@ -36,7 +36,7 @@ class CommonCharsTracker {
         }
     }
 
-    /** 
+    /**
      * The number of common characters (i.e. mask values which are true) to all strings.
      *
      * @return the number of characters
@@ -47,8 +47,9 @@ class CommonCharsTracker {
 
     /**
      * Finds the first set of trues (values that are all true contiguously) in the mask.
-     * 
-     * @return the range of indices that fulfills the condition, or {@link Optional#empty} if none can be found.
+     *
+     * @return the range of indices that fulfills the condition, or {@link Optional#empty} if none
+     *     can be found.
      */
     public Optional<IndexRange> indexOfFirstTrueRange() {
         return mask.indexOfFirstTrueRange();

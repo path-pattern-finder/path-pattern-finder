@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-/** 
+/**
  * Utilities functions to help with reversing strings and other string operations.
  *
  * @author Owen Feehan

@@ -32,7 +32,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 
+/**
  * Finds a list of files recursively in a directory.
  *
  * @author Owen Feehan

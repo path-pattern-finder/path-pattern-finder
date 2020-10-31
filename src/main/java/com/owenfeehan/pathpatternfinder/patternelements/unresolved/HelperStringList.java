@@ -33,9 +33,9 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** 
+/**
  * Helper class that allows operations to be provided from the left and from the right.
- * 
+ *
  * @author Owen Feehan
  */
 class HelperStringList {

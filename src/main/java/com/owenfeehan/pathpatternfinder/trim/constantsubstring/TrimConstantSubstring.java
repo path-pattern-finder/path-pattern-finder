@@ -38,7 +38,7 @@ import java.util.Optional;
 /**
  * Attempts to split a string by finding an identical sub-string in all strings, so long as it is
  * always located at the same index (relative to left).
- * 
+ *
  * @author Owen Feehan
  */
 public class TrimConstantSubstring implements TrimOperation<String> {

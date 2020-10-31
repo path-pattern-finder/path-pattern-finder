@@ -37,7 +37,7 @@ import org.junit.Test;
 
 /**
  * Tests the {@link TrimInteger} operation.
- * 
+ *
  * @author Owen Feehan
  */
 public class TrimIntegerTest {
@@ -78,21 +78,17 @@ public class TrimIntegerTest {
             return new ArrayList<>(Arrays.asList(WITH_DIGITS_1, WITH_DIGITS_2));
         }
     }
-        
+
     private static UnresolvedPatternElementFactory factory =
             new UnresolvedPatternElementFactory(IOCase.SENSITIVE);
 
-    /**
-     * Tests the operation when it is expected to succeed.
-     */
+    /** Tests the operation when it is expected to succeed. */
     @Test
     public void testCaseSuccess() {
         applyTest(false, expectedSucceedPattern());
     }
 
-    /**
-     * Tests the operation when it is expected to fail.
-     */
+    /** Tests the operation when it is expected to fail. */
     @Test
     public void testCaseFail() {
         applyTest(true, null);

@@ -35,7 +35,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * <p>If we already know certain operations will fail, as they've been tried before, then they can
  * be deliberately skipped to save computation. This class specifies flags for these operations that
  * can be skipped.
- * 
+ *
  * @author Owen Feehan
  */
 public class Skipper {

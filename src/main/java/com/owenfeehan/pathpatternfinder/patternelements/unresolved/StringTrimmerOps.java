@@ -32,7 +32,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 
+/**
  * Collates together the operations used to trim strings.
  *
  * @author Owen Feehan

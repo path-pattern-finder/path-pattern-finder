@@ -41,7 +41,7 @@ import java.util.TreeSet;
  * <p>Three different types of arguments can occur: if an argument contains a wild-card, it's
  * treated like a glob, recursively applied to the current directory if the argument is a path to a
  * directory, it's recursively traversed if the argument is a path to the file, it's accepted as-is
- * 
+ *
  * @author Owen Feehan
  */
 class PathsFromArguments {

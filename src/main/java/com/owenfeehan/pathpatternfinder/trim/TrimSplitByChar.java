@@ -41,7 +41,7 @@ import java.util.List;
  *
  * <p>Note that we do not perform any case-sensitive matching on the assumption that the characters
  * used in splitChar will typically be special characters for which case is irrelevant.
- * 
+ *
  * @author Owen Feehan
  */
 public class TrimSplitByChar implements TrimOperation<String> {

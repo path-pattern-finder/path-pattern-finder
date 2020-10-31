@@ -57,7 +57,7 @@ import org.apache.commons.io.IOCase;
  *       - or ( or ) into tokens
  *   <li>apply step 3 to each of the split tokens
  * </ol>
- * 
+ *
  * @author Owen Feehan
  */
 public class PathPatternFinder {

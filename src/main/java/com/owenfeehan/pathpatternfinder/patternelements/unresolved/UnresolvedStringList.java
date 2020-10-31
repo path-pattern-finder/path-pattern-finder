@@ -33,7 +33,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** 
+/**
  * A list of strings that we haven't tried to split yet into more atomic elements.
  *
  * @author Owen Feehan

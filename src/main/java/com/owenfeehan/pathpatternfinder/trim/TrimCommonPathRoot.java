@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
  * a the maximally constant sublist from the left size.
  *
  * <p>Only directories are considered. The file-name (the final element in a path) is ignored.
- * 
+ *
  * @author Owen Feehan
  */
 public class TrimCommonPathRoot implements TrimOperation<Path> {

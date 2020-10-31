@@ -28,7 +28,7 @@ package com.owenfeehan.pathpatternfinder.describer;
 
 import java.io.IOException;
 
-/** 
+/**
  * Guesses how many characters exist in a single line of the console.
  *
  * @author Owen Feehan

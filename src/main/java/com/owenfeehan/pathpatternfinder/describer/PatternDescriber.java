@@ -29,11 +29,11 @@ package com.owenfeehan.pathpatternfinder.describer;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
 /**
- * Creates a string that shows constant-value elements as text replacing variable-value
- * elements with a pattern.
- * 
+ * Creates a string that shows constant-value elements as text replacing variable-value elements
+ * with a pattern.
+ *
  * <p>e.g. {@code ${3}} where the number is an index.
- * 
+ *
  * @author Owen Feehan
  */
 class PatternDescriber {

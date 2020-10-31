@@ -29,7 +29,7 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** 
+/**
  * Stores a key and its associated frequency, implementing an ordering on the count.
  *
  * @author Owen Feehan

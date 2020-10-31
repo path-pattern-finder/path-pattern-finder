@@ -32,7 +32,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** 
+/**
  * A {@link PatternElement} that is resolved and varies across the list of values.
  *
  * @author Owen Feehan
@@ -43,7 +43,7 @@ public abstract class VariableElement extends ResolvedPatternElement {
 
     /**
      * Creates for a list of values.
-     * 
+     *
      * @param values the values
      */
     public VariableElement(List<String> values) {

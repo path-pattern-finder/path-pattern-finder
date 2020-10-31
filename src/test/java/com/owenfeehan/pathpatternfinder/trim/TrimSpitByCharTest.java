@@ -39,7 +39,7 @@ import org.junit.Test;
 
 /**
  * Tests the {@link TrimSpitByCharTest} operation.
- * 
+ *
  * @author Owen Feehan
  */
 public class TrimSpitByCharTest {
@@ -76,25 +76,19 @@ public class TrimSpitByCharTest {
     private static UnresolvedPatternElementFactory factory =
             new UnresolvedPatternElementFactory(IOCase.SENSITIVE);
 
-    /**
-     * Tests the operation to split strings by an <i>underscore</i> character.
-     */
+    /** Tests the operation to split strings by an <i>underscore</i> character. */
     @Test
     public void testCaseUnderscoreSplit() {
         applyTest('_', false, false, ConstantStringsFixture.expectedUnderscoreSplit());
     }
 
-    /**
-     * Tests the operation to split strings by a <i>hyphen</i> character.
-     */
+    /** Tests the operation to split strings by a <i>hyphen</i> character. */
     @Test
     public void testCaseHyphenSplit() {
         applyTest('-', false, false, ConstantStringsFixture.expectedHyphenSplit());
     }
 
-    /**
-     * Tests the operation to split strings by a <i>comma</i> character.
-     */
+    /** Tests the operation to split strings by a <i>comma</i> character. */
     @Test
     public void testCaseCommaSplit() {
         applyTest(',', false, false, null);

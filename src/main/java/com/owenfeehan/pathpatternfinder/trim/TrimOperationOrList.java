@@ -29,7 +29,7 @@ package com.owenfeehan.pathpatternfinder.trim;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import java.util.List;
 
-/** 
+/**
  * Tries to apply each operation in a list until one is successful.
  *
  * @author Owen Feehan
@@ -41,7 +41,7 @@ public class TrimOperationOrList<T> implements TrimOperation<T> {
 
     /**
      * Creates given a list of operations.
-     * 
+     *
      * @param operations the operations
      */
     public TrimOperationOrList(List<TrimOperation<T>> operations) {

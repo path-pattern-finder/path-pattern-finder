@@ -37,9 +37,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * A {@link PatternElement} that has yet to be resolved with a varying list of paths.
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  */
 class UnresolvedPathList extends UnresolvedPatternElement {
 

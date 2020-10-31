@@ -26,7 +26,7 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * #L%
  */
 
-/** 
+/**
  * Generates a string that describes an individual KeyFrequency item alone.
  *
  * @author Owen Feehan
@@ -38,7 +38,7 @@ class DescribeKeyFrequency {
     /**
      * The total number of characters needed to describe the key and the count, assuming a pattern
      * of "KEY" (COUNT) as in {@link #describe}.
-     * 
+     *
      * @param keyFrequency what needs to be described
      * @return the number of characters needed to describe {@code keyFrequency}.
      */
@@ -49,7 +49,7 @@ class DescribeKeyFrequency {
 
     /**
      * Creates a description of a {@link KeyFrequency} including a prefix.
-     * 
+     *
      * @param <T> the element-type in {@code KeyFrequency}
      * @param keyFrequency what needs to be described
      * @param prefix a string to insert at the beginning of the description.
