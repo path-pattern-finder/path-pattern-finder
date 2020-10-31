@@ -35,9 +35,14 @@ import java.util.List;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
-/** Tests various combinations of inputs to the PathPatternFinder */
+/**
+ * Tests various combinations of inputs to the {@link PathPatternFinder}.
+ *
+ * @author Owen Feehan
+ */
 public class PathPatternFinderTest {
 
+    /** Tests three relative-paths with a common first directory but are otherwise different. */
     @Test
     public void testMixture1() {
 
@@ -59,8 +64,9 @@ public class PathPatternFinderTest {
                 true);
     }
 
+    /** Tests two absolte paths, where one has an additional sub-directory before the filename. */
     @Test
-    public void testNestedSubdir() {
+    public void testNestedSubdirectory() {
 
         applyTest(
                 pathList(

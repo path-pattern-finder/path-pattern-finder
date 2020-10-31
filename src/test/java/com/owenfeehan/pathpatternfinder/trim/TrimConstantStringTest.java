@@ -38,55 +38,69 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
+/**
+ * Tests the {@link TrimConstantString} operation.
+ * 
+ * @author Owen Feehan
+ */
 public class TrimConstantStringTest {
 
     private static class ConstantStringsFixture {
-        private static String STR1 = "aaa";
-        private static String STR1_different_case = "aAa";
-        private static String STR1_common = "a";
+        private static final String FIRST_BASE = "aaa";
+        private static final String FIRST_DIFFERENT_CASE = "aAa";
+        private static final String FIRST_COMMON = "a";
 
-        private static String STR2 = "bbbbbb";
-        private static String STR3 = "cccccc";
-        private static String STR4 = "dd";
+        private static final String SECOND = "bbbbbb";
+        private static final String THIRD = "cccccc";
+        private static final String FOURTH = "dd";
 
-        public static String commonStr1() {
-            return STR1_common;
+        public static String commonString1() {
+            return FIRST_COMMON;
         }
 
         public static String firstTwo(boolean changeCase) {
-            return str1(changeCase) + STR2;
+            return multiplexFirst(changeCase) + SECOND;
         }
 
-        public static List<String> genSource(boolean changeCase) {
-            return new ArrayList<>(Arrays.asList(genStr(changeCase, false), genStr(false, true)));
+        public static List<String> generateSource(boolean changeCase) {
+            return new ArrayList<>(Arrays.asList(generateString(changeCase, false), generateString(false, true)));
         }
 
-        private static String genStr(boolean differentCase, boolean ending) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(str1(differentCase));
-            sb.append(STR2);
-            sb.append(ending ? STR3 : STR4);
-            return sb.toString();
+        private static String generateString(boolean differentCase, boolean ending) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(multiplexFirst(differentCase));
+            builder.append(SECOND);
+            builder.append(ending ? THIRD : FOURTH);
+            return builder.toString();
         }
 
-        private static String str1(boolean differentCase) {
-            return differentCase ? STR1_different_case : STR1;
+        private static String multiplexFirst(boolean differentCase) {
+            return differentCase ? FIRST_DIFFERENT_CASE : FIRST_BASE;
         }
     }
 
+    /**
+     * Tests with <i>case-insensitivity</i> expecting a match.
+     */
     @Test
-    public void testCaseInsensitive_ExpectMatch() {
+    public void testCaseInsensitiveExpectMatch() {
         applyTest_ExpectMatch(true, IOCase.INSENSITIVE);
     }
 
+    /**
+     * Tests with <i>case-sensitivity</i> expecting a match.
+     */
     @Test
-    public void testCaseSensitive_ExpectMatch() {
+    public void testCaseSensitiveExpectMatch() {
         applyTest_ExpectMatch(false, IOCase.SENSITIVE);
     }
 
+    /**
+     * Tests with <i>case-sensitivity</i> expecting a match only of a single-character.
+     */
     @Test
-    public void testCaseSensitive_ExpectSingleCharMatchOnly() {
-        applyTest(true, IOCase.SENSITIVE, ConstantStringsFixture.commonStr1(), 1);
+    public void testCaseSensitiveExpectSingleCharMatchOnly() {
+        applyTest(true, IOCase.SENSITIVE, ConstantStringsFixture.commonString1(), 1);
     }
 
     private static void applyTest_ExpectMatch(boolean changeCase, IOCase ioCase) {
@@ -107,7 +121,7 @@ public class TrimConstantStringTest {
 
         UnresolvedPatternElementFactory factory = new UnresolvedPatternElementFactory(ioCase);
 
-        List<String> source = ConstantStringsFixture.genSource(changeCase);
+        List<String> source = ConstantStringsFixture.generateSource(changeCase);
 
         TrimConstantString op = new TrimConstantString(factory);
 

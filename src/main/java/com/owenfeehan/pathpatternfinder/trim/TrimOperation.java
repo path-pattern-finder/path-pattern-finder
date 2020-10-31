@@ -33,6 +33,7 @@ import java.util.List;
  * Attempts to trim the list of objects from left or right.
  *
  * @param <T> type of objects the trimmer works upon
+ * @author Owen Feehan
  */
 public interface TrimOperation<T> {
 

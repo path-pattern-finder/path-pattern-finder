@@ -33,10 +33,13 @@ import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPat
 import com.owenfeehan.pathpatternfinder.trim.TrimOperation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Attempts to split a string by finding an identical sub-string in all strings, so long as it is
- * always located at the same index (relative to left)
+ * always located at the same index (relative to left).
+ * 
+ * @author Owen Feehan
  */
 public class TrimConstantSubstring implements TrimOperation<String> {
 
@@ -60,31 +63,31 @@ public class TrimConstantSubstring implements TrimOperation<String> {
 
         // First of all we find a mask with all common characters (identical character at the same
         // index in each str)
-        IndexRange common = findCommonString(source);
-        if (common == null) {
+        Optional<IndexRange> common = findCommonString(source);
+        if (!common.isPresent()) {
             return null;
         }
 
         // Stage 2. Let's create a pattern
-        return createPattern(source, common);
+        return createPattern(source, common.get());
     }
 
     /**
      * Finds the index-range of the first common subset of characters (all located at the same
      * indices) among the strings
      */
-    private IndexRange findCommonString(List<String> source) {
+    private Optional<IndexRange> findCommonString(List<String> source) {
 
         CommonCharsTracker tracker =
                 new CommonCharsTracker(source.get(0), factory.stringComparer());
 
         for (int i = 1; i < source.size(); i++) {
 
-            tracker.maskWith(source.get(i));
+            tracker.combineWith(source.get(i));
 
             // If there's nothing left in common we give up
-            if (tracker.numCommonChars() == 0) {
-                return null;
+            if (tracker.numberCommonCharacters() == 0) {
+                return Optional.empty();
             }
         }
 
@@ -106,11 +109,11 @@ public class TrimConstantSubstring implements TrimOperation<String> {
     private void populateLeftRight(
             List<String> source, List<String> left, List<String> right, IndexRange common) {
 
-        for (String s : source) {
+        for (String str : source) {
 
             assert (common.getStartIndex() > 0);
-            left.add(s.substring(0, common.getStartIndex()));
-            right.add(s.substring(common.getEndIndexExclusive()));
+            left.add(str.substring(0, common.getStartIndex()));
+            right.add(str.substring(common.getEndIndexExclusive()));
         }
     }
 

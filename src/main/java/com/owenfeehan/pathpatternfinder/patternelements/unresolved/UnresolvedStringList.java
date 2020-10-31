@@ -33,7 +33,11 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** A list of strings that we haven't tried to split yet into more atomic elements */
+/** 
+ * A list of strings that we haven't tried to split yet into more atomic elements.
+ *
+ * @author Owen Feehan
+ */
 class UnresolvedStringList extends UnresolvedPatternElement {
 
     private HelperStringList list;
@@ -56,9 +60,10 @@ class UnresolvedStringList extends UnresolvedPatternElement {
             List<String> list, UnresolvedPatternElementFactory factory, Skipper skipper) {
         this.list = new HelperStringList(list);
         assert (this.list.atLeastOneNonEmptyStr());
-        this.firstOp = StringTrimmerOps.createFirstOp(factory);
-        this.secondOp = StringTrimmerOps.createSecondOp(factory, skipper.getStartSplitCharIndex());
-        this.thirdOp = StringTrimmerOps.createThirdOp(factory);
+        this.firstOp = StringTrimmerOps.createFirstOperation(factory);
+        this.secondOp =
+                StringTrimmerOps.createSecondOperation(factory, skipper.getStartSplitCharIndex());
+        this.thirdOp = StringTrimmerOps.createThirdOperation(factory);
         this.skipper = skipper;
     }
 

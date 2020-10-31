@@ -13,19 +13,19 @@ import java.util.List;
  */
 public class PathListFixture {
 
-    private static String DIR1_LOWER = "dir1";
-    private static String DIR1_UPPER = "DIR1";
+    private static final String DIR1_LOWER = "dir1";
+    private static final String DIR1_UPPER = "DIR1";
 
-    private static String DIR2_LOWER = "dir2";
-    private static String DIR2_UPPER = "DIR2";
+    private static final String DIR2_LOWER = "dir2";
+    private static final String DIR2_UPPER = "DIR2";
 
-    private static String DIR3a = "dir3a";
-    private static String DIR3b = "dir3b";
-    private static String DIR4a = "dir4a";
-    private static String DIR4b = "dir4b";
-    private static String FILENAME = "filename";
+    private static final String DIR3a = "dir3a";
+    private static final String DIR3b = "dir3b";
+    private static final String DIR4a = "dir4a";
+    private static final String DIR4b = "dir4b";
+    private static final String FILENAME = "filename";
 
-    private static String ROOT = "/";
+    private static final String ROOT = "/";
 
     private final Path path1;
     private final Path path2;

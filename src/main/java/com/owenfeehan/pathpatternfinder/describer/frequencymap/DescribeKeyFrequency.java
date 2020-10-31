@@ -26,22 +26,38 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * #L%
  */
 
-/** Generates a string that describes an individual KeyFrequency item alone */
+/** 
+ * Generates a string that describes an individual KeyFrequency item alone.
+ *
+ * @author Owen Feehan
+ */
 class DescribeKeyFrequency {
 
     private DescribeKeyFrequency() {}
 
     /**
      * The total number of characters needed to describe the key and the count, assuming a pattern
-     * of "KEY" (COUNT) as in describe()
+     * of "KEY" (COUNT) as in {@link #describe}.
+     * 
+     * @param keyFrequency what needs to be described
+     * @return the number of characters needed to describe {@code keyFrequency}.
      */
-    public static <T extends Comparable<T>> int numCharsToDescribe(KeyFrequency<T> kf) {
-        return describe(kf).length();
+    public static <T extends Comparable<T>> int numberCharsToDescribe(
+            KeyFrequency<T> keyFrequency) {
+        return describe(keyFrequency).length();
     }
 
-    public static <T extends Comparable<T>> String describeWithPrefix(
-            KeyFrequency<T> kf, String prefix) {
-        return prefix + describe(kf);
+    /**
+     * Creates a description of a {@link KeyFrequency} including a prefix.
+     * 
+     * @param <T> the element-type in {@code KeyFrequency}
+     * @param keyFrequency what needs to be described
+     * @param prefix a string to insert at the beginning of the description.
+     * @return the description of {@code keyFrequency}.
+     */
+    static <T extends Comparable<T>> String describeWithPrefix(
+            KeyFrequency<T> keyFrequency, String prefix) {
+        return prefix + describe(keyFrequency);
     }
 
     /// Describes a

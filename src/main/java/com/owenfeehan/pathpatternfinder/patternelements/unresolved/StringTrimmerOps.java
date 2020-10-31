@@ -32,7 +32,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Collates together the operations used to trim strings */
+/** 
+ * Collates together the operations used to trim strings.
+ *
+ * @author Owen Feehan
+ */
 class StringTrimmerOps {
 
     /** The characters we use in trying to split by character */
@@ -40,27 +44,50 @@ class StringTrimmerOps {
 
     private StringTrimmerOps() {}
 
-    /** Operation used for trimming strings (first step in UnresolvedStringList) */
-    public static TrimOperation<String> createFirstOp(UnresolvedPatternElementFactory factory) {
+    /**
+     * Operation used for trimming strings.
+     *
+     * <p>This is the <i>first</i> step for a list of unresolved strings.
+     *
+     * @param factory for creating elements
+     * @return the operation
+     */
+    public static TrimOperation<String> createFirstOperation(
+            UnresolvedPatternElementFactory factory) {
         List<TrimOperation<String>> list = new ArrayList<>();
         list.add(new TrimInteger(factory));
         list.add(new TrimConstantString(factory));
         return new TrimOperationOrList<>(list);
     }
 
-    /** Operation used for splitting strings (second step in UnresolvedStringList) */
-    public static TrimOperation<String> createSecondOp(
+    /**
+     * Operation used for splitting strings.
+     *
+     * <p>This is the <i>second</i> step for a list of unresolved strings.
+     *
+     * @param factory for creating elements
+     * @param startSplitCharIndex the first index to start splitting at
+     * @return the operation
+     */
+    public static TrimOperation<String> createSecondOperation(
             UnresolvedPatternElementFactory factory, int startSplitCharIndex) {
         List<TrimOperation<String>> list = new ArrayList<>();
         for (int i = startSplitCharIndex; i < SPLIT_CHARS.length; i++) {
-            char c = SPLIT_CHARS[i];
-            list.add(new TrimSplitByChar(c, i, factory));
+            list.add(new TrimSplitByChar(SPLIT_CHARS[i], i, factory));
         }
         return new TrimOperationOrList<>(list);
     }
 
-    /** Operation used for finding constant substrings (third step in UnresolvedStringList) */
-    public static TrimOperation<String> createThirdOp(UnresolvedPatternElementFactory factory) {
+    /**
+     * Operation used for finding constant substrings (third step in UnresolvedStringList)
+     *
+     * <p>This is the <i>third</i> step for a list of unresolved strings.
+     *
+     * @param factory for creating elements
+     * @return the operation
+     */
+    public static TrimOperation<String> createThirdOperation(
+            UnresolvedPatternElementFactory factory) {
         return new TrimConstantSubstring(factory);
     }
 }

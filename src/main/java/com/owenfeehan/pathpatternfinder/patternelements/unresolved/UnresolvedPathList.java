@@ -27,6 +27,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.trim.TrimCommonPathRoot;
 import java.nio.file.Path;
 import java.util.List;
@@ -34,6 +35,12 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * A {@link PatternElement} that has yet to be resolved with a varying list of paths.
+ * 
+ * @author Owen Feehan
+ *
+ */
 class UnresolvedPathList extends UnresolvedPatternElement {
 
     private List<Path> list;

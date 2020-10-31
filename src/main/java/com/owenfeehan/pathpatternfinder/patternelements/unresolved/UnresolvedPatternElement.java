@@ -30,6 +30,11 @@ import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import org.apache.commons.io.IOCase;
 
+/**
+ * A pattern element that has yet to be resolved.
+ * 
+ * @author Owen Feehan
+ */
 abstract class UnresolvedPatternElement extends PatternElement {
 
     @Override

@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-import com.owenfeehan.pathpatternfinder.trim.FixtureHelper;
+import com.owenfeehan.pathpatternfinder.trim.AndUnresolvedHelper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,53 +39,67 @@ import java.util.function.Function;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
+/**
+ * Tests the {@link TrimConstantSubstring} operation.
+ * 
+ * @author Owen Feehan
+ */
 public class TrimConstantSubstringTest {
 
     private static class ConstantStringsFixture {
 
         private UnresolvedPatternElementFactory factory;
 
-        private static String STR1 = "aaaconstantbbb";
-        private static String STR2_lower_case = "cccconstantddd";
-        private static String STR2_mixed_case = "cccconsTANTddd";
+        private static final String FIRST = "aaaconstantbbb";
+        private static final String SECOND_LOWER_CASE = "cccconstantddd";
+        private static final String SECOND_MIXED_CASE = "cccconsTANTddd";
 
         public ConstantStringsFixture(UnresolvedPatternElementFactory factory) {
             this.factory = factory;
         }
 
         public static List<String> genSource(boolean mixedCase, boolean prependFirst) {
-            return new ArrayList<>(Arrays.asList(muxStr1(prependFirst), muxStr2(mixedCase)));
+            return new ArrayList<>(Arrays.asList(multiplexFirst(prependFirst), multiplexSecond(mixedCase)));
         }
 
         public Pattern expectedPattern() {
             Pattern pattern = new Pattern();
-            FixtureHelper.addUnresolved("aaa", "ccc", pattern, false, true, factory);
+            AndUnresolvedHelper.addUnresolved("aaa", "ccc", pattern, false, true, factory);
             ResolvedPatternElementFactory.addConstantTo("constant", pattern);
-            FixtureHelper.addUnresolved("bbb", "ddd", pattern, true, false, factory);
+            AndUnresolvedHelper.addUnresolved("bbb", "ddd", pattern, true, false, factory);
             return pattern;
         }
 
-        private static String muxStr1(boolean prepend) {
-            return prepend ? "_" + STR1 : STR1;
+        private static String multiplexFirst(boolean prepend) {
+            return prepend ? "_" + FIRST : FIRST;
         }
 
-        private static String muxStr2(boolean mixedCase) {
-            return mixedCase ? STR2_mixed_case : STR2_lower_case;
+        private static String multiplexSecond(boolean mixedCase) {
+            return mixedCase ? SECOND_MIXED_CASE : SECOND_LOWER_CASE;
         }
     }
 
+    /**
+     * Test <i>non mixed case</i> expecting a successful outcome.
+     */
     @Test
-    public void testCase_IdenticalCase() {
+    public void testCaseIdenticalCase() {
         applyTest(false, false, fixture -> fixture.expectedPattern());
     }
 
+    /**
+     * Test <i>mixed case</i> expecting a successful outcome.
+     */
     @Test
-    public void testCase_MixedCase() {
+    public void testCaseMixedCase() {
         applyTest(true, false, fixture -> fixture.expectedPattern());
     }
 
+    /**
+     * Test expecting failure.
+     */
     @Test
-    public void testCase_Failure() {
+    public void testCaseFailure() {
         applyTest(false, true, fixture -> null);
     }
 

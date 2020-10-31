@@ -1,5 +1,6 @@
 package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
 
+import java.util.Optional;
 import com.owenfeehan.pathpatternfinder.CasedStringComparer;
 
 class CommonCharsTracker {
@@ -14,14 +15,18 @@ class CommonCharsTracker {
         this.comparer = comparer;
     }
 
-    /** Another string that is masked with the existing string */
-    public void maskWith(String str) {
+    /** 
+     * Another string that is combined with the existing string.
+     * 
+     * @param toMask the string to combine
+     */
+    public void combineWith(String toMask) {
 
         for (int i = 0; i < firstItem.length(); i++) {
 
-            if (i < str.length()) {
+            if (i < toMask.length()) {
 
-                if (!comparer.match(str.charAt(i), firstItem.charAt(i))) {
+                if (!comparer.match(toMask.charAt(i), firstItem.charAt(i))) {
                     mask.ensureFalse(i);
                 }
 
@@ -31,17 +36,21 @@ class CommonCharsTracker {
         }
     }
 
-    /** The number of common characters (i.e. mask values which are true) to all strings */
-    public int numCommonChars() {
+    /** 
+     * The number of common characters (i.e. mask values which are true) to all strings.
+     *
+     * @return the number of characters
+     */
+    public int numberCommonCharacters() {
         return mask.countTrueValues();
     }
 
     /**
-     * Finds the first set of trues (values that are all true contiguously) in the mask
-     *
-     * <p>If none can be found, null is returned
+     * Finds the first set of trues (values that are all true contiguously) in the mask.
+     * 
+     * @return the range of indices that fulfills the condition, or {@link Optional#empty} if none can be found.
      */
-    public IndexRange indexOfFirstTrueRange() {
+    public Optional<IndexRange> indexOfFirstTrueRange() {
         return mask.indexOfFirstTrueRange();
     }
 }

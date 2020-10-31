@@ -29,19 +29,29 @@ package com.owenfeehan.pathpatternfinder.trim;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import java.util.List;
 
-/** Tries to apply each operation in a list until one is successful. */
+/** 
+ * Tries to apply each operation in a list until one is successful.
+ *
+ * @author Owen Feehan
+ * @param <T> type of objects the trimmer works upon
+ */
 public class TrimOperationOrList<T> implements TrimOperation<T> {
 
-    private List<TrimOperation<T>> listOps;
+    private List<TrimOperation<T>> operations;
 
-    public TrimOperationOrList(List<TrimOperation<T>> listOps) {
-        this.listOps = listOps;
+    /**
+     * Creates given a list of operations.
+     * 
+     * @param operations the operations
+     */
+    public TrimOperationOrList(List<TrimOperation<T>> operations) {
+        this.operations = operations;
     }
 
     @Override
     public Pattern trim(List<T> source) {
 
-        for (TrimOperation<T> op : listOps) {
+        for (TrimOperation<T> op : operations) {
             Pattern pattern = op.trim(source);
             if (pattern != null) {
                 return pattern;

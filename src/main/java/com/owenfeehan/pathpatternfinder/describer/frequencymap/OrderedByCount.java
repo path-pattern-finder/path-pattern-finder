@@ -31,10 +31,10 @@ import java.util.TreeSet;
 import org.apache.commons.collections4.bag.TreeBag;
 
 /**
- * A set of {@link KeyFrequency} ordered by their counts.
+ * A set of elements ordered by their counts.
  *
  * @author Owen Feehan
- * @param <T>
+ * @param <T> element-type
  */
 class OrderedByCount<T extends Comparable<T>> implements Iterable<KeyFrequency<T>> {
 

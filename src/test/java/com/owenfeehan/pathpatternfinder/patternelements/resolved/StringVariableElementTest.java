@@ -33,6 +33,11 @@ import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
+/**
+ * Tests {@code StringVariableElement}.
+ *
+ * @author Owen Feehan
+ */
 public class StringVariableElementTest {
 
     /** Checks that it tries to fit the longer keys first, with empty keys last */

@@ -31,9 +31,7 @@ import org.apache.commons.io.IOCase;
 
 class ExtractElementFrom {
 
-    private ExtractElementFrom() {
-        // NOTHING TO DO
-    }
+    private ExtractElementFrom() {}
 
     /**
      * Extracts a string (trims it from the left-side) if possible

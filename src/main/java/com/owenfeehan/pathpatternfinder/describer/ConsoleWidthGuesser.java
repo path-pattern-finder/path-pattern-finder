@@ -28,7 +28,11 @@ package com.owenfeehan.pathpatternfinder.describer;
 
 import java.io.IOException;
 
-/** Guesses how many characters exist in a single line of the console. */
+/** 
+ * Guesses how many characters exist in a single line of the console.
+ *
+ * @author Owen Feehan
+ */
 public class ConsoleWidthGuesser {
 
     /** Used if we can't otherwise determine the console width */
@@ -39,6 +43,11 @@ public class ConsoleWidthGuesser {
 
     private ConsoleWidthGuesser() {}
 
+    /**
+     * Guesses the width (in characters) of the console.
+     *
+     * @return a guess (or a fallback constant) of the width of the console.
+     */
     public static int determineConsoleWidth() {
         // With reference to
         // https://stackoverflow.com/questions/1286461/can-i-find-the-console-width-with-java

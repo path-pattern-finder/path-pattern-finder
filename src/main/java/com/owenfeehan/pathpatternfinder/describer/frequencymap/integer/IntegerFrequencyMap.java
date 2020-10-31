@@ -29,11 +29,20 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap.integer;
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.FrequencyMap;
 import java.util.List;
 
-/** Specialised frequency-map for integers */
+/**
+ * Specialised frequency-map for integers, similar to {@link FrequencyMap}.
+ *
+ * @author Owen Feehan
+ */
 public class IntegerFrequencyMap {
 
     private FrequencyMap<Integer> map;
 
+    /**
+     * Creates for a list of integers.
+     *
+     * @param list the list
+     */
     public IntegerFrequencyMap(List<Integer> list) {
         this.map = new FrequencyMap<>(list);
     }
@@ -66,12 +75,12 @@ public class IntegerFrequencyMap {
     }
 
     /**
-     * Does it contain exactly one integer (and only one) for every integer between lowest() and
-     * highest() inclusive
+     * Does it contain exactly one integer (and only one) for every integer between {@link #lowest}
+     * and {@link #highest} inclusive
      *
      * @return true if the map fulfills above condition
      */
-    public boolean testIfContiguous() {
+    public boolean areIndicesContiguous() {
         int highest = highest();
         for (int i = lowest(); i <= highest; i++) {
             if (map.getCount(i) != 1) {

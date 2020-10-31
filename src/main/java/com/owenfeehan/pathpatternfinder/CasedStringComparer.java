@@ -37,26 +37,38 @@ public class CasedStringComparer {
 
     private IOCase ioCase;
 
+    /**
+     * Create for a given {@link IOCase}.
+     *
+     * @param ioCase whether be case-sensitive or not.
+     */
     public CasedStringComparer(IOCase ioCase) {
         this.ioCase = ioCase;
     }
 
     /**
-     * Equality among strings, based upon the case-sensitivity flag
+     * Are two strings identical, based upon current case-sensitivity settings?
      *
-     * @param str1 first string
-     * @param str2 second string
-     * @return whether the strings are equal (depending on caseSensitive flag)
+     * @param str1 the first string
+     * @param str2 the second string
+     * @return true if strings are equal, false otherwise
      */
     public boolean match(String str1, String str2) {
         return ioCase.checkEquals(str1, str2);
     }
 
-    public boolean match(char c1, char c2) {
+    /**
+     * Are two characters identical, based upon current case-sensitivity settings?
+     *
+     * @param char1 the first character
+     * @param char2 the second character
+     * @return true if strings are equal, false otherwise
+     */
+    public boolean match(char char1, char char2) {
         if (ioCase.isCaseSensitive()) {
-            return c1 == c2;
+            return char1 == char2;
         } else {
-            return c1 == c2 || Character.toLowerCase(c1) == Character.toLowerCase(c2);
+            return char1 == char2 || Character.toLowerCase(char1) == Character.toLowerCase(char2);
         }
     }
 }

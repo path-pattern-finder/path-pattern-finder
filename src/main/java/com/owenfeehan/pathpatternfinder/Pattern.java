@@ -39,27 +39,49 @@ import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** A pattern that has been extracted, containing 0 or more {@link PatternElement}s. */
+/**
+ * A pattern that has been extracted, containing 0 or more {@link PatternElement}s.
+ *
+ * <p>This is a <b>mutable</b> class and elements can be added or replaced.
+ *
+ * @author Owen Feehan
+ */
 public class Pattern implements Iterable<PatternElement> {
 
     private List<PatternElement> elements;
 
+    /** Create with 0 elements. */
     public Pattern() {
         elements = new ArrayList<>();
     }
 
+    /**
+     * Create for a list of elements.
+     *
+     * @param elements the list.
+     */
     Pattern(List<PatternElement> elements) {
         assert (elements != null);
         this.elements = elements;
     }
 
+    /**
+     * Create with 1 element.
+     *
+     * @param element the element
+     */
     public Pattern(PatternElement element) {
         this();
         elements.add(element);
     }
 
-    public void add(PatternElement toAdd) {
-        elements.add(toAdd);
+    /**
+     * Adds an element.
+     *
+     * @param elementToAdd the element to add
+     */
+    public void add(PatternElement elementToAdd) {
+        elements.add(elementToAdd);
     }
 
     /**

@@ -34,7 +34,11 @@ import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** A varying integer */
+/** 
+ * A varying integer.
+ *
+ * @author Owen Feehan
+ */
 class IntegerVariableElement extends VariableElement {
 
     public IntegerVariableElement(List<String> values) {
@@ -56,7 +60,7 @@ class IntegerVariableElement extends VariableElement {
 
         IntegerFrequencyMap freq = new IntegerFrequencyMap(extractIntegerList());
 
-        if (freq.testIfContiguous()) {
+        if (freq.areIndicesContiguous()) {
             return String.format(
                     "an integer sequence from %d to %d inclusive", freq.lowest(), freq.highest());
         } else {

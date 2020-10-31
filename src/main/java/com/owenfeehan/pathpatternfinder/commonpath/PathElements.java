@@ -35,6 +35,8 @@ import java.util.List;
 /**
  * A list of elements of a path from the left to right.
  *
+ * <p>This is a <i>mutable</i> class whose paths can be changed after calls to {@link #intersect}.
+ *
  * @author Owen Feehan
  */
 public class PathElements implements Iterable<String> {
@@ -98,11 +100,18 @@ public class PathElements implements Iterable<String> {
         }
     }
 
-    /** Number of path-elements in the prefix. */
+    /**
+     * Number of path-elements in the prefix.
+     *
+     * @return the number of elements
+     */
     public int size() {
         return elements.size();
     }
 
+    /**
+     * Iterates through each common element (including the root as the first element if it exists).
+     */
     @Override
     public Iterator<String> iterator() {
         return elements.iterator();
@@ -112,7 +121,7 @@ public class PathElements implements Iterable<String> {
         elements = elements.subList(0, numberElementsFromLeft);
     }
 
-    /** A list of elements from a path, including a root if it exists */
+    /** A list of elements from a path, including a root if it exists. */
     private static List<String> pathElements(Path path) {
 
         List<String> elements = new ArrayList<>();

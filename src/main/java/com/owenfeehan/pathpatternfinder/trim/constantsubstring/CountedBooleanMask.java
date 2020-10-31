@@ -1,5 +1,7 @@
 package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -57,9 +59,9 @@ class CountedBooleanMask {
     /**
      * Finds the first set of trues (values that are all true contiguously) in the mask
      *
-     * <p>If none can be found, null is returned
+     * @return the range of indices that fulfills the condition, or {@link Optional#empty} if none can be found.
      */
-    public IndexRange indexOfFirstTrueRange() {
+    public Optional<IndexRange> indexOfFirstTrueRange() {
 
         int indexFirstTrue = -1;
         int indexLastTrue = -1;
@@ -80,9 +82,9 @@ class CountedBooleanMask {
         }
 
         if (indexFirstTrue == -1) {
-            return null;
+            return Optional.empty();
         }
 
-        return new IndexRange(indexFirstTrue, indexLastTrue - indexFirstTrue + 1);
+        return Optional.of( new IndexRange(indexFirstTrue, indexLastTrue - indexFirstTrue + 1) );
     }
 }

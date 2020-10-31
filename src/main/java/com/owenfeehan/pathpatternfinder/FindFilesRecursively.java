@@ -32,7 +32,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Finds a list of files recursively in a directory */
+/** 
+ * Finds a list of files recursively in a directory.
+ *
+ * @author Owen Feehan
+ */
 public class FindFilesRecursively {
 
     private static class Visitor extends SimpleFileVisitor<Path> {

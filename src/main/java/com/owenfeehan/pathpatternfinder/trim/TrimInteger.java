@@ -37,11 +37,18 @@ import java.util.List;
  * possible length).
  *
  * <p>Only succeeds if every string has an integer at the left, otherwise returns null.
+ * 
+ * @author Owen Feehan
  */
 public class TrimInteger implements TrimOperation<String> {
 
     private UnresolvedPatternElementFactory factory;
 
+    /**
+     * Creates given a factory for creating unresolved pattern-elements.
+     * 
+     * @param factory the factory
+     */
     public TrimInteger(UnresolvedPatternElementFactory factory) {
         this.factory = factory;
     }

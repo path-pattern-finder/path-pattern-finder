@@ -35,20 +35,25 @@ import java.util.*;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
+/**
+ * Tests the {@link TrimInteger} operation.
+ * 
+ * @author Owen Feehan
+ */
 public class TrimIntegerTest {
 
     private static class ConstantStringsFixture {
 
-        private static String STR_DIGITS_1 = "321";
-        private static String STR_DIGITS_2 = "78";
+        private static final String STR_DIGITS_1 = "321";
+        private static final String STR_DIGITS_2 = "78";
 
-        private static String STR_SUFFIX_1 = "ab";
-        private static String STR_SUFFIX_2 = "cd";
+        private static final String SUFFIX_1 = "ab";
+        private static final String SUFFIX_2 = "cd";
 
-        private static String STR_WITH_DIGITS_1 = STR_DIGITS_1 + STR_SUFFIX_1;
-        private static String STR_WITH_DIGITS_2 = STR_DIGITS_2 + STR_SUFFIX_2;
+        private static final String WITH_DIGITS_1 = STR_DIGITS_1 + SUFFIX_1;
+        private static final String WITH_DIGITS_2 = STR_DIGITS_2 + SUFFIX_2;
 
-        private static String STR_WITHOUT_DIGITS_1 = "efgg";
+        private static final String WITHOUT_DIGITS_1 = "efgg";
 
         public static List<String> digits() {
             List<String> digits = new ArrayList<>();
@@ -58,32 +63,38 @@ public class TrimIntegerTest {
         }
 
         public static List<String> suffices() {
-            return new ArrayList<>(Arrays.asList(STR_SUFFIX_1, STR_SUFFIX_2));
+            return new ArrayList<>(Arrays.asList(SUFFIX_1, SUFFIX_2));
         }
 
         public static List<String> genSource(boolean includeWithoutDigits) {
             List<String> list = genWithDigits();
             if (includeWithoutDigits) {
-                list.add(STR_WITHOUT_DIGITS_1);
+                list.add(WITHOUT_DIGITS_1);
             }
             return list;
         }
 
         private static List<String> genWithDigits() {
-            return new ArrayList<>(Arrays.asList(STR_WITH_DIGITS_1, STR_WITH_DIGITS_2));
+            return new ArrayList<>(Arrays.asList(WITH_DIGITS_1, WITH_DIGITS_2));
         }
     }
-
+        
     private static UnresolvedPatternElementFactory factory =
             new UnresolvedPatternElementFactory(IOCase.SENSITIVE);
 
+    /**
+     * Tests the operation when it is expected to succeed.
+     */
     @Test
-    public void testCase_Success() {
+    public void testCaseSuccess() {
         applyTest(false, expectedSucceedPattern());
     }
 
+    /**
+     * Tests the operation when it is expected to fail.
+     */
     @Test
-    public void testCase_Fail() {
+    public void testCaseFail() {
         applyTest(true, null);
     }
 
@@ -95,12 +106,10 @@ public class TrimIntegerTest {
 
         Pattern pattern = op.trim(source);
 
-        // assert statements
         assertEquals(expectedPattern, pattern);
     }
 
     private static Pattern expectedSucceedPattern() {
-
         return factory.createUnresolvedString(
                 ResolvedPatternElementFactory.integer(ConstantStringsFixture.digits()),
                 ConstantStringsFixture.suffices());

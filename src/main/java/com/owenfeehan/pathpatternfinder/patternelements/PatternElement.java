@@ -39,6 +39,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  *
  * <p>It can have a constant-value (identical value for all items in the list) or can have a varying
  * value.
+ * 
+ * @author Owen Feehan
  */
 public abstract class PatternElement {
 
@@ -60,7 +62,7 @@ public abstract class PatternElement {
     public abstract Pattern resolve();
 
     /**
-     * Does the element never vary?
+     * Does the element <b>never</b> vary?
      *
      * @return true iff this element have a constant value. Otherwise the element has multiple
      *     possible values. Iff true, {@link #describe} should return this constant value

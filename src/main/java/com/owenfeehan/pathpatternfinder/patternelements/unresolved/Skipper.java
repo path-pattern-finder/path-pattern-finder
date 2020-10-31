@@ -30,10 +30,16 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * If we already know certain operations will fail, as they've been tried before, then they can be
- * deliberately skipped to save computation.
+ * Skips certain kind of resolves operations if it is known a priori that they are unneeded.
+ *
+ * <p>If we already know certain operations will fail, as they've been tried before, then they can
+ * be deliberately skipped to save computation. This class specifies flags for these operations that
+ * can be skipped.
+ * 
+ * @author Owen Feehan
  */
 public class Skipper {
+
     /**
      * Whether to try to resolve from the left. We can disable this operation, if we've already
      * tried without success, and don't wish to repeat needlessly.
@@ -46,13 +52,26 @@ public class Skipper {
      */
     private boolean includeRightResolve;
 
-    /** The minimum index from which we start attempting to split characters, to avoid repeating */
+    /** The minimum index from which we start attempting to split characters, to avoid repeating. */
     private int startSplitCharIndex;
 
+    /**
+     * Creates with default values (include everything, and {@code #getStartSplitCharIndex()} of 0).
+     */
     public Skipper() {
         this(true, true, 0);
     }
 
+    /**
+     * Creates with explicit values for flags.
+     *
+     * @param includeLeftResolve whether to try to resolve from the left. We can disable this
+     *     operation, if we've already tried without success, and don't wish to repeat needlessly.
+     * @param includeRightResolve whether to try to resolve from the right. We can disable this
+     *     operation, if we've already tried without success, and don't wish to repeat needlessly.
+     * @param startSplitCharIndex the minimum index from which we start attempting to split
+     *     characters, to avoid repeating
+     */
     public Skipper(
             boolean includeLeftResolve, boolean includeRightResolve, int startSplitCharIndex) {
         this.includeLeftResolve = includeLeftResolve;
@@ -60,18 +79,36 @@ public class Skipper {
         this.startSplitCharIndex = startSplitCharIndex;
     }
 
+    /**
+     * Whether to try to resolve from the left. We can disable this operation, if we've already
+     * tried without success, and don't wish to repeat needlessly.
+     *
+     * @return true if resolution should be tried, false if it should not be.
+     */
     public boolean includeLeftResolve() {
         return includeLeftResolve;
     }
 
+    /**
+     * Whether to try to resolve from the right. We can disable this operation, if we've already
+     * tried without success, and don't wish to repeat needlessly.
+     *
+     * @return true if resolution should be tried, false if it should not be.
+     */
     public boolean includeRightResolve() {
         return includeRightResolve;
     }
 
+    /**
+     * The minimum index from which we start attempting to split characters, to avoid repeating.
+     *
+     * @return the index
+     */
     public int getStartSplitCharIndex() {
         return startSplitCharIndex;
     }
 
+    /** Switch whether to resolve from the left, with whether to resolve from the right. */
     public void swapResolves() {
         boolean previousLeftResolve = includeLeftResolve;
         this.includeLeftResolve = includeRightResolve;

@@ -29,8 +29,12 @@ package com.owenfeehan.pathpatternfinder.describer;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
 /**
- * Creates a string that * shows constant-value elements as text * replacing varliable-value
- * elements with a pattern e.g. ${3} where the number is an index
+ * Creates a string that shows constant-value elements as text replacing variable-value
+ * elements with a pattern.
+ * 
+ * <p>e.g. {@code ${3}} where the number is an index.
+ * 
+ * @author Owen Feehan
  */
 class PatternDescriber {
 
@@ -41,9 +45,9 @@ class PatternDescriber {
     private int variableIndex = 0;
 
     /**
-     * Adds a new element to be described
+     * Adds a new element to be described.
      *
-     * @param element
+     * @param element the element to add
      * @param consoleWidth width of the console (used to determine how much content to display, so
      *     there's no word-wrapping)
      */

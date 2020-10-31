@@ -43,11 +43,18 @@ import java.util.stream.Collectors;
  *   input:   ["the boy went to school", "the boy went to a party"]
  *   pattern: ["the boy went to "]
  * </pre>
+ * 
+ * @author Owen Feehan
  */
 public class TrimConstantString implements TrimOperation<String> {
 
     private UnresolvedPatternElementFactory factory;
 
+    /**
+     * Creates given a factory for creating unresolved pattern-elements.
+     * 
+     * @param factory the factory
+     */
     public TrimConstantString(UnresolvedPatternElementFactory factory) {
         this.factory = factory;
     }

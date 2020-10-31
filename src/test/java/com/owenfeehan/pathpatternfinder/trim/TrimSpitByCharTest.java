@@ -37,33 +37,38 @@ import java.util.List;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
+/**
+ * Tests the {@link TrimSpitByCharTest} operation.
+ * 
+ * @author Owen Feehan
+ */
 public class TrimSpitByCharTest {
 
     private static class ConstantStringsFixture {
 
-        private static String STR1 = "aaa_bbb_ccc_dddd-eeee";
-        private static String STR2 = "four_three_two-one";
+        private static final String STRING1 = "aaa_bbb_ccc_dddd-eeee";
+        private static final String STRING2 = "four_three_two-one";
 
         public static List<String> genSource(
                 boolean includeWithoutUnderscores, boolean includeWithoutAny) {
-            return new ArrayList<>(Arrays.asList(STR1, STR2));
+            return new ArrayList<>(Arrays.asList(STRING1, STRING2));
         }
 
         public static Pattern expectedUnderscoreSplit() {
             Pattern pattern = new Pattern();
-            FixtureHelper.addUnresolved("aaa", "four", pattern, false, true, factory);
+            AndUnresolvedHelper.addUnresolved("aaa", "four", pattern, false, true, factory);
             ResolvedPatternElementFactory.addConstantTo("_", pattern);
-            FixtureHelper.addUnresolved(
+            AndUnresolvedHelper.addUnresolved(
                     "bbb_ccc_dddd-eeee", "three_two-one", pattern, true, false, factory);
             return pattern;
         }
 
         public static Pattern expectedHyphenSplit() {
             Pattern pattern = new Pattern();
-            FixtureHelper.addUnresolved(
+            AndUnresolvedHelper.addUnresolved(
                     "aaa_bbb_ccc_dddd", "four_three_two", pattern, false, true, factory);
             ResolvedPatternElementFactory.addConstantTo("-", pattern);
-            FixtureHelper.addUnresolved("eeee", "one", pattern, true, false, factory);
+            AndUnresolvedHelper.addUnresolved("eeee", "one", pattern, true, false, factory);
             return pattern;
         }
     }
@@ -71,18 +76,27 @@ public class TrimSpitByCharTest {
     private static UnresolvedPatternElementFactory factory =
             new UnresolvedPatternElementFactory(IOCase.SENSITIVE);
 
+    /**
+     * Tests the operation to split strings by an <i>underscore</i> character.
+     */
     @Test
-    public void testCase_UnderscoreSplit() {
+    public void testCaseUnderscoreSplit() {
         applyTest('_', false, false, ConstantStringsFixture.expectedUnderscoreSplit());
     }
 
+    /**
+     * Tests the operation to split strings by a <i>hyphen</i> character.
+     */
     @Test
-    public void testCase_HyphenSplit() {
+    public void testCaseHyphenSplit() {
         applyTest('-', false, false, ConstantStringsFixture.expectedHyphenSplit());
     }
 
+    /**
+     * Tests the operation to split strings by a <i>comma</i> character.
+     */
     @Test
-    public void testCase_CommaSplit() {
+    public void testCaseCommaSplit() {
         applyTest(',', false, false, null);
     }
 

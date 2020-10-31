@@ -38,13 +38,24 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
+/**
+ * Tests the {@link TrimCommonPathRoot} operation.
+ * 
+ * @author Owen Feehan
+ */
 public class TrimCommonPathRootTest {
 
+    /**
+     * Tests comparing paths with case-insensitivity.
+     */
     @Test
     public void testCaseInsensitive() {
         applyTest(IOCase.INSENSITIVE, 2);
     }
 
+    /**
+     * Tests comparing paths with case-sensitivity.
+     */
     @Test
     public void testCaseSensitive() {
         applyTest(IOCase.SENSITIVE, 1);

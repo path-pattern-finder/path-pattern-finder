@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.apache.commons.io.IOCase;
 
 /**
- * Finds common (left-most) elements among paths.
+ * Finds common (left-most) elements among {@link java.nio.file.Path}s.
  *
  * <p>Elements are common if they are present (from left to right) among all paths.
  *
@@ -17,12 +17,10 @@ import org.apache.commons.io.IOCase;
  */
 public class FindCommonPathElements {
 
-    private FindCommonPathElements() {
-        // NOTHING TO DO
-    }
+    private FindCommonPathElements() {}
 
     /**
-     * Finds the common (left-most) elements among paths.
+     * Finds the common (left-most) elements among {@link java.nio.file.Path}s.
      *
      * @param pathsToFiles paths to files
      * @return the common path-elements among all of {@code pathsToFiles}, if any common elements
@@ -34,8 +32,8 @@ public class FindCommonPathElements {
     }
 
     /**
-     * Finds the common (left-most) elements among paths, with a customizable means via an {@code
-     * IOCase} for comparing strings.
+     * Finds the common (left-most) elements among {@link java.nio.file.Path}s, with a customizable
+     * means via an {@code IOCase} for comparing strings.
      *
      * @param pathsToFiles paths to files
      * @param ioCase whether to be case-sensitive or not in comparisons.
@@ -49,8 +47,8 @@ public class FindCommonPathElements {
     }
 
     /**
-     * Finds the common (left-most) elements among paths, with a customizable means via a {@link
-     * CasedStringComparer} for comparing strings.
+     * Finds the common (left-most) elements among {@link java.nio.file.Path}s, with a customizable
+     * means via a {@link CasedStringComparer} for comparing strings.
      *
      * @param pathsToFiles paths to files
      * @param comparer how to compare two strings (whether to be case-sensitive or not).

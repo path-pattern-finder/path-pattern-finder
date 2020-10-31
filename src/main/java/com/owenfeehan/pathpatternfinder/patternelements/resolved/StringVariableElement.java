@@ -37,7 +37,11 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-/** A varying string */
+/** 
+ * A varying string.
+ *
+ * @author Owen Feehan
+ */
 class StringVariableElement extends VariableElement {
 
     private static final String SEP_ALL = " | ";
@@ -121,7 +125,7 @@ class StringVariableElement extends VariableElement {
 
     private static String describeWithMaybeExamples(
             DescribeFrequencyMap<String> freq, int widthToDescribe) {
-        String intro = String.format("%d unique strings", freq.numUniqueValues());
+        String intro = String.format("%d unique strings", freq.numberUniqueValues());
         return intro + freq.describeAllWithin(widthToDescribe - intro.length(), " e.g. ", SEP_SOME);
     }
 }

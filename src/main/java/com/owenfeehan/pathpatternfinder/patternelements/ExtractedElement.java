@@ -29,7 +29,7 @@ package com.owenfeehan.pathpatternfinder.patternelements;
 /**
  * The result of partition a string into two components, one left (prefix) and one right (suffix)
  *
- * @author owen
+ * @author Owen Feehan
  */
 public class ExtractedElement {
 
@@ -59,10 +59,20 @@ public class ExtractedElement {
         this(str.substring(0, indexSecondPart), str.substring(indexSecondPart));
     }
 
+    /**
+     * The left-most part of string
+     *
+     * @return the left-most part of string.
+     */
     public String getExtracted() {
         return extracted;
     }
 
+    /**
+     * The right-most part of string
+     *
+     * @return the right-most part of string.
+     */
     public String getRemainder() {
         return remainder;
     }

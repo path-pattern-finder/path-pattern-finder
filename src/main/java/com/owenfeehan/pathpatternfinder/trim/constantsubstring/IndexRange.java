@@ -26,25 +26,51 @@ package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
  * #L%
  */
 
-/** A range of indices in an array. */
+/**
+ * A range of indices in an array.
+ *
+ * @author Owen Feehan
+ */
 public class IndexRange {
 
     private int startIndex;
     private int length;
 
+    /**
+     * Create for a given starting-index and length.
+     *
+     * @param startIndex the index the range begins at.
+     * @param length how many items are in the range.
+     */
     public IndexRange(int startIndex, int length) {
         this.startIndex = startIndex;
         this.length = length;
     }
 
+    /**
+     * The index the range begins at.
+     *
+     * @return the index
+     */
     public int getStartIndex() {
         return startIndex;
     }
 
+    /**
+     * How many items are in the range.
+     *
+     * @return the number of items in the range.
+     */
     public int getLength() {
         return length;
     }
 
+    /**
+     * The end index (exclusive) of the range.
+     *
+     * @return an index can be used as an upper-bound on the range, but doesn't itself exist as an
+     *     element.
+     */
     public int getEndIndexExclusive() {
         return startIndex + length;
     }

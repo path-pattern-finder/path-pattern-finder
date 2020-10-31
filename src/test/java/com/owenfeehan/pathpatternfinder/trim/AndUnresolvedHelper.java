@@ -32,8 +32,23 @@ import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPat
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class FixtureHelper {
+/**
+ * Helps add unresolved-elements in tests.
+ *
+ * @author Owen Feehan
+ */
+public class AndUnresolvedHelper {
 
+    /**
+     * Adds a list of two strings as unresolved.
+     *
+     * @param first the first-string to add
+     * @param second the second-string to add
+     * @param pattern the pattern to add the unresolved element to
+     * @param includeLeftResolve whether to resolve from the left
+     * @param includeRightResolve whether to resolve from the right
+     * @param factory the factory for creating unresolved pattern-elements.
+     */
     public static void addUnresolved(
             String first,
             String second,

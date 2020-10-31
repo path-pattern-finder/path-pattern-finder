@@ -33,15 +33,31 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/** Creation of the different types of resolved elements. */
+/**
+ * Creation of the different types of resolved elements.
+ *
+ * @author Owen Feehan
+ */
 public class ResolvedPatternElementFactory {
 
     private ResolvedPatternElementFactory() {}
 
+    /**
+     * Creates constant element of a single character.
+     *
+     * @param value the character
+     * @return a newly created element
+     */
     public static PatternElement constant(char value) {
         return constant(Character.toString(value));
     }
 
+    /**
+     * Creates constant element of a string.
+     *
+     * @param value the string
+     * @return a newly created element
+     */
     public static PatternElement constant(String value) {
 
         // Special case where we create a constant with a directory seperator only, then we convert
@@ -53,38 +69,86 @@ public class ResolvedPatternElementFactory {
         return new ConstantElement(value);
     }
 
-    public static PatternElement integer(int... args) {
+    /**
+     * Creates a varying integer element of one or more ints.
+     *
+     * @param values the ints that vary
+     * @return a newly created element
+     */
+    public static PatternElement integer(int... values) {
         List<String> list = new ArrayList<>();
-        for (int val : args) {
+        for (int val : values) {
             list.add(Integer.toString(val));
         }
         return integer(list);
     }
 
+    /**
+     * Creates a varying integer element of one more strings.
+     *
+     * @param values the strings that vary
+     * @return a newly created element
+     */
     public static PatternElement integer(List<String> values) {
         return new IntegerVariableElement(values);
     }
 
-    public static PatternElement string(String... args) {
-        return string(Arrays.asList(args));
+    /**
+     * Creates a varying string element of one or more strings.
+     *
+     * @param values the strings that vary
+     * @return a newly created element
+     */
+    public static PatternElement string(String... values) {
+        return string(Arrays.asList(values));
     }
 
+    /**
+     * Creates a varying string element of a list of strings.
+     *
+     * @param values the strings that vary
+     * @return a newly created element
+     */
     public static PatternElement string(List<String> values) {
         return new StringVariableElement(values);
     }
 
+    /**
+     * Creates an element representing a directory seperator.
+     *
+     * <p>e.g. this is a forward-slash on Unix or a backslash on Windows.
+     *
+     * @return a newly created element
+     */
     public static PatternElement directorySeperator() {
         return new DirectorySeperator();
     }
 
+    /**
+     * Creates a new constant element from a string, and adds to {@code pattern}.
+     *
+     * @param value the value for the constant element
+     * @param pattern the pattern to add to
+     */
     public static void addConstantTo(String value, Pattern pattern) {
         pattern.add(constant(value));
     }
 
+    /**
+     * Creates a new constant element from a character, and adds to {@code pattern}.
+     *
+     * @param value the value for the constant element
+     * @param pattern the pattern to add to
+     */
     public static void addConstantTo(char value, Pattern pattern) {
         pattern.add(constant(value));
     }
 
+    /**
+     * Creates a new directory-seperator element, and adds to {@code pattern}.
+     *
+     * @param pattern the pattern to add to
+     */
     public static void addDirectorySeperatorTo(Pattern pattern) {
         pattern.add(directorySeperator());
     }

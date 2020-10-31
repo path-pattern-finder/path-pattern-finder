@@ -34,25 +34,32 @@ import java.util.Arrays;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
+/**
+ * Tests on {@code IntegerVariableElement}.
+ *
+ * @author Owen Feehan
+ */
 public class IntegerVariableElementTest {
 
+    /** Checks that it can describe a contiguous range of numbers as a sequence. */
     @Test
     public void testDescribeSequence() {
         testDescribeSequence("5", true);
     }
 
+    /** Checks that it can detect a non-contiguous set of numbers. */
     @Test
     public void testDescribeNotSequence() {
         testDescribeSequence("6", false);
     }
 
-    /** Checks that it can an integer string without problems */
+    /** Checks that it can extract an integer string without problems */
     @Test
     public void testIntegerString_All() {
         testExtractElement("444", "444");
     }
 
-    /** Checks that it can an integer string with text at the end */
+    /** Checks that it can extract an integer string with text at the end */
     @Test
     public void testIntegerString_Partial() {
         testExtractElement("444a", "444");

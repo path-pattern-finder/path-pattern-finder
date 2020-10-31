@@ -29,7 +29,15 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
 import java.util.*;
 import org.apache.commons.collections4.bag.TreeBag;
 
-/** Constructs a frequency map for a list of values */
+/**
+ * Constructs a frequency map for a list of values.
+ *
+ * <p>This counts the number of occurrences of each element (who may be repeated many times).
+ *
+ * @author Owen Feehan
+ * @param <T> element-type whose frequency is counted ({@link #hashCode()} and {@link
+ *     #equals(Object) should be well-defined}.
+ */
 public class FrequencyMap<T extends Comparable<T>> {
 
     // Maps the item to the count (ordered by the key)
@@ -38,6 +46,11 @@ public class FrequencyMap<T extends Comparable<T>> {
     // Ordered by the count (rather than the key)
     private OrderedByCount<T> orderedCounts;
 
+    /**
+     * Create for a list of elements.
+     *
+     * @param list the list.
+     */
     public FrequencyMap(List<T> list) {
         bag = new TreeBag<>(list);
         orderedCounts = new OrderedByCount<>(bag);
