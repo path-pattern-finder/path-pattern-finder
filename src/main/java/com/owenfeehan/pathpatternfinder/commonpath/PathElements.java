@@ -44,7 +44,7 @@ public class PathElements implements Iterable<String> {
     private List<String> elements;
     private final CasedStringComparer comparer;
 
-    /* The path used in the constructor, reused in {@link #toPath} to form an output-path. */
+    /** The path used in the constructor, reused in {@link #toPath} to form an output-path. */
     private final Path firstPath;
     
     /**
