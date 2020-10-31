@@ -86,7 +86,8 @@ class StringVariableElement extends VariableElement {
 
         // Search for the first key that can be extracted
         for (String key : keys) {
-            Optional<ExtractedElement> element = ExtractElementFrom.extractStringIfPossible(key, str, ioCase);
+            Optional<ExtractedElement> element =
+                    ExtractElementFrom.extractStringIfPossible(key, str, ioCase);
             if (element.isPresent()) {
                 return element;
             }

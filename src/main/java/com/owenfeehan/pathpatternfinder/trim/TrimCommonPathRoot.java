@@ -64,8 +64,7 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
                 FindCommonPathElements.findForFilePaths(source, factory.stringComparer());
 
         // If we have at least one common element... we convert
-        return commonElements.map( value ->
-            createPatternFromCommonElements(value, source, factory));
+        return commonElements.map(value -> createPatternFromCommonElements(value, source, factory));
     }
 
     private static Pattern createPatternFromCommonElements(

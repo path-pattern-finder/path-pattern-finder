@@ -27,9 +27,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  */
 
 import static org.junit.Assert.*;
-import java.util.Optional;
+
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 

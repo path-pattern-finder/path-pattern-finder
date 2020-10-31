@@ -66,7 +66,10 @@ public class IntegerVariableElementTest {
         testExtractElement("444a", Optional.of("444"));
     }
 
-    /** Checks that a {@link Optional#empty} is returned if there are no digits at the beginning of the string */
+    /**
+     * Checks that a {@link Optional#empty} is returned if there are no digits at the beginning of
+     * the string
+     */
     @Test
     public void testIntegerStringFailure() {
         testExtractElement("a444", Optional.empty());

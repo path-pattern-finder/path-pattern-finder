@@ -37,7 +37,8 @@ import java.util.Optional;
  * Reads an integer from the left-side of the string (greedy, it grabs an integer of maximally
  * possible length).
  *
- * <p>Only succeeds if every string has an integer at the left, otherwise returns {@link Optional#empty}.
+ * <p>Only succeeds if every string has an integer at the left, otherwise returns {@link
+ * Optional#empty}.
  *
  * @author Owen Feehan
  */
@@ -67,15 +68,17 @@ public class TrimInteger implements TrimOperation<String> {
 
             if (integerPart.isEmpty()) {
                 // Can't read an integer, so this won't work
-                return Optional.empty();            }
+                return Optional.empty();
+            }
 
             foundIntegers.add(integerPart);
         }
 
         // If successful, then we create a pattern out of the commonality, and remove it from each
         // string
-        return Optional.of( factory.createUnresolvedString(
-                ResolvedPatternElementFactory.integer(foundIntegers), remainder));
+        return Optional.of(
+                factory.createUnresolvedString(
+                        ResolvedPatternElementFactory.integer(foundIntegers), remainder));
     }
 
     private String readNumbersFromLeft(String str, List<String> remainder) {

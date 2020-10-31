@@ -67,11 +67,10 @@ public class TrimCommonPathRootTest {
 
         TrimCommonPathRoot common = new TrimCommonPathRoot(factory);
 
-        Pattern expected = expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture);
-        
-        assertEquals(
-                Optional.of(expected),
-                common.trim(source));
+        Pattern expected =
+                expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture);
+
+        assertEquals(Optional.of(expected), common.trim(source));
     }
 
     /**

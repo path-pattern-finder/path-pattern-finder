@@ -59,5 +59,6 @@ public class TrimOperationOrList<T> implements TrimOperation<T> {
             }
         }
 
-        return Optional.empty();    }
+        return Optional.empty();
+    }
 }

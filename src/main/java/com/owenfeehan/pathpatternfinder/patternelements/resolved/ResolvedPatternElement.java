@@ -1,7 +1,5 @@
 package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
-import java.util.Optional;
-
 /*-
  * #%L
  * path-pattern-finder
@@ -30,6 +28,7 @@ import java.util.Optional;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
+import java.util.Optional;
 
 /**
  * A {@link PatternElement} that has been resolved.

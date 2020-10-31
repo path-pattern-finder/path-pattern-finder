@@ -64,9 +64,9 @@ public class TrimConstantSubstring implements TrimOperation<String> {
         // First of all we find a mask with all common characters (identical character at the same
         // index in each str)
         Optional<IndexRange> common = findCommonString(source);
-        
+
         // Stage 2. Let's create a pattern
-        return common.map( value -> createPattern(source, value) );
+        return common.map(value -> createPattern(source, value));
     }
 
     /**

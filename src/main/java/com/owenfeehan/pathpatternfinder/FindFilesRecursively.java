@@ -80,7 +80,8 @@ public class FindFilesRecursively {
      * @throws IOException if root isn't a valid directory, or something goes wrong while walking
      *     the three
      */
-    public static List<Path> findFiles(Path root, Optional<String> fileFilterPattern) throws IOException {
+    public static List<Path> findFiles(Path root, Optional<String> fileFilterPattern)
+            throws IOException {
 
         if (!root.isAbsolute()) {
             root = root.toAbsolutePath();
@@ -99,9 +100,9 @@ public class FindFilesRecursively {
         return list;
     }
 
-    private static Optional<PathMatcher> matcherFromPattern(Path root, Optional<String> fileFilterPattern) {
-        return fileFilterPattern.map( pattern -> 
-            root.getFileSystem().getPathMatcher("glob:" + pattern)
-        );
+    private static Optional<PathMatcher> matcherFromPattern(
+            Path root, Optional<String> fileFilterPattern) {
+        return fileFilterPattern.map(
+                pattern -> root.getFileSystem().getPathMatcher("glob:" + pattern));
     }
 }

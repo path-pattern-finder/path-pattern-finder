@@ -61,7 +61,7 @@ class HelperStringList {
         // Invert the pattern found
         pattern.ifPresent(Pattern::reverse);
         return pattern;
-     }
+    }
 
     public void reverse() {
         this.list = StringUtilities.reverseStringsInList(list);

@@ -102,7 +102,7 @@ class UnresolvedStringList extends UnresolvedPatternElement {
         }
 
         // Nothing more we can do, so we convert into a StringSetElement
-        return Optional.of( new Pattern(ResolvedPatternElementFactory.string(list.list())));
+        return Optional.of(new Pattern(ResolvedPatternElementFactory.string(list.list())));
     }
 
     @Override

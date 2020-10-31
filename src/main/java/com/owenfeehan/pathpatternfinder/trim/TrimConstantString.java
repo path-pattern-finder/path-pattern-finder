@@ -63,7 +63,7 @@ public class TrimConstantString implements TrimOperation<String> {
     @Override
     public Optional<Pattern> trim(List<String> source) {
         Optional<String> common = findCommonString(source);
-        return common.map( value -> createPattern(source, value) );
+        return common.map(value -> createPattern(source, value));
     }
 
     private Optional<String> findCommonString(List<String> source) {

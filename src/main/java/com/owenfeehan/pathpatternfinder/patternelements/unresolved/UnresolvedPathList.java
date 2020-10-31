@@ -60,7 +60,7 @@ class UnresolvedPathList extends UnresolvedPatternElement {
         }
 
         // Otherwise if we cannot find any common-path, we convert paths to strings
-        return Optional.of( factory.createUnresolvedString(convert(list)) );
+        return Optional.of(factory.createUnresolvedString(convert(list)));
     }
 
     @Override

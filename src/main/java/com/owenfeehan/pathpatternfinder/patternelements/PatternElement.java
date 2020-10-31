@@ -57,8 +57,8 @@ public abstract class PatternElement {
      *
      * <p>If isResolved()==true, this method should always return {@link Optional#empty}.
      *
-     * @return a {@link Pattern} if successfully broken into smaller units, or {@link Optional#empty} if this isn't
-     *     possible
+     * @return a {@link Pattern} if successfully broken into smaller units, or {@link
+     *     Optional#empty} if this isn't possible
      */
     public abstract Optional<Pattern> resolve();
 
@@ -112,8 +112,8 @@ public abstract class PatternElement {
      *
      * @param str the string to extract the element from
      * @param ioCase how to handle case-sensitivity
-     * @return {@link Optional#empty} if element cannot be extracted, otherwise the string split into two components
-     *     (extracted, and remainder)
+     * @return {@link Optional#empty} if element cannot be extracted, otherwise the string split
+     *     into two components (extracted, and remainder)
      */
     public abstract Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase);
 
