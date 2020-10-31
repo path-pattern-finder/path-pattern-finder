@@ -34,6 +34,7 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
@@ -66,10 +67,10 @@ public class TrimCommonPathRootTest {
 
         TrimCommonPathRoot common = new TrimCommonPathRoot(factory);
 
-        Pattern expected =expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture);
+        Pattern expected = expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture);
         
         assertEquals(
-                expected,
+                Optional.of(expected),
                 common.trim(source));
     }
 

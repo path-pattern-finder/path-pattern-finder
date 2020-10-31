@@ -82,6 +82,6 @@ public class IntegerVariableElementTest {
     private static void testExtractElement(String srcStr, Optional<String> expectedExtract) {
         PatternElement element = ResolvedPatternElementFactory.integer(1, 8, 1000);
         Optional<ExtractedElement> extracted = element.extractElementFrom(srcStr, IOCase.SENSITIVE);
-        assertEquals(expectedExtract, extracted.map(ExtractedElement::getExtracted).orElse(""));
+        assertEquals(expectedExtract, extracted.map(ExtractedElement::getExtracted));
     }
 }
