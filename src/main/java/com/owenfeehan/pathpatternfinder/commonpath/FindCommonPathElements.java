@@ -23,9 +23,9 @@ public class FindCommonPathElements {
     }
 
     /**
-     * Finds the common (left-most) elements among paths that are guaranteed to refer to files, never to directories.
+     * Finds the common (left-most) elements among paths.
      * 
-     * @param pathsToFiles paths to files (but never to directories).
+     * @param pathsToFiles paths to files
      * @return the common path-elements among all of {@code pathsToFiles}, if any common elements exist.
      * @throws IllegalArgumentException if {@code pathsToFiles} is empty.
      */
@@ -34,9 +34,9 @@ public class FindCommonPathElements {
     }
     
     /**
-     * Finds the common (left-most) elements among paths that are guaranteed to refer to files, never to directories - with a customizable means of comparing strings.
+     * Finds the common (left-most) elements among paths, with a customizable means via an {@code IOCase} for comparing strings.
      * 
-     * @param pathsToFiles paths to files (but never to directories).
+     * @param pathsToFiles paths to files
      * @param ioCase whether to be case-sensitive or not in comparisons.
      * @return the common path-elements among all of {@code pathsToFiles}, if any common elements exist.
      * @throws IllegalArgumentException if {@code pathsToFiles} is empty.
@@ -46,9 +46,9 @@ public class FindCommonPathElements {
     }
     
     /**
-     * Finds the common (left-most) elements among paths that are guaranteed to refer to files, never to directories - with a customizable means of comparing strings.
+     * Finds the common (left-most) elements among paths, with a customizable means via a {@link CasedStringComparer} for comparing strings.
      * 
-     * @param pathsToFiles paths to files (but never to directories).
+     * @param pathsToFiles paths to files
      * @param comparer how to compare two strings (whether to be case-sensitive or not).
      * @return the common path-elements among all of {@code pathsToFiles}, if any common elements exist.
      * @throws IllegalArgumentException if {@code pathsToFiles} is empty.

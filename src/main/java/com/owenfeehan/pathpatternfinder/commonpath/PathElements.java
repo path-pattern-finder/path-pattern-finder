@@ -69,9 +69,9 @@ public class PathElements implements Iterable<String> {
         // If the path has less elements, we trim ours to match
         // We skip the file-name, and only consider directories
 
-        int numberDirectories = NumberDirectoriesHelper.numberDirectoryElementsForFile(path);
-        if (numberDirectories < elements.size()) {
-            trimTo(numberDirectories);
+        int numberElements = numberElementsForPath(path);
+        if (numberElements < elements.size()) {
+            trimTo(numberElements);
         }
         
         for (int i = 0; i < elements.size(); i++) {
@@ -125,7 +125,7 @@ public class PathElements implements Iterable<String> {
         }
 
         // We skip the file-name, and only consider directories
-        for (int i = 0; i < NumberDirectoriesHelper.numberDirectoryElementsForFile(path); i++) {
+        for (int i = 0; i < path.getNameCount(); i++) {
             elements.add(path.getName(i).toString());
         }
         return elements;
@@ -151,5 +151,17 @@ public class PathElements implements Iterable<String> {
         } else {
             return path.getName(index).toString();
         }
+    }
+    
+    
+    /**
+     * The number of elements in this path, maybe also including the root as the first element if it exists.
+     * 
+     * @param pathToFile a path, with or without a root
+     * @return the number of directory elements in the path, including the root as the first element if it exists.
+     */
+    private static int numberElementsForPath(Path pathToFile) {
+        int numberRootElements = pathToFile.getRoot()!=null ? 1 : 0;
+        return numberRootElements + pathToFile.getNameCount();
     }
 }
