@@ -34,6 +34,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPat
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
 
@@ -79,33 +80,33 @@ public class TrimSpitByCharTest {
     /** Tests the operation to split strings by an <i>underscore</i> character. */
     @Test
     public void testCaseUnderscoreSplit() {
-        applyTest('_', false, false, ConstantStringsFixture.expectedUnderscoreSplit());
+        applyTest('_', false, false, Optional.of(ConstantStringsFixture.expectedUnderscoreSplit()));
     }
 
     /** Tests the operation to split strings by a <i>hyphen</i> character. */
     @Test
     public void testCaseHyphenSplit() {
-        applyTest('-', false, false, ConstantStringsFixture.expectedHyphenSplit());
+        applyTest('-', false, false, Optional.of(ConstantStringsFixture.expectedHyphenSplit()));
     }
 
     /** Tests the operation to split strings by a <i>comma</i> character. */
     @Test
     public void testCaseCommaSplit() {
-        applyTest(',', false, false, null);
+        applyTest(',', false, false, Optional.empty());
     }
 
     private static void applyTest(
             char splitChar,
             boolean includeWithoutUnderscores,
             boolean includeWithoutAny,
-            Pattern expectedPattern) {
+            Optional<Pattern> expectedPattern) {
 
         List<String> source =
                 ConstantStringsFixture.genSource(includeWithoutUnderscores, includeWithoutAny);
 
         TrimSplitByChar op = new TrimSplitByChar(splitChar, 0, factory);
 
-        Pattern pattern = op.trim(source);
+        Optional<Pattern> pattern = op.trim(source);
 
         // assert statements
         assertEquals(expectedPattern, pattern);

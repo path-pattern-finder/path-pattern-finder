@@ -61,7 +61,6 @@ public class Pattern implements Iterable<PatternElement> {
      * @param elements the list.
      */
     Pattern(List<PatternElement> elements) {
-        assert (elements != null);
         this.elements = elements;
     }
 
@@ -154,9 +153,9 @@ public class Pattern implements Iterable<PatternElement> {
             PatternElement element = get(i);
             if (!element.isResolved()) {
 
-                Pattern patternResolved = element.resolve();
-                if (patternResolved != null) {
-                    replace(i, patternResolved);
+                Optional<Pattern> patternResolved = element.resolve();
+                if (patternResolved.isPresent()) {
+                    replace(i, patternResolved.get());
                     patternChanged = true;
                     continue;
                 }
@@ -189,12 +188,12 @@ public class Pattern implements Iterable<PatternElement> {
     /**
      * Fits a string against the pattern.
      *
-     * @param str the string to fit
+     * @param stringToFit the string to fit
      * @param ioCase how to handle case-sensitivity
      * @return an array with a string for each corresponding element of the pattern, or {@code
      *     Optional.empty()} if a string cannot be fit
      */
-    public Optional<String[]> fitAgainst(String str, IOCase ioCase) {
+    public Optional<String[]> fitAgainst(String stringToFit, IOCase ioCase) {
 
         String[] out = new String[elements.size()];
 
@@ -202,10 +201,10 @@ public class Pattern implements Iterable<PatternElement> {
             PatternElement element = elements.get(i);
 
             // Extract an element matching the pattern, or give up if it fails
-            ExtractedElement extracted = element.extractElementFrom(str, ioCase);
-            if (extracted != null) {
-                out[i] = extracted.getExtracted();
-                str = extracted.getRemainder();
+            Optional<ExtractedElement> extracted = element.extractElementFrom(stringToFit, ioCase);
+            if (extracted.isPresent()) {
+                out[i] = extracted.get().getExtracted();
+                stringToFit = extracted.get().getRemainder();
             } else {
                 return Optional.empty();
             }

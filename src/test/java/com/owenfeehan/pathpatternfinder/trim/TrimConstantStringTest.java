@@ -34,6 +34,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPat
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
@@ -120,10 +121,8 @@ public class TrimConstantStringTest {
 
         TrimConstantString op = new TrimConstantString(factory);
 
-        Pattern pattern = op.trim(source);
-
-        // assert statements
-        assertEquals(expectedPattern(constantValue, source, matchLength, factory), pattern);
+        Pattern expected = expectedPattern(constantValue, source, matchLength, factory);
+        assertEquals(Optional.of(expected), op.trim(source));
     }
 
     private static Pattern expectedPattern(

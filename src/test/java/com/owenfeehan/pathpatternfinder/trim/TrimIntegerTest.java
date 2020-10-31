@@ -85,24 +85,22 @@ public class TrimIntegerTest {
     /** Tests the operation when it is expected to succeed. */
     @Test
     public void testCaseSuccess() {
-        applyTest(false, expectedSucceedPattern());
+        applyTest(false, Optional.of(expectedSucceedPattern()));
     }
 
     /** Tests the operation when it is expected to fail. */
     @Test
     public void testCaseFail() {
-        applyTest(true, null);
+        applyTest(true, Optional.empty());
     }
 
-    private static void applyTest(boolean includeWithoutDigits, Pattern expectedPattern) {
+    private static void applyTest(boolean includeWithoutDigits, Optional<Pattern> expectedPattern) {
 
         List<String> source = ConstantStringsFixture.genSource(includeWithoutDigits);
 
         TrimInteger op = new TrimInteger(factory);
 
-        Pattern pattern = op.trim(source);
-
-        assertEquals(expectedPattern, pattern);
+        assertEquals(expectedPattern, op.trim(source));
     }
 
     private static Pattern expectedSucceedPattern() {

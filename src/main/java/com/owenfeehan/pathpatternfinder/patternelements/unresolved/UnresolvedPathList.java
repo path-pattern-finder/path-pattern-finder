@@ -31,6 +31,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.trim.TrimCommonPathRoot;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -51,15 +52,15 @@ class UnresolvedPathList extends UnresolvedPatternElement {
     }
 
     @Override
-    public Pattern resolve() {
-        Pattern pattern = new TrimCommonPathRoot(factory).trim(list);
+    public Optional<Pattern> resolve() {
+        Optional<Pattern> pattern = new TrimCommonPathRoot(factory).trim(list);
 
-        if (pattern != null) {
+        if (pattern.isPresent()) {
             return pattern;
         }
 
         // Otherwise if we cannot find any common-path, we convert paths to strings
-        return factory.createUnresolvedString(convert(list));
+        return Optional.of( factory.createUnresolvedString(convert(list)) );
     }
 
     @Override

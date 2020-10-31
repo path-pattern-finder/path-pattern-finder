@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -88,10 +89,10 @@ class PathsFromArguments {
     }
 
     private static List<Path> pathsFromWildcardGlob(String filterStr) throws IOException {
-        return FindFilesRecursively.findFiles(Paths.get(""), filterStr);
+        return FindFilesRecursively.findFiles(Paths.get(""), Optional.of(filterStr));
     }
 
     private static List<Path> pathsInDirectory(Path dir) throws IOException {
-        return FindFilesRecursively.findFiles(dir, null);
+        return FindFilesRecursively.findFiles(dir, Optional.empty());
     }
 }

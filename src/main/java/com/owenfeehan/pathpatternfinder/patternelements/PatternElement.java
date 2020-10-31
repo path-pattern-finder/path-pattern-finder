@@ -27,6 +27,7 @@ package com.owenfeehan.pathpatternfinder.patternelements;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -54,12 +55,12 @@ public abstract class PatternElement {
     /**
      * Converts this {@link Pattern} into smaller units.
      *
-     * <p>If isResolved()==true, this method should always return null
+     * <p>If isResolved()==true, this method should always return {@link Optional#empty}.
      *
-     * @return a {@link Pattern} if successfully broken into smaller units, or null if this isn't
+     * @return a {@link Pattern} if successfully broken into smaller units, or {@link Optional#empty} if this isn't
      *     possible
      */
-    public abstract Pattern resolve();
+    public abstract Optional<Pattern> resolve();
 
     /**
      * Does the element <b>never</b> vary?
@@ -111,10 +112,10 @@ public abstract class PatternElement {
      *
      * @param str the string to extract the element from
      * @param ioCase how to handle case-sensitivity
-     * @return null if element cannot be extracted, otherwise the string split into two components
+     * @return {@link Optional#empty} if element cannot be extracted, otherwise the string split into two components
      *     (extracted, and remainder)
      */
-    public abstract ExtractedElement extractElementFrom(String str, IOCase ioCase);
+    public abstract Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase);
 
     /**
      * Describe the element.

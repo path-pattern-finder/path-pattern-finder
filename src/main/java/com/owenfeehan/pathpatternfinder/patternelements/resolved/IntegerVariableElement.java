@@ -29,6 +29,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.integer.IntegerFrequencyMap;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -58,32 +59,32 @@ class IntegerVariableElement extends VariableElement {
     @Override
     public String describe(int widthToDescribe) {
 
-        IntegerFrequencyMap freq = new IntegerFrequencyMap(extractIntegerList());
+        IntegerFrequencyMap map = new IntegerFrequencyMap(extractIntegerList());
 
-        if (freq.areIndicesContiguous()) {
+        if (map.areIndicesContiguous()) {
             return String.format(
-                    "an integer sequence from %d to %d inclusive", freq.lowest(), freq.highest());
+                    "an integer sequence from %d to %d inclusive", map.lowest(), map.highest());
         } else {
 
             return String.format(
                     "%d unique integers between %d and %d inclusive",
-                    freq.numberUniqueValues(), freq.lowest(), freq.highest());
+                    map.numberUniqueValues(), map.lowest(), map.highest());
         }
     }
 
     @Override
-    public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+    public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
 
         int firstNonDigit = findIndexFirstNonDigitChar(str);
 
         if (firstNonDigit > 0) {
-            return new ExtractedElement(str, firstNonDigit);
+            return Optional.of(new ExtractedElement(str, firstNonDigit));
         } else if (firstNonDigit == 0) {
             // The first character was non-digit
-            return null;
+            return Optional.empty();
         } else {
             // The -1 case, where all the string were digits
-            return new ExtractedElement(str, "");
+            return Optional.of(new ExtractedElement(str, ""));
         }
     }
 

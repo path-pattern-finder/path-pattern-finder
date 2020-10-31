@@ -28,6 +28,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 
 /**
@@ -48,7 +49,7 @@ abstract class UnresolvedPatternElement extends PatternElement {
     }
 
     @Override
-    public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+    public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
         throw new UnsupportedOperationException(
                 "extractElementFrom operation is usupported un unresolved path elements");
     }

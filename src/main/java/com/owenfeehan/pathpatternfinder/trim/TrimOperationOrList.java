@@ -28,6 +28,7 @@ package com.owenfeehan.pathpatternfinder.trim;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Tries to apply each operation in a list until one is successful.
@@ -49,15 +50,14 @@ public class TrimOperationOrList<T> implements TrimOperation<T> {
     }
 
     @Override
-    public Pattern trim(List<T> source) {
+    public Optional<Pattern> trim(List<T> source) {
 
         for (TrimOperation<T> op : operations) {
-            Pattern pattern = op.trim(source);
-            if (pattern != null) {
+            Optional<Pattern> pattern = op.trim(source);
+            if (pattern.isPresent()) {
                 return pattern;
             }
         }
 
-        return null;
-    }
+        return Optional.empty();    }
 }

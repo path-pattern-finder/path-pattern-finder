@@ -2,6 +2,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import java.io.File;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -39,7 +40,7 @@ class DirectorySeperator extends ResolvedPatternElement {
     }
 
     @Override
-    public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+    public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
         return ExtractElementFrom.extractStringIfPossible(File.separator, str, ioCase);
     }
 }

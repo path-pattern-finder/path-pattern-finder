@@ -32,6 +32,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
@@ -48,7 +49,7 @@ class StringVariableElement extends VariableElement {
     private static final String SEP_SOME = ", ";
 
     // Lazy initialization
-    private FrequencyMap<String> freqMap = null;
+    private FrequencyMap<String> freqMap;
 
     public StringVariableElement(List<String> values) {
         super(values);
@@ -74,7 +75,7 @@ class StringVariableElement extends VariableElement {
     }
 
     @Override
-    public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+    public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
 
         // The order is important to make sure that smaller strings are checked after their longer
         // ones
@@ -85,13 +86,13 @@ class StringVariableElement extends VariableElement {
 
         // Search for the first key that can be extracted
         for (String key : keys) {
-            ExtractedElement elem = ExtractElementFrom.extractStringIfPossible(key, str, ioCase);
-            if (elem != null) {
-                return elem;
+            Optional<ExtractedElement> element = ExtractElementFrom.extractStringIfPossible(key, str, ioCase);
+            if (element.isPresent()) {
+                return element;
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     // Lazy creation of the frequency-map

@@ -27,6 +27,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  */
 
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 
 class ExtractElementFrom {
@@ -39,16 +40,16 @@ class ExtractElementFrom {
      * @param strToExtract string to extract
      * @param strToSearch string to search from
      * @param ioCase whether to be case-sensitive or not
-     * @return the extracted-string (and the remainder) or null if the left-most-side doesn't match
+     * @return the extracted-string (and the remainder) or {@link Optional#empty} if the left-most-side doesn't match.
      */
-    public static ExtractedElement extractStringIfPossible(
+    public static Optional<ExtractedElement> extractStringIfPossible(
             String strToExtract, String strToSearch, IOCase ioCase) {
 
         if (ioCase.checkStartsWith(strToSearch, strToExtract)) {
-            return new ExtractedElement(
+            return Optional.of( new ExtractedElement(
                     strToSearch.substring(0, strToExtract.length()),
-                    strToSearch.substring(strToExtract.length()));
+                    strToSearch.substring(strToExtract.length())));
         }
-        return null;
+        return Optional.empty();
     }
 }

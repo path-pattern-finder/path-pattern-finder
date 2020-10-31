@@ -28,6 +28,7 @@ package com.owenfeehan.pathpatternfinder.trim;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Attempts to trim the list of objects from left or right.
@@ -41,7 +42,7 @@ public interface TrimOperation<T> {
      * Attempts to trim the list of objects by finding a {@link Pattern}.
      *
      * @param source list of objects
-     * @return if successful, a pattern with the trimmed elements (and what remains to be resolved) as elements, otherwise null if unsuccessful
+     * @return if successful, a pattern with the trimmed elements (and what remains to be resolved) as elements, otherwise {@link Optional#empty} if unsuccessful
      */
-    public abstract Pattern trim(List<T> source);
+    public abstract Optional<Pattern> trim(List<T> source);
 }

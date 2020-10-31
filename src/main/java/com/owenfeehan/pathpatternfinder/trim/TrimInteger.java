@@ -31,12 +31,13 @@ import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPattern
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Reads an integer from the left-side of the string (greedy, it grabs an integer of maximally
  * possible length).
  *
- * <p>Only succeeds if every string has an integer at the left, otherwise returns null.
+ * <p>Only succeeds if every string has an integer at the left, otherwise returns {@link Optional#empty}.
  *
  * @author Owen Feehan
  */
@@ -54,28 +55,27 @@ public class TrimInteger implements TrimOperation<String> {
     }
 
     @Override
-    public Pattern trim(List<String> source) {
+    public Optional<Pattern> trim(List<String> source) {
 
         List<String> foundIntegers = new ArrayList<>();
         List<String> remainder = new ArrayList<>();
 
-        for (String s : source) {
+        for (String str : source) {
 
             // Is there an integer on the left side of the string
-            String integerPart = readNumbersFromLeft(s, remainder);
+            String integerPart = readNumbersFromLeft(str, remainder);
 
             if (integerPart.isEmpty()) {
                 // Can't read an integer, so this won't work
-                return null;
-            }
+                return Optional.empty();            }
 
             foundIntegers.add(integerPart);
         }
 
         // If successful, then we create a pattern out of the commonality, and remove it from each
         // string
-        return factory.createUnresolvedString(
-                ResolvedPatternElementFactory.integer(foundIntegers), remainder);
+        return Optional.of( factory.createUnresolvedString(
+                ResolvedPatternElementFactory.integer(foundIntegers), remainder));
     }
 
     private String readNumbersFromLeft(String str, List<String> remainder) {

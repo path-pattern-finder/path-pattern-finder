@@ -55,7 +55,7 @@ public class TrimConstantSubstring implements TrimOperation<String> {
     }
 
     @Override
-    public Pattern trim(List<String> source) {
+    public Optional<Pattern> trim(List<String> source) {
 
         if (source.isEmpty()) {
             throw new IllegalArgumentException("source must contain at least one path");
@@ -64,12 +64,9 @@ public class TrimConstantSubstring implements TrimOperation<String> {
         // First of all we find a mask with all common characters (identical character at the same
         // index in each str)
         Optional<IndexRange> common = findCommonString(source);
-        if (!common.isPresent()) {
-            return null;
-        }
-
+        
         // Stage 2. Let's create a pattern
-        return createPattern(source, common.get());
+        return common.map( value -> createPattern(source, value) );
     }
 
     /**

@@ -31,6 +31,7 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -60,18 +61,12 @@ public class TrimConstantString implements TrimOperation<String> {
     }
 
     @Override
-    public Pattern trim(List<String> source) {
-
-        String common = findCommonString(source);
-
-        if (common == null) {
-            return null;
-        }
-
-        return createPattern(source, common);
+    public Optional<Pattern> trim(List<String> source) {
+        Optional<String> common = findCommonString(source);
+        return common.map( value -> createPattern(source, value) );
     }
 
-    private String findCommonString(List<String> source) {
+    private Optional<String> findCommonString(List<String> source) {
         String common = source.get(0);
 
         for (int i = 1; i < source.size(); i++) {
@@ -81,11 +76,11 @@ public class TrimConstantString implements TrimOperation<String> {
 
             // If there's nothing left in common we give up
             if (common.isEmpty()) {
-                return null;
+                return Optional.empty();
             }
         }
 
-        return common;
+        return Optional.of(common);
     }
 
     private Pattern createPattern(List<String> source, String common) {

@@ -27,7 +27,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  */
 
 import static org.junit.Assert.*;
-
+import java.util.Optional;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import org.apache.commons.io.IOCase;
@@ -56,7 +56,7 @@ public class StringVariableElementTest {
 
     private static void testPattern(
             String expected, String fromStr, PatternElement element, IOCase ioCase) {
-        ExtractedElement extracted = element.extractElementFrom(fromStr, ioCase);
-        assertEquals(expected, extracted.getExtracted());
+        Optional<ExtractedElement> extracted = element.extractElementFrom(fromStr, ioCase);
+        assertEquals(Optional.of(expected), extracted.map(ExtractedElement::getExtracted));
     }
 }

@@ -35,6 +35,7 @@ import com.owenfeehan.pathpatternfinder.trim.AndUnresolvedHelper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
@@ -83,19 +84,19 @@ public class TrimConstantSubstringTest {
     /** Test <i>non mixed case</i> expecting a successful outcome. */
     @Test
     public void testCaseIdenticalCase() {
-        applyTest(false, false, fixture -> fixture.expectedPattern());
+        applyTest(false, false, fixture -> Optional.of(fixture.expectedPattern()));
     }
 
     /** Test <i>mixed case</i> expecting a successful outcome. */
     @Test
     public void testCaseMixedCase() {
-        applyTest(true, false, fixture -> fixture.expectedPattern());
+        applyTest(true, false, fixture -> Optional.of(fixture.expectedPattern()));
     }
 
     /** Test expecting failure. */
     @Test
     public void testCaseFailure() {
-        applyTest(false, true, fixture -> null);
+        applyTest(false, true, fixture -> Optional.empty());
     }
 
     /**
@@ -109,7 +110,7 @@ public class TrimConstantSubstringTest {
     private static void applyTest(
             boolean mixedCase,
             boolean prependFirst,
-            Function<ConstantStringsFixture, Pattern> expectedPattern) {
+            Function<ConstantStringsFixture, Optional<Pattern>> expectedPattern) {
 
         UnresolvedPatternElementFactory factory =
                 new UnresolvedPatternElementFactory(
@@ -120,10 +121,6 @@ public class TrimConstantSubstringTest {
         List<String> source = ConstantStringsFixture.genSource(mixedCase, prependFirst);
 
         TrimConstantSubstring op = new TrimConstantSubstring(factory);
-
-        Pattern pattern = op.trim(source);
-
-        // assert statements
-        assertEquals(expectedPattern.apply(fixture), pattern);
+        assertEquals(expectedPattern.apply(fixture), op.trim(source));
     }
 }

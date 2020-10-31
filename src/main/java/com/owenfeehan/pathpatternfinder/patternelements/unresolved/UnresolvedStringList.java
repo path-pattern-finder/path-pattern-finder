@@ -30,6 +30,7 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.trim.*;
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -68,40 +69,40 @@ class UnresolvedStringList extends UnresolvedPatternElement {
     }
 
     @Override
-    public Pattern resolve() {
+    public Optional<Pattern> resolve() {
 
         if (skipper.includeLeftResolve()) {
-            Pattern patternLeft = list.applyOpFromLeft(firstOp);
+            Optional<Pattern> patternLeft = list.applyOperationFromLeft(firstOp);
 
-            if (patternLeft != null) {
+            if (patternLeft.isPresent()) {
                 return patternLeft;
             }
         }
 
         if (skipper.includeRightResolve()) {
-            Pattern patternRight = list.applyOpFromRight(firstOp);
+            Optional<Pattern> patternRight = list.applyOperationFromRight(firstOp);
 
-            if (patternRight != null) {
+            if (patternRight.isPresent()) {
                 return patternRight;
             }
         }
 
         // We attempt to split by various special characters
-        Pattern patternSplit = list.applyOpFromLeft(secondOp);
+        Optional<Pattern> patternSplit = list.applyOperationFromLeft(secondOp);
 
-        if (patternSplit != null) {
+        if (patternSplit.isPresent()) {
             return patternSplit;
         }
 
         // We attempt to split by common sub-strings
-        Pattern patternThird = list.applyOpFromLeft(thirdOp);
+        Optional<Pattern> patternThird = list.applyOperationFromLeft(thirdOp);
 
-        if (patternThird != null) {
+        if (patternThird.isPresent()) {
             return patternThird;
         }
 
         // Nothing more we can do, so we convert into a StringSetElement
-        return new Pattern(ResolvedPatternElementFactory.string(list.list()));
+        return Optional.of( new Pattern(ResolvedPatternElementFactory.string(list.list())));
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -46,7 +47,7 @@ class ConstantElement extends ResolvedPatternElement {
     }
 
     @Override
-    public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+    public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
         return ExtractElementFrom.extractStringIfPossible(value, str, ioCase);
     }
 

@@ -32,6 +32,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.unresolved.Skipper;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Attempts to split a string by finding a common special character in all strings.
@@ -69,23 +70,23 @@ public class TrimSplitByChar implements TrimOperation<String> {
     }
 
     @Override
-    public Pattern trim(List<String> source) {
+    public Optional<Pattern> trim(List<String> source) {
 
         // As most of the time, we won't find a special char, we execute this algorithm in two
         // stages
         //  Stage 1. Let's check that all strings have the special-char and exit otherwise.
-        if (!allStrHaveSpecialChar(source)) {
-            return null;
+        if (allStringsHaveSpecialCharacter(source)) {
+            // Stage 2. Let's create a pattern
+            return Optional.of(createPattern(source));
+        } else {
+            return Optional.empty();
         }
-
-        // Stage 2. Let's create a pattern
-        return createPattern(source);
     }
 
-    private boolean allStrHaveSpecialChar(List<String> source) {
-        for (String s : source) {
+    private boolean allStringsHaveSpecialCharacter(List<String> source) {
+        for (String str : source) {
 
-            int index = s.indexOf(splitChar);
+            int index = str.indexOf(splitChar);
 
             if (index == -1) {
                 // At least one string doesn't have this character. Let's abandon

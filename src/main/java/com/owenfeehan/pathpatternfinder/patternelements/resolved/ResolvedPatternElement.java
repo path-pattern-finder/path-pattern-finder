@@ -1,5 +1,7 @@
 package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -42,8 +44,8 @@ public abstract class ResolvedPatternElement extends PatternElement {
     }
 
     @Override
-    public Pattern resolve() {
-        // Always returns null as isResolved() is true
-        return null;
+    public Optional<Pattern> resolve() {
+        // Always returns Optional.empty() as isResolved() is true
+        return Optional.empty();
     }
 }

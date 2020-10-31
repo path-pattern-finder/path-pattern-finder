@@ -30,6 +30,7 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
 import com.owenfeehan.pathpatternfinder.trim.TrimOperation;
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -45,38 +46,32 @@ class HelperStringList {
         this.list = list;
     }
 
-    public Pattern applyOpFromLeft(TrimOperation<String> op) {
+    public Optional<Pattern> applyOperationFromLeft(TrimOperation<String> op) {
         return op.trim(list);
     }
 
-    public Pattern applyOpFromRight(TrimOperation<String> op) {
+    public Optional<Pattern> applyOperationFromRight(TrimOperation<String> op) {
 
         // 1. Invert all the strings to be resolved
         List<String> reversed = StringUtilities.reverseStringsInList(list);
 
         // 2. Apply op
-        Pattern pattern = op.trim(reversed);
+        Optional<Pattern> pattern = op.trim(reversed);
 
-        if (pattern != null) {
-
-            // Invert the pattern found
-            pattern.reverse();
-            return pattern;
-
-        } else {
-            return null;
-        }
-    }
+        // Invert the pattern found
+        pattern.ifPresent(Pattern::reverse);
+        return pattern;
+     }
 
     public void reverse() {
         this.list = StringUtilities.reverseStringsInList(list);
     }
 
-    public String firstElement() {
+    public Optional<String> firstElement() {
         if (!list.isEmpty()) {
-            return list.get(0);
+            return Optional.of(list.get(0));
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 
