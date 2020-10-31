@@ -34,17 +34,19 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Abstract base class for any pattern elements.
  *
- * <p>A {@link PatternElement} is one part of the pattern that is fitted against a list of strings/paths.
+ * <p>A {@link PatternElement} is one part of the pattern that is fitted against a list of
+ * strings/paths.
  *
  * <p>It can have a constant-value (identical value for all items in the list) or can have a varying
  * value.
  */
 public abstract class PatternElement {
 
-    /** 
+    /**
      * Can the element no longer be further broken down into smaller units?
-     * 
-     * @return true iff this element <i>cannot</i> be broken down further into smaller units. */
+     *
+     * @return true iff this element <i>cannot</i> be broken down further into smaller units.
+     */
     public abstract boolean isResolved();
 
     /**
@@ -59,7 +61,7 @@ public abstract class PatternElement {
 
     /**
      * Does the element never vary?
-     * 
+     *
      * @return true iff this element have a constant value. Otherwise the element has multiple
      *     possible values. Iff true, {@link #describe} should return this constant value
      */
@@ -86,8 +88,9 @@ public abstract class PatternElement {
 
     /**
      * Reverses the current pathElement.
-     * 
-     * <p>i.e. if the string was previously applied from left to right it is now, right to left and vice-versa
+     *
+     * <p>i.e. if the string was previously applied from left to right it is now, right to left and
+     * vice-versa
      */
     public abstract void reverse();
 

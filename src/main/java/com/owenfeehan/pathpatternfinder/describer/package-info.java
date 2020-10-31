@@ -1,5 +1,6 @@
 /**
- * A describer converts a {@link com.owenfeehan.pathpatternfinder.Pattern} into a string representation.
+ * A describer converts a {@link com.owenfeehan.pathpatternfinder.Pattern} into a string
+ * representation.
  *
  * <p>This is a package related classes.
  */

@@ -53,7 +53,8 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
     @Override
     public Pattern trim(List<Path> source) {
 
-        Optional<PathElements> commonElements = FindCommonPathElements.findForFilePaths(source, factory.stringComparer());
+        Optional<PathElements> commonElements =
+                FindCommonPathElements.findForFilePaths(source, factory.stringComparer());
 
         // If we have at least one common element... we convert
         if (commonElements.isPresent()) {

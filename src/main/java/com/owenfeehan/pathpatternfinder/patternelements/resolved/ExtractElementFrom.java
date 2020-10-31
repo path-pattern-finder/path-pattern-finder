@@ -26,8 +26,8 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * #L%
  */
 
-import org.apache.commons.io.IOCase;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
+import org.apache.commons.io.IOCase;
 
 class ExtractElementFrom {
 

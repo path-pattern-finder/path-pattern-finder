@@ -39,9 +39,7 @@ import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** 
- * A pattern that has been extracted, containing 0 or more {@link PatternElement}s.
- **/
+/** A pattern that has been extracted, containing 0 or more {@link PatternElement}s. */
 public class Pattern implements Iterable<PatternElement> {
 
     private List<PatternElement> elements;
@@ -96,9 +94,9 @@ public class Pattern implements Iterable<PatternElement> {
 
     /**
      * A description of the pattern in a single line.
-     * 
+     *
      * <p>Variable patterns are replaced with indexed symbols.
-     * 
+     *
      * @return the description
      */
     public String describeShort() {
@@ -108,10 +106,9 @@ public class Pattern implements Iterable<PatternElement> {
     /**
      * A description of the pattern in one or more lines.
      *
-     * <p>Variable patterns are
-     *     replaced with indexed symbols AND each variable pattern is further detailed on an
-     *     additional line.
-     *     
+     * <p>Variable patterns are replaced with indexed symbols AND each variable pattern is further
+     * detailed on an additional line.
+     *
      * @return the description
      */
     public String describeDetailed() {
@@ -153,10 +150,12 @@ public class Pattern implements Iterable<PatternElement> {
 
     /**
      * Reverse the pattern.
-     * 
-     * <p>Specifically, the order of elements is reversed, and {@link PatternElement#reverse} is applied to each element.
-     * 
-     * <p>Note that {@link PatternElement#reverse} occurs inplace in the element i.e. it's a mutable operation.
+     *
+     * <p>Specifically, the order of elements is reversed, and {@link PatternElement#reverse} is
+     * applied to each element.
+     *
+     * <p>Note that {@link PatternElement#reverse} occurs inplace in the element i.e. it's a mutable
+     * operation.
      */
     public void reverse() {
         List<PatternElement> listWithReversedElements =
@@ -170,8 +169,8 @@ public class Pattern implements Iterable<PatternElement> {
      *
      * @param str the string to fit
      * @param ioCase how to handle case-sensitivity
-     * @return an array with a string for each corresponding element of the pattern, or {@code Optional.empty()} if a
-     *     string cannot be fit
+     * @return an array with a string for each corresponding element of the pattern, or {@code
+     *     Optional.empty()} if a string cannot be fit
      */
     public Optional<String[]> fitAgainst(String str, IOCase ioCase) {
 

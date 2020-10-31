@@ -1,7 +1,5 @@
 package com.owenfeehan.pathpatternfinder.trim;
 
-import com.owenfeehan.pathpatternfinder.CasedStringComparer;
-
 /*-
  * #%L
  * path-pattern-finder
@@ -28,6 +26,7 @@ import com.owenfeehan.pathpatternfinder.CasedStringComparer;
  * #L%
  */
 
+import com.owenfeehan.pathpatternfinder.CasedStringComparer;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;

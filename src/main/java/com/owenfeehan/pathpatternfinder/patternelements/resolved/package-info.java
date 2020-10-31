@@ -1,4 +1,7 @@
-/** {@link com.owenfeehan.pathpatternfinder.patternelements.PatternElement}s that are resolved (cannot be broken down further). */
+/**
+ * {@link com.owenfeehan.pathpatternfinder.patternelements.PatternElement}s that are resolved
+ * (cannot be broken down further).
+ */
 package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 /*-
  * #%L

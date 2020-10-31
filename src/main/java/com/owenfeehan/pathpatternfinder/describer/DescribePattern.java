@@ -29,9 +29,7 @@ package com.owenfeehan.pathpatternfinder.describer;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
-/** 
- * Describes a pattern by generating a user-readable string representation of a pattern.
- */
+/** Describes a pattern by generating a user-readable string representation of a pattern. */
 public class DescribePattern {
 
     private DescribePattern() {}

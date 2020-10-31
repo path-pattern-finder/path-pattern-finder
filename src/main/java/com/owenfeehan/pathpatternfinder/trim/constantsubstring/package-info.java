@@ -1,4 +1,7 @@
-/** All classes related to particular operation of {@link com.owenfeehan.pathpatternfinder.trim.constantsubstring.TrimConstantSubstring}. */
+/**
+ * All classes related to particular operation of {@link
+ * com.owenfeehan.pathpatternfinder.trim.constantsubstring.TrimConstantSubstring}.
+ */
 package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
 /*-
  * #%L

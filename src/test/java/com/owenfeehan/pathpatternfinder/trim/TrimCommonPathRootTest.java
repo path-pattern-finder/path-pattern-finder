@@ -28,6 +28,7 @@ package com.owenfeehan.pathpatternfinder.trim;
 
 import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
 import static org.junit.Assert.assertEquals;
+
 import com.owenfeehan.pathpatternfinder.PathListFixture;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
@@ -61,12 +62,14 @@ public class TrimCommonPathRootTest {
         Pattern pattern = common.trim(source);
 
         // assert statements
-        assertEquals(expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture), pattern);
+        assertEquals(
+                expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture),
+                pattern);
     }
 
-    /** 
+    /**
      * Constructs an the expected-pattern given a path and the number of elements expected.
-     * 
+     *
      * @param path the path from which constant elements are extracted
      * @param numberElementsFromPath how many constant elements to expect in the pattern
      * @param paths all paths (to construct unresolved-elements)

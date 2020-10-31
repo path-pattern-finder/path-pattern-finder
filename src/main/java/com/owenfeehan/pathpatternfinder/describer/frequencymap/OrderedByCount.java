@@ -32,9 +32,8 @@ import org.apache.commons.collections4.bag.TreeBag;
 
 /**
  * A set of {@link KeyFrequency} ordered by their counts.
- * 
- * @author Owen Feehan
  *
+ * @author Owen Feehan
  * @param <T>
  */
 class OrderedByCount<T extends Comparable<T>> implements Iterable<KeyFrequency<T>> {

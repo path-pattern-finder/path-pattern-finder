@@ -33,9 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/** 
- * Creation of the different types of resolved elements.
- */
+/** Creation of the different types of resolved elements. */
 public class ResolvedPatternElementFactory {
 
     private ResolvedPatternElementFactory() {}
@@ -68,7 +66,7 @@ public class ResolvedPatternElementFactory {
     }
 
     public static PatternElement string(String... args) {
-        return string( Arrays.asList(args) );
+        return string(Arrays.asList(args));
     }
 
     public static PatternElement string(List<String> values) {

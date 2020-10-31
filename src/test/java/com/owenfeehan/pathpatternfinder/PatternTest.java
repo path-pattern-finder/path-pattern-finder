@@ -137,7 +137,7 @@ public class PatternTest {
                         String.format("34343fRiDay%sGREEN", File.separator), IOCase.INSENSITIVE);
 
         assertTrue(elementsOptional.isPresent());
-        
+
         String[] elements = elementsOptional.get();
         assertEquals("34343", elements[0]);
         assertEquals("fRiDay", elements[1]);

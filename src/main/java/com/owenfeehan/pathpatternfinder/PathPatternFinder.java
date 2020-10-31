@@ -109,7 +109,7 @@ public class PathPatternFinder {
                 List<Path> paths = PathsFromArguments.pathsFromArgs(args);
                 findFilesAndPattern(paths);
             } catch (IOException e) {
-                System.err.println("An exception occurred");    // NOSONAR
+                System.err.println("An exception occurred"); // NOSONAR
                 e.printStackTrace();
             }
         } else {
@@ -130,9 +130,9 @@ public class PathPatternFinder {
 
     private static void printFiles(List<Path> paths) {
         for (Path p : paths) {
-            System.out.println(p);  // NOSONAR
+            System.out.println(p); // NOSONAR
         }
-        System.out.printf("There are %d input paths in total%n", paths.size());     // NOSONAR
+        System.out.printf("There are %d input paths in total%n", paths.size()); // NOSONAR
     }
 
     private static UnresolvedPatternElementFactory createFactory(IOCase ioCase) {

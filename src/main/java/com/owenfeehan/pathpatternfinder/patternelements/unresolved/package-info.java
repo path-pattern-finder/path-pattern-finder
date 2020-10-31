@@ -1,6 +1,6 @@
 /**
- * {@link com.owenfeehan.pathpatternfinder.patternelements.PatternElement}s that are unresolved (can possibly be broken down further into a smaller
- * patterns).
+ * {@link com.owenfeehan.pathpatternfinder.patternelements.PatternElement}s that are unresolved (can
+ * possibly be broken down further into a smaller patterns).
  */
 package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 /*-

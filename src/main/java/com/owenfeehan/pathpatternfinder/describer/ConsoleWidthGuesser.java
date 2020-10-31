@@ -28,9 +28,7 @@ package com.owenfeehan.pathpatternfinder.describer;
 
 import java.io.IOException;
 
-/** 
- * Guesses how many characters exist in a single line of the console.
- */
+/** Guesses how many characters exist in a single line of the console. */
 public class ConsoleWidthGuesser {
 
     /** Used if we can't otherwise determine the console width */

@@ -1,7 +1,5 @@
 package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 
-import com.owenfeehan.pathpatternfinder.CasedStringComparer;
-
 /*-
  * #%L
  * path-pattern-finder
@@ -28,6 +26,7 @@ import com.owenfeehan.pathpatternfinder.CasedStringComparer;
  * #L%
  */
 
+import com.owenfeehan.pathpatternfinder.CasedStringComparer;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
@@ -36,8 +35,8 @@ import java.util.List;
 import org.apache.commons.io.IOCase;
 
 /**
- * Creates {@link Pattern}s or {@link PatternElement}s which have yet to be resolved <i>or</i> adds a new such unresolved Element
- * to an existing {@link Pattern}.
+ * Creates {@link Pattern}s or {@link PatternElement}s which have yet to be resolved <i>or</i> adds
+ * a new such unresolved Element to an existing {@link Pattern}.
  */
 public class UnresolvedPatternElementFactory {
 
@@ -64,7 +63,8 @@ public class UnresolvedPatternElementFactory {
     }
 
     /**
-     * Creates a {@link Pattern} with an element on the left, and a UnresolvedString list on the right
+     * Creates a {@link Pattern} with an element on the left, and a UnresolvedString list on the
+     * right
      *
      * @param left left-most element
      * @param right right-most element

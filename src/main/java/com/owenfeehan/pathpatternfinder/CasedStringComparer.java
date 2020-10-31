@@ -28,9 +28,9 @@ package com.owenfeehan.pathpatternfinder;
 
 import org.apache.commons.io.IOCase;
 
-/** 
+/**
  * Performs (maybe) case-sensitive matching based upon current setting of {@link IOCase}.
- * 
+ *
  * @author Owen Feehan
  */
 public class CasedStringComparer {

@@ -38,30 +38,29 @@ public class IntegerFrequencyMap {
         this.map = new FrequencyMap<>(list);
     }
 
-    /** 
+    /**
      * The lowest-value in the map.
-     * 
-     * @return the lowest-value. 
-     * 
-     **/
+     *
+     * @return the lowest-value.
+     */
     public int lowest() {
         return map.lowestKey();
     }
 
-    /** 
+    /**
      * The highest-value in the map.
-     * 
+     *
      * @return the highest-value.
-     * */
+     */
     public int highest() {
         return map.highestKey();
     }
 
-    /** 
+    /**
      * Number of unique values.
-     * 
-     * @return number of unique values. 
-     **/
+     *
+     * @return number of unique values.
+     */
     public int numberUniqueValues() {
         return map.numberUniqueValues();
     }

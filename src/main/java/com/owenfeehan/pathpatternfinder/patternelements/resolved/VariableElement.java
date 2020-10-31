@@ -1,7 +1,5 @@
 package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
-import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
-
 /*-
  * #%L
  * path-pattern-finder
@@ -28,6 +26,7 @@ import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
  * #L%
  */
 
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
 import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
