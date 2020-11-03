@@ -125,14 +125,14 @@ public class PathPatternFinder {
         printFiles(files);
 
         if (files.size() > 1) {
-            Pattern pp = findPatternPaths(files, IOCase.SYSTEM);
-            System.out.printf("Pattern is: %s%n", DescribePattern.apply(pp, true)); // NOSONAR
+            Pattern pattern = findPatternPaths(files, IOCase.SYSTEM);
+            System.out.printf("Pattern is: %s%n", DescribePattern.apply(pattern, true)); // NOSONAR
         }
     }
 
     private static void printFiles(List<Path> paths) {
-        for (Path p : paths) {
-            System.out.println(p); // NOSONAR
+        for (Path path : paths) {
+            System.out.println(path); // NOSONAR
         }
         System.out.printf("There are %d input paths in total%n", paths.size()); // NOSONAR
     }

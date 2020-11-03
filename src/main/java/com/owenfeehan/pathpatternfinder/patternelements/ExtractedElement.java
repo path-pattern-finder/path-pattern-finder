@@ -43,7 +43,6 @@ public class ExtractedElement {
      * @param remainder right-most part of string
      */
     public ExtractedElement(String extracted, String remainder) {
-        super();
         this.extracted = extracted;
         this.remainder = remainder;
     }
@@ -51,12 +50,12 @@ public class ExtractedElement {
     /**
      * Alternative constructor where a string is passed, and then split into two by an index
      *
-     * @param str string to split
+     * @param stringToSplit string to split
      * @param indexSecondPart the starting in index of the second part, so that
      *     extracted=[0,indexSecondPart-1] and remainder=[indexSecondPart..]
      */
-    public ExtractedElement(String str, int indexSecondPart) {
-        this(str.substring(0, indexSecondPart), str.substring(indexSecondPart));
+    public ExtractedElement(String stringToSplit, int indexSecondPart) {
+        this(stringToSplit.substring(0, indexSecondPart), stringToSplit.substring(indexSecondPart));
     }
 
     /**
