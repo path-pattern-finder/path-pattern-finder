@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,28 +27,38 @@ package com.owenfeehan.pathpatternfinder.trim;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
-
 import java.util.List;
+import java.util.Optional;
 
-/** Tries to apply each operation in a list until one is successful. */
+/**
+ * Tries to apply each operation in a list until one is successful.
+ *
+ * @author Owen Feehan
+ * @param <T> type of objects the trimmer works upon
+ */
 public class TrimOperationOrList<T> implements TrimOperation<T> {
 
-    private List<TrimOperation<T>> listOps;
+    private List<TrimOperation<T>> operations;
 
-    public TrimOperationOrList(List<TrimOperation<T>> listOps) {
-        this.listOps = listOps;
+    /**
+     * Creates given a list of operations.
+     *
+     * @param operations the operations
+     */
+    public TrimOperationOrList(List<TrimOperation<T>> operations) {
+        this.operations = operations;
     }
 
     @Override
-    public Pattern trim(List<T> source) {
+    public Optional<Pattern> trim(List<T> source) {
 
-        for( TrimOperation<T> op : listOps ) {
-            Pattern pattern = op.trim( source );
-            if (pattern!=null) {
+        for (TrimOperation<T> op : operations) {
+            Optional<Pattern> pattern = op.trim(source);
+            if (pattern.isPresent()) {
                 return pattern;
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 }

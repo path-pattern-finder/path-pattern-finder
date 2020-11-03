@@ -1,5 +1,7 @@
 package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
 
+import java.util.Optional;
+
 /*-
  * #%L
  * path-pattern-finder
@@ -12,10 +14,10 @@ package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -31,22 +33,22 @@ class CountedBooleanMask {
     private boolean[] mask;
     private int countTrueValues;
 
-    public CountedBooleanMask(int size ) {
-        this.mask = new boolean[ size ];
+    public CountedBooleanMask(int size) {
+        this.mask = new boolean[size];
 
         // Initially all values of the mask are true
-        for( int i=0; i<size; i++) {
+        for (int i = 0; i < size; i++) {
             mask[i] = true;
         }
 
         countTrueValues = size;
     }
 
-    // Makes sure the mask is FALSE at a given index, changing variable if necessary
-    public void ensureFalse( int index ) {
+    // Makes sure the mask is false at a given index, changing variable if necessary
+    public void ensureFalse(int index) {
         if (mask[index]) {
             countTrueValues--;
-            mask[index]=false;
+            mask[index] = false;
         }
     }
 
@@ -55,35 +57,35 @@ class CountedBooleanMask {
     }
 
     /**
-     *  Finds the first set of TRUEs (values that are all TRUE contiguously) in the mask
+     * Finds the first set of trues (values that are all true contiguously) in the mask
      *
-     *  If none can be found, null is returned
+     * @return the range of indices that fulfills the condition, or {@link Optional#empty} if none
+     *     can be found.
      */
-    public IndexRange indexOfFirstTrueRange() {
+    public Optional<IndexRange> indexOfFirstTrueRange() {
 
         int indexFirstTrue = -1;
         int indexLastTrue = -1;
 
-        for (int i=0; i<mask.length; i++) {
+        for (int i = 0; i < mask.length; i++) {
             if (mask[i]) {
-                if (indexFirstTrue==-1) {
+                if (indexFirstTrue == -1) {
                     indexFirstTrue = i;
                 }
                 indexLastTrue = i;
             } else {
-                // If we haven't found a TRUE yet, this is fine
-                // But if we've already encountered a TRUE, then we should exit
-                if (indexFirstTrue!=-1) {
+                // If we haven't found a true yet, this is fine
+                // But if we've already encountered a true, then we should exit
+                if (indexFirstTrue != -1) {
                     break;
                 }
             }
         }
 
-        if (indexFirstTrue==-1) {
-            return null;
+        if (indexFirstTrue == -1) {
+            return Optional.empty();
         }
 
-        return new IndexRange(indexFirstTrue, indexLastTrue - indexFirstTrue + 1);
+        return Optional.of(new IndexRange(indexFirstTrue, indexLastTrue - indexFirstTrue + 1));
     }
-
 }

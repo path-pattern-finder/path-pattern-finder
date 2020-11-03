@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,21 +27,22 @@ package com.owenfeehan.pathpatternfinder.trim;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
-
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Attempts to trim the list of objects from left or right.
  *
  * @param <T> type of objects the trimmer works upon
+ * @author Owen Feehan
  */
 public interface TrimOperation<T> {
 
     /***
-     * Attempts to trim the list of objects by finding a pattern.
+     * Attempts to trim the list of objects by finding a {@link Pattern}.
      *
      * @param source list of objects
-     * @return if successful, a pattern with the trimmed elements (and what remains to be resolved) as elements, otherwise NULL if unsuccessful
+     * @return if successful, a pattern with the trimmed elements (and what remains to be resolved) as elements, otherwise {@link Optional#empty} if unsuccessful
      */
-    public abstract Pattern trim(List<T> source);
+    public abstract Optional<Pattern> trim(List<T> source);
 }

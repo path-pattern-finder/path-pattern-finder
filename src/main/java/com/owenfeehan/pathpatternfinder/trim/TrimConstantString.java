@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,18 +26,22 @@ package com.owenfeehan.pathpatternfinder.trim;
  * #L%
  */
 
+import com.owenfeehan.pathpatternfinder.CasedStringComparer;
 import com.owenfeehan.pathpatternfinder.Pattern;
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
 
 /**
  * Looks for a constant common substring (from left-size, as maximal as possible).
- * 
- * <p>This is turned into a Constant pattern-element, and otherwise removing</p>
+ *
+ * <p>This is turned into a Constant pattern-element, and otherwise removing
  *
  * <pre>
  * e.g.
@@ -45,78 +49,78 @@ import java.util.stream.Collectors;
  *   pattern: ["the boy went to "]
  * </pre>
  *
+ * @author Owen Feehan
  */
 public class TrimConstantString implements TrimOperation<String> {
 
     private UnresolvedPatternElementFactory factory;
 
+    /**
+     * Creates given a factory for creating unresolved pattern-elements.
+     *
+     * @param factory the factory
+     */
     public TrimConstantString(UnresolvedPatternElementFactory factory) {
         this.factory = factory;
     }
 
     @Override
-    public Pattern trim(List<String> source) {
-
-        String common = findCommonString(source);
-
-        if (common==null) {
-            return null;
-        }
-
-        return createPattern(
-                source,
-                common
-        );
+    public Optional<Pattern> trim(List<String> source) {
+        Optional<String> common = findCommonString(source);
+        return common.map(value -> createPattern(source, value));
     }
 
-    private String findCommonString( List<String> source ) {
+    private Optional<String> findCommonString(List<String> source) {
         String common = source.get(0);
 
-        for( int i=1; i<source.size(); i++) {
+        for (int i = 1; i < source.size(); i++) {
 
             // Find the maximum intersection
             common = intersect(common, source.get(i));
 
             // If there's nothing left in common we give up
             if (common.isEmpty()) {
-                return null;
+                return Optional.empty();
             }
         }
 
-        return common;
+        return Optional.of(common);
     }
 
-    private Pattern createPattern(List<String> source, String common ) {
-        // If successful, then we create a pattern out of the commonality, and remove it from each string
+    private Pattern createPattern(List<String> source, String common) {
+        // If successful, then we create a pattern out of the commonality, and remove it from each
+        // string
+        List<PatternElement> elements = new ArrayList<>();
+        
+        // We 
+        addConstantAndDirectoryElements(common, elements::add);
+        
+        // Add all elements, and removing the number of characters from the remaining charrs
         return factory.createUnresolvedString(
-                ResolvedPatternElementFactory.constant(common),
-                removeFirstNCharsFrom( source, common.length() )
-        );
+                elements,
+                removeFirstNCharsFrom(source, common.length()));
     }
 
-    private static List<String> removeFirstNCharsFrom(List<String> source, int n ) {
-        return source.stream().map(
-                s -> s.substring(n)
-        ).collect( Collectors.toList() );
-    }
-
-    /** Returns as many characters as possible (from the left) that are equal between source and to intersect
-     *  An empty string is returned if the left-most character is different in both strings
-     * */
-    private String intersect( String source, String toIntersect ) {
+    /**
+     * Returns as many characters as possible (from the left) that are equal between source and to
+     * intersect.
+     * 
+     * <p>An empty string is returned if the left-most character is different in both strings.
+     */
+    private String intersect(String source, String toIntersect) {
 
         CasedStringComparer comparer = factory.stringComparer();
 
-        for( int i=0;i<source.length(); i++) {
+        for (int i = 0; i < source.length(); i++) {
 
-            if (i==toIntersect.length()) {
+            if (i == toIntersect.length()) {
                 // our intersection string is smaller, and it entirely matches
                 return toIntersect;
             }
 
-            if( !comparer.match(source.charAt(i), toIntersect.charAt(i)) ) {
+            if (!comparer.match(source.charAt(i), toIntersect.charAt(i))) {
 
-                if (i==0) {
+                if (i == 0) {
                     return "";
                 }
 
@@ -126,5 +130,46 @@ public class TrimConstantString implements TrimOperation<String> {
 
         // Everything matches to we keep the source
         return source;
+    }
+    
+    
+    /**
+     * Parses a string so that any characters matching the path separation are added separately.
+     * 
+     * @param constantToAdd the constant string to add
+     * @param elementConsumer called to add each element
+     */
+    private static void addConstantAndDirectoryElements(String constantToAdd, Consumer<PatternElement> elementConsumer) {
+        
+        // Loop through
+        int position = 0;
+        String remaining = constantToAdd;
+        while( position < remaining.length()) {
+            
+            // Separate into components when a separator component is found
+            if (remaining.charAt(position)==File.separatorChar) {
+                if (position!=0) {
+                    elementConsumer.accept(ResolvedPatternElementFactory.constant(remaining.substring(0, position)));
+                }
+                elementConsumer.accept(ResolvedPatternElementFactory.directorySeperator());
+                
+                // Update what's remaining to parse
+                if (remaining.length()!=position) {
+                    remaining = remaining.substring(position+1);
+                } else {
+                    remaining = "";
+                }
+            }
+            position++;
+        }
+        
+        // Anything remaining should be added as an element
+        if (!remaining.isEmpty()) {
+            elementConsumer.accept(ResolvedPatternElementFactory.constant(remaining));
+        }
+    }
+
+    private static List<String> removeFirstNCharsFrom(List<String> source, int n) {
+        return source.stream().map(s -> s.substring(n)).collect(Collectors.toList());
     }
 }

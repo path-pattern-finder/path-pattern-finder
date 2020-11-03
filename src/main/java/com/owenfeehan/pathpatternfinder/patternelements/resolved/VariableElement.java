@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,19 +26,26 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * #L%
  */
 
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
+import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.List;
-
 /**
- * A pattern-element that is resolved and varies across the list of values.
+ * A {@link PatternElement} that is resolved and varies across the list of values.
+ *
+ * @author Owen Feehan
  */
 public abstract class VariableElement extends ResolvedPatternElement {
 
     private List<String> values;
 
+    /**
+     * Creates for a list of values.
+     *
+     * @param values the values
+     */
     public VariableElement(List<String> values) {
         this.values = values;
     }
@@ -58,9 +65,13 @@ public abstract class VariableElement extends ResolvedPatternElement {
     }
 
     @Override
-    public boolean equals(Object obj)  {
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
         if (obj.getClass() != getClass()) {
             return false;
         }
@@ -68,16 +79,13 @@ public abstract class VariableElement extends ResolvedPatternElement {
         VariableElement rhs = (VariableElement) obj;
 
         return new EqualsBuilder()
-                .appendSuper( super.equals(obj) )
+                .appendSuper(super.equals(obj))
                 .append(values, rhs.values)
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder()
-                .appendSuper(super.hashCode())
-                .append(values)
-                .toHashCode();
+        return new HashCodeBuilder().appendSuper(super.hashCode()).append(values).toHashCode();
     }
 }

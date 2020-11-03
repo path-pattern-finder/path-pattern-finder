@@ -1,4 +1,4 @@
-package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
+package com.owenfeehan.pathpatternfinder;
 
 /*-
  * #%L
@@ -26,31 +26,49 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
  * #L%
  */
 
-import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
-import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
-import java.util.Optional;
 import org.apache.commons.io.IOCase;
 
 /**
- * A pattern element that has yet to be resolved.
+ * Performs (maybe) case-sensitive matching based upon current setting of {@link IOCase}.
  *
  * @author Owen Feehan
  */
-abstract class UnresolvedPatternElement extends PatternElement {
+public class CasedStringComparer {
 
-    @Override
-    public boolean isResolved() {
-        return false;
+    private IOCase ioCase;
+
+    /**
+     * Create for a given {@link IOCase}.
+     *
+     * @param ioCase whether be case-sensitive or not.
+     */
+    public CasedStringComparer(IOCase ioCase) {
+        this.ioCase = ioCase;
     }
 
-    @Override
-    public boolean hasConstantValue() {
-        return false;
+    /**
+     * Are two strings identical, based upon current case-sensitivity settings?
+     *
+     * @param str1 the first string
+     * @param str2 the second string
+     * @return true if strings are equal, false otherwise
+     */
+    public boolean match(String str1, String str2) {
+        return ioCase.checkEquals(str1, str2);
     }
 
-    @Override
-    public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
-        throw new UnsupportedOperationException(
-                "extractElementFrom operation is usupported un unresolved path elements");
+    /**
+     * Are two characters identical, based upon current case-sensitivity settings?
+     *
+     * @param char1 the first character
+     * @param char2 the second character
+     * @return true if strings are equal, false otherwise
+     */
+    public boolean match(char char1, char char2) {
+        if (ioCase.isCaseSensitive()) {
+            return char1 == char2;
+        } else {
+            return char1 == char2 || Character.toLowerCase(char1) == Character.toLowerCase(char2);
+        }
     }
 }

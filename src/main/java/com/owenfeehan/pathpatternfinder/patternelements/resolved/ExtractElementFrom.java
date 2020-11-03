@@ -1,10 +1,10 @@
-package com.owenfeehan.pathpatternfinder.trim;
+package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 /*-
  * #%L
  * path-pattern-finder
  * %%
- * Copyright (C) 2019 Owen Feehan
+ * Copyright (C) 2019 - 2020 Owen Feehan
  * %%
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,35 +26,32 @@ package com.owenfeehan.pathpatternfinder.trim;
  * #L%
  */
 
+import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 
-/**
- * Performs (maybe) case-sensitive matching based upon current setting of IOCase.
- */
-public class CasedStringComparer {
+class ExtractElementFrom {
 
-    private IOCase ioCase;
-
-    public CasedStringComparer(IOCase ioCase) {
-        this.ioCase = ioCase;
-    }
+    private ExtractElementFrom() {}
 
     /**
-     * Equality among strings, based upon the case-sensitivity flag
+     * Extracts a string (trims it from the left-side) if possible
      *
-     * @param str1 first string
-     * @param str2 second string
-     * @return whether the strings are equal (depending on caseSensitive flag)
+     * @param strToExtract string to extract
+     * @param strToSearch string to search from
+     * @param ioCase whether to be case-sensitive or not
+     * @return the extracted-string (and the remainder) or {@link Optional#empty} if the
+     *     left-most-side doesn't match.
      */
-    public boolean match( String str1, String str2 ) {
-        return ioCase.checkEquals(str1, str2);
-    }
+    public static Optional<ExtractedElement> extractStringIfPossible(
+            String strToExtract, String strToSearch, IOCase ioCase) {
 
-    public boolean match( char c1, char c2 ) {
-        if (ioCase.isCaseSensitive()) {
-            return c1==c2;
-        } else {
-            return c1==c2 || Character.toLowerCase(c1)==Character.toLowerCase(c2);
+        if (ioCase.checkStartsWith(strToSearch, strToExtract)) {
+            return Optional.of(
+                    new ExtractedElement(
+                            strToSearch.substring(0, strToExtract.length()),
+                            strToSearch.substring(strToExtract.length())));
         }
+        return Optional.empty();
     }
 }

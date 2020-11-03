@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,14 +26,17 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * #L%
  */
 
-
+import java.util.*;
 import org.apache.commons.collections4.bag.TreeBag;
 
-import java.util.*;
-
-
 /**
- * Constructs a frequency map for a list of values
+ * Constructs a frequency map for a list of values.
+ *
+ * <p>This counts the number of occurrences of each element (who may be repeated many times).
+ *
+ * @author Owen Feehan
+ * @param <T> element-type whose frequency is counted ({@link #hashCode()} and {@link
+ *     #equals(Object) should be well-defined}.
  */
 public class FrequencyMap<T extends Comparable<T>> {
 
@@ -43,43 +46,68 @@ public class FrequencyMap<T extends Comparable<T>> {
     // Ordered by the count (rather than the key)
     private OrderedByCount<T> orderedCounts;
 
-    public FrequencyMap( List<T> list ) {
+    /**
+     * Create for a list of elements.
+     *
+     * @param list the list.
+     */
+    public FrequencyMap(List<T> list) {
         bag = new TreeBag<>(list);
         orderedCounts = new OrderedByCount<>(bag);
     }
 
-    /** 
+    /**
      * Count for a given key
      *
-     *  @param key the key to find a count for
-     *  @return the count for the key
+     * @param key the key to find a count for
+     * @return the count for the key
      */
-    public int getCount( T key ) {
-        return bag.getCount( key );
+    public int getCount(T key) {
+        return bag.getCount(key);
     }
 
-    /** @return The number of unique-values that are being counted (i.e. number of keys) */
-    public int numUniqueValues() {
+    /**
+     * The number of unique-values that are being counted (i.e. number of keys).
+     *
+     * @return the number of unique-values
+     */
+    public int numberUniqueValues() {
         return bag.uniqueSet().size();
     }
 
-    /** @return A view of the frequency-map ordered by counts */
+    /**
+     * A view of the frequency-map ordered by counts
+     *
+     * @return the view
+     */
     protected OrderedByCount<T> byCount() {
         return orderedCounts;
     }
 
-    /** @return The key with lowest-value */
+    /**
+     * The key with lowest-value
+     *
+     * @return the key
+     */
     public T lowestKey() {
         return bag.first();
     }
 
-    /** @return The key with highest-value */
+    /**
+     * The key with highest-value
+     *
+     * @return the key
+     */
     public T highestKey() {
         return bag.last();
     }
-    
-    /** @return Set of keys */
+
+    /**
+     * All keys in the map.
+     *
+     * @return the keys
+     */
     public Set<T> keys() {
-    	return bag.uniqueSet();
+        return bag.uniqueSet();
     }
 }

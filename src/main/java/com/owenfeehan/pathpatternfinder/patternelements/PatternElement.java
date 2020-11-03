@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,45 +27,61 @@ package com.owenfeehan.pathpatternfinder.patternelements;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
-
+import java.util.Optional;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * Abstract base class for any PatternElements.
+ * Abstract base class for any pattern elements.
  *
- * <p>A PatternElement is one part of the pattern that is fitted against a list of strings/paths.</p>
+ * <p>A {@link PatternElement} is one part of the pattern that is fitted against a list of
+ * strings/paths.
  *
- * <p>It can have a constant-value (identical value for all items in the list) or can have a varying value.</p>
+ * <p>It can have a constant-value (identical value for all items in the list) or can have a varying
+ * value.
+ *
+ * @author Owen Feehan
  */
 public abstract class PatternElement {
 
-    /** @return TRUE iff this element CANNOT be broken down further into smaller units. */
+    /**
+     * Can the element no longer be further broken down into smaller units?
+     *
+     * @return true iff this element <i>cannot</i> be broken down further into smaller units.
+     */
     public abstract boolean isResolved();
 
-    /** 
-     * Converts this PathPattern into smaller units
+    /**
+     * Converts this {@link Pattern} into smaller units.
      *
-     * <p>If isResolved()==true, this method should always return NULL</p>
+     * <p>If isResolved()==true, this method should always return {@link Optional#empty}.
      *
-     * @return a PathPattern if successfully broken into smaller units, or NULL if this isn't possible
+     * @return a {@link Pattern} if successfully broken into smaller units, or {@link
+     *     Optional#empty} if this isn't possible
      */
-    public abstract Pattern resolve();
-    
-    /** @return TRUE iff this element have a constant value. Otherwise the element has multiple possible values.
-     * Iff TRUE, describe() should return this constant value */
+    public abstract Optional<Pattern> resolve();
+
+    /**
+     * Does the element <b>never</b> vary?
+     *
+     * @return true iff this element have a constant value. Otherwise the element has multiple
+     *     possible values. Iff true, {@link #describe} should return this constant value
+     */
     public abstract boolean hasConstantValue();
 
     @Override
-    public boolean equals(Object obj)  {
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
         if (obj.getClass() != getClass()) {
             return false;
         }
-        return new EqualsBuilder()
-                .isEquals();
+        return new EqualsBuilder().isEquals();
     }
 
     @Override
@@ -73,30 +89,41 @@ public abstract class PatternElement {
         return new HashCodeBuilder().toHashCode();
     }
 
-    /** Inverts the current pathElement
-     * i.e. if the string was previously applied from left to right it is now, right to left and vice-versa */
+    /**
+     * Reverses the current element.
+     *
+     * <p>i.e. if the string was previously applied from left to right it is now, right to left and
+     * vice-versa
+     */
     public abstract void reverse();
 
-    /** Reverses the pattern
-     *  @return the current element after being reversed */
+    /**
+     * Reverses the pattern.
+     *
+     * @return the current element after being reversed
+     */
     public PatternElement reverseReturn() {
         reverse();
         return this;
     }
-    
-    
-    /** Extracts the element from the left-most side of a string
-     * 
-     * @param str the string to extract the element from
-     * @param ioCase TODO
-     * @return null if element cannot be extracted, otherwise the string split into two components (extracted, and remainder)
-     * */
-    public abstract ExtractedElement extractElementFrom( String str, IOCase ioCase );
 
-    /** Describe the element.
+    /**
+     * Extracts the element from the left-most side of a string.
+     *
+     * @param str the string to extract the element from
+     * @param ioCase how to handle case-sensitivity
+     * @return {@link Optional#empty} if element cannot be extracted, otherwise the string split
+     *     into two components (extracted, and remainder)
+     */
+    public abstract Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase);
+
+    /**
+     * Describe the element.
+     *
      * @param widthToDescribe the maximum width that should be used to describe the pattern
-     * @return the constant-value if it exists, otherwise a descriptive string describing the variable-element
-     * */
+     * @return the constant-value if it exists, otherwise a descriptive string describing the
+     *     variable-element
+     */
     public abstract String describe(int widthToDescribe);
 
     @Override

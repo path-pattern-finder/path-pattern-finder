@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,18 +28,21 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
 
 import com.owenfeehan.pathpatternfinder.describer.frequencymap.integer.IntegerFrequencyMap;
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-/** A varying integer */
+/**
+ * A varying integer.
+ *
+ * @author Owen Feehan
+ */
 class IntegerVariableElement extends VariableElement {
 
-    public IntegerVariableElement(List<String> values ) {
+    public IntegerVariableElement(List<String> values) {
         super(values);
     }
 
@@ -56,61 +59,52 @@ class IntegerVariableElement extends VariableElement {
     @Override
     public String describe(int widthToDescribe) {
 
-        IntegerFrequencyMap freq = new IntegerFrequencyMap(
-            extractIntegerList()
-        );
+        IntegerFrequencyMap map = new IntegerFrequencyMap(extractIntegerList());
 
-        if (freq.testIfContiguous()) {
+        if (map.areIndicesContiguous()) {
             return String.format(
-                    "an integer sequence from %d to %d inclusive",
-                    freq.lowest(),
-                    freq.highest()
-            );
+                    "an integer sequence from %d to %d inclusive", map.lowest(), map.highest());
         } else {
 
             return String.format(
                     "%d unique integers between %d and %d inclusive",
-                    freq.numUniqueValues(),
-                    freq.lowest(),
-                    freq.highest()
-            );
+                    map.numberUniqueValues(), map.lowest(), map.highest());
         }
     }
-    
 
-	@Override
-	public ExtractedElement extractElementFrom(String str, IOCase ioCase) {
+    @Override
+    public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
 
-		int firstNonDigit = findIndexFirstNonDigitChar(str);
-		
-		if (firstNonDigit>0) {
-			return new ExtractedElement(str, firstNonDigit);
-		} else if (firstNonDigit==0){
-			// The first character was non-digit
-			return null;	
-		} else {
-			// The -1 case, where all the string were digits
-			return new ExtractedElement(str, "");
-		}
-	}
-	
-	/** Returns the index of the first non-digit character (from left-most side) or -1 if all are digits */
-	private static int findIndexFirstNonDigitChar( String str ) {
-		for( int i=0; i<str.length(); i++ ) {
-			char c = str.charAt(i);
-			
-			if (!Character.isDigit(c)) {
-				return i;
-			}
-		}
-		
-		return -1;
-	}
+        int firstNonDigit = findIndexFirstNonDigitChar(str);
+
+        if (firstNonDigit > 0) {
+            return Optional.of(new ExtractedElement(str, firstNonDigit));
+        } else if (firstNonDigit == 0) {
+            // The first character was non-digit
+            return Optional.empty();
+        } else {
+            // The -1 case, where all the string were digits
+            return Optional.of(new ExtractedElement(str, ""));
+        }
+    }
+
+    /**
+     * Returns the index of the first non-digit character (from left-most side) or -1 if all are
+     * digits
+     */
+    private static int findIndexFirstNonDigitChar(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+
+            if (!Character.isDigit(c)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 
     private List<Integer> extractIntegerList() {
-        return getValues()
-                .stream()
-                .map( Integer::parseInt )
-                .collect( Collectors.toList() );
+        return getValues().stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 }

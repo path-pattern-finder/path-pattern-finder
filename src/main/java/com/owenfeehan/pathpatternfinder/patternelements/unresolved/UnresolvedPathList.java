@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,15 +27,20 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.trim.TrimCommonPathRoot;
-
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.nio.file.Path;
-import java.util.List;
-import java.util.stream.Collectors;
-
+/**
+ * A {@link PatternElement} that has yet to be resolved with a varying list of paths.
+ *
+ * @author Owen Feehan
+ */
 class UnresolvedPathList extends UnresolvedPatternElement {
 
     private List<Path> list;
@@ -47,19 +52,17 @@ class UnresolvedPathList extends UnresolvedPatternElement {
     }
 
     @Override
-    public Pattern resolve() {
-        Pattern pattern = new TrimCommonPathRoot( factory ).trim(list);
+    public Optional<Pattern> resolve() {
+        Optional<Pattern> pattern = new TrimCommonPathRoot(factory).trim(list);
 
-        if (pattern!=null) {
+        if (pattern.isPresent()) {
             return pattern;
         }
 
         // Otherwise if we cannot find any common-path, we convert paths to strings
-        return factory.createUnresolvedString(
-           convert(list)
-        );
+        return Optional.of(factory.createUnresolvedString(convert(list)));
     }
-	
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
@@ -78,13 +81,10 @@ class UnresolvedPathList extends UnresolvedPatternElement {
 
     @Override
     public String describe(int widthToDescribe) {
-        return String.format("unresolved paths with %d elements", list.size() );
+        return String.format("unresolved paths with %d elements", list.size());
     }
 
-    private static List<String> convert( List<Path> paths ) {
-        return paths.stream().map(
-                Path::toString
-        ).collect( Collectors.toList() );
+    private static List<String> convert(List<Path> paths) {
+        return paths.stream().map(Path::toString).collect(Collectors.toList());
     }
-
 }

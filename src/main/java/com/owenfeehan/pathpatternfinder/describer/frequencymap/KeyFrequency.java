@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,8 +29,12 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-/** Stores a key and its associated frequency, implementing an ordering on the count */
-class KeyFrequency<T extends Comparable<T> > implements Comparable<KeyFrequency<T>> {
+/**
+ * Stores a key and its associated frequency, implementing an ordering on the count.
+ *
+ * @author Owen Feehan
+ */
+class KeyFrequency<T extends Comparable<T>> implements Comparable<KeyFrequency<T>> {
     private T key;
     private int count;
 
@@ -50,17 +54,19 @@ class KeyFrequency<T extends Comparable<T> > implements Comparable<KeyFrequency<
     @Override
     public boolean equals(Object obj) {
 
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
         if (obj.getClass() != getClass()) {
             return false;
         }
         @SuppressWarnings("unchecked")
-		KeyFrequency<T> rhs = (KeyFrequency<T>) obj;
+        KeyFrequency<T> rhs = (KeyFrequency<T>) obj;
 
-        return new EqualsBuilder()
-            .append(count, rhs.key)
-            .isEquals();
+        return new EqualsBuilder().append(count, rhs.key).isEquals();
     }
 
     // Needs to be implemented to determine order for the TreeSet
@@ -69,9 +75,9 @@ class KeyFrequency<T extends Comparable<T> > implements Comparable<KeyFrequency<
         // Ensures higher-counts (more frequent items) come first
         // the order becomes:  MOST-FREQUENT to LESS-FREQUENT in the TreeSet
         int compareTo = Integer.compare(other.count, this.count);
-        if (compareTo==0) {
+        if (compareTo == 0) {
             // If they are equal, we compare with the keys instead
-            return other.key.compareTo( this.key );
+            return other.key.compareTo(this.key);
         } else {
             return compareTo;
         }
@@ -79,9 +85,6 @@ class KeyFrequency<T extends Comparable<T> > implements Comparable<KeyFrequency<
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder()
-            .append(count)
-            .append(key)
-            .toHashCode();
+        return new HashCodeBuilder().append(count).append(key).toHashCode();
     }
 }

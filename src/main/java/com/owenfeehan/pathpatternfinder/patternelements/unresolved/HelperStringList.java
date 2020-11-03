@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,13 +29,15 @@ package com.owenfeehan.pathpatternfinder.patternelements.unresolved;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.StringUtilities;
 import com.owenfeehan.pathpatternfinder.trim.TrimOperation;
+import java.util.List;
+import java.util.Optional;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.util.List;
-
 /**
- * Helper class that allows ops to be provided from Left and from Right
+ * Helper class that allows operations to be provided from the left and from the right.
+ *
+ * @author Owen Feehan
  */
 class HelperStringList {
     private List<String> list;
@@ -44,38 +46,32 @@ class HelperStringList {
         this.list = list;
     }
 
-    public Pattern applyOpFromLeft(TrimOperation<String> op ) {
+    public Optional<Pattern> applyOperationFromLeft(TrimOperation<String> op) {
         return op.trim(list);
     }
 
-    public Pattern applyOpFromRight(TrimOperation<String> op ) {
+    public Optional<Pattern> applyOperationFromRight(TrimOperation<String> op) {
 
         // 1. Invert all the strings to be resolved
         List<String> reversed = StringUtilities.reverseStringsInList(list);
 
         // 2. Apply op
-        Pattern pattern = op.trim(reversed);
+        Optional<Pattern> pattern = op.trim(reversed);
 
-        if (pattern!=null) {
-
-            // Invert the pattern found
-            pattern.reverse();
-            return pattern;
-
-        } else {
-            return null;
-        }
+        // Invert the pattern found
+        pattern.ifPresent(Pattern::reverse);
+        return pattern;
     }
 
     public void reverse() {
         this.list = StringUtilities.reverseStringsInList(list);
     }
 
-    public String firstElement() {
+    public Optional<String> firstElement() {
         if (!list.isEmpty()) {
-            return list.get(0);
+            return Optional.of(list.get(0));
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -92,16 +88,18 @@ class HelperStringList {
     }
 
     @Override
-    public boolean equals(Object obj)  {
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
         if (obj.getClass() != getClass()) {
             return false;
         }
         HelperStringList rhs = (HelperStringList) obj;
-        return new EqualsBuilder()
-                .append(list, rhs.list)
-                .isEquals();
+        return new EqualsBuilder().append(list, rhs.list).isEquals();
     }
 
     @Override

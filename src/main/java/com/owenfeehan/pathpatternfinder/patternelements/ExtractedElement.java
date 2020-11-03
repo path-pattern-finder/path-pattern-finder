@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.patternelements;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,45 +28,52 @@ package com.owenfeehan.pathpatternfinder.patternelements;
 
 /**
  * The result of partition a string into two components, one left (prefix) and one right (suffix)
- * 
- * @author owen
  *
+ * @author Owen Feehan
  */
 public class ExtractedElement {
 
-	private String extracted;
-	private String remainder;
+    private String extracted;
+    private String remainder;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param extracted left-most part of string
-	 * @param remainder right-most part of string
-	 */
-	public ExtractedElement(String extracted, String remainder) {
-		super();
-		this.extracted = extracted;
-		this.remainder = remainder;
-	}
-	
-	/**
-	 * Alternative constructor where a string is passed, and then split into two by an index
-	 * @param str string to split
-	 * @param indexSecondPart the starting in index of the second part, so that extracted=[0,indexSecondPart-1] and remainder=[indexSecondPart..]
-	 */
-	public ExtractedElement(String str, int indexSecondPart) {
-		this(
-			str.substring(0, indexSecondPart),
-			str.substring(indexSecondPart)				
-		);
-	}
+    /**
+     * Constructor
+     *
+     * @param extracted left-most part of string
+     * @param remainder right-most part of string
+     */
+    public ExtractedElement(String extracted, String remainder) {
+        super();
+        this.extracted = extracted;
+        this.remainder = remainder;
+    }
 
-	public String getExtracted() {
-		return extracted;
-	}
+    /**
+     * Alternative constructor where a string is passed, and then split into two by an index
+     *
+     * @param str string to split
+     * @param indexSecondPart the starting in index of the second part, so that
+     *     extracted=[0,indexSecondPart-1] and remainder=[indexSecondPart..]
+     */
+    public ExtractedElement(String str, int indexSecondPart) {
+        this(str.substring(0, indexSecondPart), str.substring(indexSecondPart));
+    }
 
-	public String getRemainder() {
-		return remainder;
-	}
+    /**
+     * The left-most part of string
+     *
+     * @return the left-most part of string.
+     */
+    public String getExtracted() {
+        return extracted;
+    }
 
+    /**
+     * The right-most part of string
+     *
+     * @return the right-most part of string.
+     */
+    public String getRemainder() {
+        return remainder;
+    }
 }

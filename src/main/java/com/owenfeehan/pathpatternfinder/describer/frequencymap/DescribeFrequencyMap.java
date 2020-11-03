@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,61 +27,87 @@ package com.owenfeehan.pathpatternfinder.describer.frequencymap;
  */
 
 /**
- * Describes the contents of a frequency-map with user-friendly strings
- *  containing examples.
+ * Describes the contents of a frequency-map with user-friendly strings containing examples.
+ *
+ * @author Owen Feehan
+ * @param <T> element-type in frequency-map
  */
 public class DescribeFrequencyMap<T extends Comparable<T>> {
 
     private FrequencyMap<T> frequencyMap;
 
+    /**
+     * Create for a {@link FrequencyMap}.
+     *
+     * @param frequencyMap the frequency-map.
+     */
     public DescribeFrequencyMap(FrequencyMap<T> frequencyMap) {
         this.frequencyMap = frequencyMap;
     }
 
-    public int numUniqueValues() {
-        return frequencyMap.numUniqueValues();
+    /**
+     * How many unique-values are described in the {@link FrequencyMap}?
+     *
+     * @return a count of the unique-values
+     */
+    public int numberUniqueValues() {
+        return frequencyMap.numberUniqueValues();
     }
 
-    // Can all values be described within a certain width?
-    public boolean canDescribeAllWithin( int maxWidth, int sepNumChars ) {
+    /**
+     * Can all values be described within a certain width?
+     *
+     * @param width the maximum number-of-characters that values need to be described within
+     * @param seperatorNumberChars the number of characters in the separator that is used between
+     *     elements
+     * @return true if all values can be described within {@code width} number of characters
+     */
+    public boolean canDescribeAllWithin(int width, int seperatorNumberChars) {
         int runningCount = 0;
 
-        for( KeyFrequency<T> ke : frequencyMap.byCount() ) {
-            runningCount += DescribeKeyFrequency.numCharsToDescribe(ke);
+        for (KeyFrequency<T> keyFrequency : frequencyMap.byCount()) {
+            runningCount += DescribeKeyFrequency.numberCharsToDescribe(keyFrequency);
 
-            if (runningCount > maxWidth) {
+            if (runningCount > width) {
                 return false;
             }
 
-            runningCount += sepNumChars;
+            runningCount += seperatorNumberChars;
         }
 
         return true;
     }
 
-    public String describeAllWithin( int maxWidth, String prefix, String separator ) {
-        StringBuilder sb = new StringBuilder();
+    /**
+     * Describe all elements in the frequency-map in a string that must have maximum {@code width}
+     * number of characters.
+     *
+     * @param width the maximum number-of-characters that values need to be described within.
+     * @param prefix a string to include immediately before the rest of the description
+     * @param separator a string to place between each element that is described
+     * @return the summary string
+     */
+    public String describeAllWithin(int width, String prefix, String separator) {
+        StringBuilder builder = new StringBuilder();
         int runningCount = 0;
 
         boolean first = true;
-        for( KeyFrequency<T> ke : frequencyMap.byCount() ) {
+        for (KeyFrequency<T> keyFrequency : frequencyMap.byCount()) {
 
-            String dscr = DescribeKeyFrequency.describeWithPrefix(
-                ke,
-                first ? prefix : separator
-            );
+            String description =
+                    DescribeKeyFrequency.describeWithPrefix(
+                            keyFrequency, first ? prefix : separator);
 
-            runningCount += dscr.length();
+            runningCount += description.length();
 
-            if (runningCount > maxWidth) {
-                return sb.toString();
+            if (runningCount > width) {
+                return builder.toString();
             }
 
-            sb.append(dscr);
+            builder.append(description);
             first = false;
         }
 
-        return sb.toString();
+        return builder.toString();
     }
-
 }

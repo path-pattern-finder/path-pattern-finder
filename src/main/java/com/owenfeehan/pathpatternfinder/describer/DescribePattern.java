@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.describer;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,48 +30,57 @@ import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 
 /**
- *  Describes a pattern by generating a user-readable string representation of a pattern
+ * Describes a pattern by generating a user-readable string representation of a pattern.
+ *
+ * @author Owen Feehan
  */
 public class DescribePattern {
 
-    private DescribePattern() {
-
-    }
+    private DescribePattern() {}
 
     /**
-     * Generates a user-readable string describing a pattern
+     * Generates a user-readable string describing a pattern.
      *
-     * A string is always returned showing constant-value elements as text, and replacing varliable-value elements
-     *   with a string like ${3} where the number is an index
+     * <p>A string is always returned showing constant-value elements as text, and replacing
+     * variable-value elements with a string like {@code ${3}} where the number is an index.
      *
      * @param pattern the pattern to describe
-     * @param includeVariableDescription whether to append additional lines describing each variable-value element, one for each element
-     * @return a user-readable stirng
+     * @param includeVariableDescription whether to append additional lines describing each
+     *     variable-value element, one for each element
+     * @return a user-readable string
      */
     public static String apply(Pattern pattern, boolean includeVariableDescription) {
         return apply(
                 pattern,
                 includeVariableDescription,
                 "",
-                ConsoleWidthGuesser.determineConsoleWidth()
-        );
+                ConsoleWidthGuesser.determineConsoleWidth());
     }
 
     /**
-     * Like apply(pattern, includeVariableDescription) but with additional parameterization
+     * Like {@link #apply(Pattern, boolean)} but with additional parameterization.
      *
      * @param pattern the pattern to describe
-     * @param includeVariableDescription whether to append additional lines describing each variable-value element, one for each element
-     * @param prefixForVariablesLine a prefix prepended to each line that describes a variable (e.g. useful for implementing bullet points)
+     * @param includeVariableDescription whether to append additional lines describing each
+     *     variable-value element, one for each element
+     * @param prefixForVariablesLine a prefix prepended to each line that describes a variable (e.g.
+     *     useful for implementing bullet points)
      * @param maxLineWidth maximum number of characters in a line
-     * @return a user-readable stirng
+     * @return a user-readable string
      */
-    public static String apply(Pattern pattern, boolean includeVariableDescription, String prefixForVariablesLine, int maxLineWidth ) {
+    public static String apply(
+            Pattern pattern,
+            boolean includeVariableDescription,
+            String prefixForVariablesLine,
+            int maxLineWidth) {
 
-        PatternDescriber describer = includeVariableDescription ? new PatternDescriberWithVariableLines(prefixForVariablesLine) : new PatternDescriber();
+        PatternDescriber describer =
+                includeVariableDescription
+                        ? new PatternDescriberWithVariableLines(prefixForVariablesLine)
+                        : new PatternDescriber();
 
-        for( PatternElement e : pattern ) {
-            describer.addElement(e, maxLineWidth);
+        for (PatternElement element : pattern) {
+            describer.addElement(element, maxLineWidth);
         }
 
         return describer.toString();

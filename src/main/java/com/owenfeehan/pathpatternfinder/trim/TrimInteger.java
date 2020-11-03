@@ -12,10 +12,10 @@ package com.owenfeehan.pathpatternfinder.trim;
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,56 +29,65 @@ package com.owenfeehan.pathpatternfinder.trim;
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * Reads an integer from the left-side of the string (greedy, it grabs an integer of maximally possible length).
+ * Reads an integer from the left-side of the string (greedy, it grabs an integer of maximally
+ * possible length).
  *
- * <p>Only succeeds if every string has an integer at the left, otherwise returns NULL.</p>
+ * <p>Only succeeds if every string has an integer at the left, otherwise returns {@link
+ * Optional#empty}.
+ *
+ * @author Owen Feehan
  */
 public class TrimInteger implements TrimOperation<String> {
 
     private UnresolvedPatternElementFactory factory;
 
+    /**
+     * Creates given a factory for creating unresolved pattern-elements.
+     *
+     * @param factory the factory
+     */
     public TrimInteger(UnresolvedPatternElementFactory factory) {
         this.factory = factory;
     }
 
     @Override
-    public Pattern trim(List<String> source) {
+    public Optional<Pattern> trim(List<String> source) {
 
         List<String> foundIntegers = new ArrayList<>();
         List<String> remainder = new ArrayList<>();
 
-        for( String s : source) {
+        for (String str : source) {
 
             // Is there an integer on the left side of the string
-            String integerPart = readNumbersFromLeft(s, remainder);
+            String integerPart = readNumbersFromLeft(str, remainder);
 
             if (integerPart.isEmpty()) {
                 // Can't read an integer, so this won't work
-                return null;
+                return Optional.empty();
             }
 
             foundIntegers.add(integerPart);
         }
 
-        // If successful, then we create a pattern out of the commonality, and remove it from each string
-        return factory.createUnresolvedString(
-                ResolvedPatternElementFactory.integer(foundIntegers),
-                remainder
-        );
+        // If successful, then we create a pattern out of the commonality, and remove it from each
+        // string
+        return Optional.of(
+                factory.createUnresolvedString(
+                        ResolvedPatternElementFactory.integer(foundIntegers), remainder));
     }
 
-    private String readNumbersFromLeft( String str, List<String> remainder ) {
+    private String readNumbersFromLeft(String str, List<String> remainder) {
 
-        for( int i=0; i<str.length(); i++ ) {
+        for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
             if (!Character.isDigit(c)) {
                 // As soon as we meet a non-digit we escape
-                String left = str.substring(0,i);
+                String left = str.substring(0, i);
                 String right = str.substring(i);
                 remainder.add(right);
                 return left;
@@ -89,5 +98,4 @@ public class TrimInteger implements TrimOperation<String> {
         remainder.add("");
         return str;
     }
-
 }
