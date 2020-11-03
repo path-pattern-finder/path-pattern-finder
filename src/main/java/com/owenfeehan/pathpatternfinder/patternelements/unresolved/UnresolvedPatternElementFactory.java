@@ -75,7 +75,24 @@ public class UnresolvedPatternElementFactory {
     }
 
     /**
-     * Creates a {@link Pattern} with an element on the left, and a UnresolvedString list on the
+     * Creates a {@link Pattern} with an elements on the left, and a unresolved-string on the
+     * right
+     *
+     * @param left left-most elements
+     * @param right right-most element
+     * @return the newly created pattern
+     */
+    public Pattern createUnresolvedString(List<PatternElement> left, List<String> right) {
+        Pattern pattern = new Pattern();
+        left.forEach(pattern::add);
+        if (StringUtilities.atLeastOneNonEmptyStr(right)) {
+            addUnresolvedStringsTo(right, pattern);
+        }
+        return pattern;
+    }
+    
+    /**
+     * Creates a {@link Pattern} with an element on the left, and a unresolved-string on the
      * right
      *
      * @param left left-most element

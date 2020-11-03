@@ -42,9 +42,30 @@ import org.junit.Test;
  */
 public class PathPatternFinderTest {
 
+    /** Tests three absolute-paths with a common first directory but are otherwise different. */
+    @Test
+    public void testAbsolute() {
+
+        applyTest(
+                pathList(
+                        "/a/b/c.txt",
+                        "/a/d/c.txt",
+                        "/a/e/c.txt"),
+                pattern(
+                        directorySeperator(),
+                        constant("a"),
+                        directorySeperator(),
+                        string("b", "d", "e"),
+                        directorySeperator(),
+                        constant("c.txt")
+                ),
+                true);
+    }
+    
+    
     /** Tests three relative-paths with a common first directory but are otherwise different. */
     @Test
-    public void testMixture1() {
+    public void testRelative() {
 
         applyTest(
                 pathList(
@@ -64,7 +85,7 @@ public class PathPatternFinderTest {
                 true);
     }
 
-    /** Tests two absolte paths, where one has an additional sub-directory before the filename. */
+    /** Tests two absolute paths with nested subdirectories, where one has an additional sub-directory before the filename. */
     @Test
     public void testNestedSubdirectory() {
 
@@ -73,7 +94,13 @@ public class PathPatternFinderTest {
                         "D:\\Users\\owen\\Pictures\\P1210940.JPG",
                         "D:\\Users\\owen\\Pictures\\Album\\P1210904.JPG"),
                 pattern(
-                        constant("D:\\Users\\owen\\Pictures\\"),
+                        constant("D:\\"),
+                        constant("Users"),
+                        directorySeperator(),
+                        constant("owen"),
+                        directorySeperator(),
+                        constant("Pictures"),
+                        directorySeperator(),
                         string("", "Album\\"),
                         constant("P"),
                         integer(1210940, 1210904),

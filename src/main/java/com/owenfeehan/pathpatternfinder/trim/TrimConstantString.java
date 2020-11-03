@@ -28,10 +28,14 @@ package com.owenfeehan.pathpatternfinder.trim;
 
 import com.owenfeehan.pathpatternfinder.CasedStringComparer;
 import com.owenfeehan.pathpatternfinder.Pattern;
+import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -86,18 +90,22 @@ public class TrimConstantString implements TrimOperation<String> {
     private Pattern createPattern(List<String> source, String common) {
         // If successful, then we create a pattern out of the commonality, and remove it from each
         // string
+        List<PatternElement> elements = new ArrayList<>();
+        
+        // We 
+        addConstantAndDirectoryElements(common, elements::add);
+        
+        // Add all elements, and removing the number of characters from the remaining charrs
         return factory.createUnresolvedString(
-                ResolvedPatternElementFactory.constant(common),
+                elements,
                 removeFirstNCharsFrom(source, common.length()));
-    }
-
-    private static List<String> removeFirstNCharsFrom(List<String> source, int n) {
-        return source.stream().map(s -> s.substring(n)).collect(Collectors.toList());
     }
 
     /**
      * Returns as many characters as possible (from the left) that are equal between source and to
-     * intersect An empty string is returned if the left-most character is different in both strings
+     * intersect.
+     * 
+     * <p>An empty string is returned if the left-most character is different in both strings.
      */
     private String intersect(String source, String toIntersect) {
 
@@ -122,5 +130,46 @@ public class TrimConstantString implements TrimOperation<String> {
 
         // Everything matches to we keep the source
         return source;
+    }
+    
+    
+    /**
+     * Parses a string so that any characters matching the path separation are added separately.
+     * 
+     * @param constantToAdd the constant string to add
+     * @param elementConsumer called to add each element
+     */
+    private static void addConstantAndDirectoryElements(String constantToAdd, Consumer<PatternElement> elementConsumer) {
+        
+        // Loop through
+        int position = 0;
+        String remaining = constantToAdd;
+        while( position < remaining.length()) {
+            
+            // Separate into components when a separator component is found
+            if (remaining.charAt(position)==File.separatorChar) {
+                if (position!=0) {
+                    elementConsumer.accept(ResolvedPatternElementFactory.constant(remaining.substring(0, position)));
+                }
+                elementConsumer.accept(ResolvedPatternElementFactory.directorySeperator());
+                
+                // Update what's remaining to parse
+                if (remaining.length()!=position) {
+                    remaining = remaining.substring(position+1);
+                } else {
+                    remaining = "";
+                }
+            }
+            position++;
+        }
+        
+        // Anything remaining should be added as an element
+        if (!remaining.isEmpty()) {
+            elementConsumer.accept(ResolvedPatternElementFactory.constant(remaining));
+        }
+    }
+
+    private static List<String> removeFirstNCharsFrom(List<String> source, int n) {
+        return source.stream().map(s -> s.substring(n)).collect(Collectors.toList());
     }
 }

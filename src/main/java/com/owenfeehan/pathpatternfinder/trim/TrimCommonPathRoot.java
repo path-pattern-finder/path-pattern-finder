@@ -73,31 +73,46 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
             UnresolvedPatternElementFactory factory) {
         Pattern pattern = new Pattern();
         addPatternsTo(commonElements, pattern);
-        factory.addUnresolvedPathsTo(removeFrom(source, commonElements.size()), pattern);
+        
+        factory.addUnresolvedPathsTo(removeFrom(source, commonElements.sizeIgnoreRoot()), pattern);
         return pattern;
     }
 
     private static void addPatternsTo(PathElements commonElements, Pattern pattern) {
-
-        for (String element : commonElements) {
-            ResolvedPatternElementFactory.addConstantTo(element, pattern);
-            ResolvedPatternElementFactory.addDirectorySeperatorTo(pattern);
+        for (String stringElement : commonElements) {
+            ResolvedPatternElementFactory.addConstantAndDirectoryTo(stringElement, pattern);
         }
     }
 
-    /** Immutably removes the first n-elements from a list */
-    private static List<Path> removeFrom(List<Path> source, int numElements) {
+    /** 
+     * Immutably removes the first n-elements from a list of paths.
+     * 
+     * <p>The elements are removed left-most i.e. closest to the root.
+     * 
+     * @param source the list of paths
+     * @param numberElementsToRemove the number of elements to remove (the root element should <b>not</b> be counted).
+     * @return Path a path with any root removed, and with the left-most {@code numberElementsToRemove} removed.
+     */
+    private static List<Path> removeFrom(List<Path> source, int numberElementsToRemove) {
         return source.stream()
-                .map(path -> removeFirstNItemsElements(path, numElements))
+                .map(path -> removeFirstNumberElements(path, numberElementsToRemove))
                 .collect(Collectors.toList());
     }
 
-    /** Removes the first n elements from a path */
-    private static Path removeFirstNItemsElements(Path path, int n) {
-        if (n > 0) {
-            return path.subpath(n, path.getNameCount());
+    /** 
+     * Immutably removes the first n elements from a path.
+     * 
+     * <p>The elements are removed left-most i.e. closest to the root.
+     * 
+     * @param pathToRemoveFrom the path to remove elements from
+     * @param numberElementsToRemove the number of elements to remove (the root element should <b>not</b> be counted).
+     * @return Path {@code path} with any root removed, and with the left-most {@code numberElementsToRemove} removed. 
+     */
+    private static Path removeFirstNumberElements(Path pathToRemoveFrom, int numberElementsToRemove) {
+        if (numberElementsToRemove > 0) {
+            return pathToRemoveFrom.subpath(numberElementsToRemove, pathToRemoveFrom.getNameCount());
         } else {
-            return path;
+            return pathToRemoveFrom;
         }
     }
 }

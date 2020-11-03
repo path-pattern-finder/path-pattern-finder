@@ -123,15 +123,32 @@ public class ResolvedPatternElementFactory {
     public static PatternElement directorySeperator() {
         return new DirectorySeperator();
     }
+    
+    /**
+     * Like {@link #addConstantTo(String,Pattern)} but additionally adds a directory separator.
+     *
+     * @param value the value for the constant element
+     * @param pattern the pattern to add to
+     */
+    public static void addConstantAndDirectoryTo(String value, Pattern pattern) {
+        PatternElement element = addConstantTo(value, pattern); 
+        if (!element.toString().endsWith(File.separator)) {
+            // The separator is only needed if the last element doesn't already end with one
+            ResolvedPatternElementFactory.addDirectorySeperatorTo(pattern);
+        }
+    }
 
     /**
      * Creates a new constant element from a string, and adds to {@code pattern}.
      *
      * @param value the value for the constant element
      * @param pattern the pattern to add to
+     * @return the element that was added
      */
-    public static void addConstantTo(String value, Pattern pattern) {
-        pattern.add(constant(value));
+    public static PatternElement addConstantTo(String value, Pattern pattern) {
+        PatternElement element = constant(value); 
+        pattern.add(element);
+        return element;
     }
 
     /**
@@ -139,9 +156,12 @@ public class ResolvedPatternElementFactory {
      *
      * @param value the value for the constant element
      * @param pattern the pattern to add to
+     * @return the element that was added
      */
-    public static void addConstantTo(char value, Pattern pattern) {
-        pattern.add(constant(value));
+    public static PatternElement addConstantTo(char value, Pattern pattern) {
+        PatternElement element = constant(value); 
+        pattern.add(element);
+        return element;
     }
 
     /**

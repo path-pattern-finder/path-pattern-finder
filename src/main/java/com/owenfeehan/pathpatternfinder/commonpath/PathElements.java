@@ -108,6 +108,19 @@ public class PathElements implements Iterable<String> {
     public int size() {
         return elements.size();
     }
+    
+    /**
+     * Number of path-elements in the prefix that <b>aren't a root</b>.
+     *
+     * @return the number of elements
+     */
+    public int sizeIgnoreRoot() {
+        if (firstPath.getRoot()!=null) {
+            return size() - 1;
+        } else {
+            return size();
+        }
+    }
 
     /**
      * Iterates through each common element (including the root as the first element if it exists).
