@@ -20,7 +20,7 @@
 	<url>http://www.owenfeehan.com</url>
       </organization>
       
-      <version>1.4.4-SNAPSHOT</version>
+      <version>1.4.4</version>
         <build>
             <plugins>
                 <plugin>
@@ -125,8 +125,8 @@
 					  <include>.gitignore</include>
 					</includes>
 					<!-- define the steps to apply to those files -->
-					<trimTrailingWhitespace/>
-					<endWithNewline/>
+					<trimTrailingWhitespace />
+					<endWithNewline />
 					<indent>
 					  <tabs>true</tabs>
 					  <spacesPerTab>4</spacesPerTab>
@@ -159,7 +159,7 @@
 		<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
 		<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
-		<tag>path-pattern-finder-1.1</tag>
+		<tag>path-pattern-finder-1.4.4</tag>
 	</scm>
 	
   
