@@ -27,6 +27,8 @@ package com.owenfeehan.pathpatternfinder.commonpath;
  */
 
 import com.owenfeehan.pathpatternfinder.CasedStringComparer;
+import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
+import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -141,7 +143,7 @@ public class PathElements implements Iterable<String> {
 
         // If it has a root we include it
         if (path.getRoot() != null) {
-            elements.add(path.getRoot().toString());
+            addElementsFromRoot(path.getRoot().toString(), elements);
         }
 
         // We skip the file-name, and only consider directories
@@ -149,6 +151,18 @@ public class PathElements implements Iterable<String> {
             elements.add(path.getName(i).toString());
         }
         return elements;
+    }
+    
+    /** Adds elements from a root/string. */
+    private static void addElementsFromRoot(String rootValue, List<String> toAddTo) {
+        if (rootValue.equals(File.separator)) {
+            toAddTo.add(File.separator);
+        } else if (rootValue.endsWith(File.separator)) {
+            toAddTo.add(rootValue.substring(0, rootValue.length()-1));
+            toAddTo.add(File.separator);
+        } else {
+            toAddTo.add(rootValue);
+        }        
     }
 
     /**

@@ -87,12 +87,9 @@ public class TrimConstantString implements TrimOperation<String> {
         return Optional.of(common);
     }
 
+    /** If successful, then we create a pattern out of the commonality, and remove it from each string. */
     private Pattern createPattern(List<String> source, String common) {
-        // If successful, then we create a pattern out of the commonality, and remove it from each
-        // string
         List<PatternElement> elements = new ArrayList<>();
-        
-        // We 
         addConstantAndDirectoryElements(common, elements::add);
         
         // Add all elements, and removing the number of characters from the remaining charrs
@@ -156,8 +153,10 @@ public class TrimConstantString implements TrimOperation<String> {
                 // Update what's remaining to parse
                 if (remaining.length()!=position) {
                     remaining = remaining.substring(position+1);
+                    position = 0;
                 } else {
                     remaining = "";
+                    position = 0;
                 }
             }
             position++;
@@ -170,6 +169,6 @@ public class TrimConstantString implements TrimOperation<String> {
     }
 
     private static List<String> removeFirstNCharsFrom(List<String> source, int n) {
-        return source.stream().map(s -> s.substring(n)).collect(Collectors.toList());
+        return source.stream().map(string -> string.substring(n)).collect(Collectors.toList());
     }
 }

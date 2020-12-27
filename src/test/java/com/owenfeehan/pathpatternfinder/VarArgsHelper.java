@@ -30,7 +30,10 @@ import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.apache.commons.io.FilenameUtils;
 
 /** Helps create Patterns, Elements, Paths etc. based upon elements passed as variable arguments */
 class VarArgsHelper {
@@ -43,11 +46,11 @@ class VarArgsHelper {
         return pattern;
     }
 
-    public static List<Path> pathList(String... args) {
-        List<Path> list = new ArrayList<>();
-        for (String str : args) {
-            list.add(Paths.get(str));
-        }
-        return list;
+    public static List<Path> pathList(Path... paths) {
+        return Arrays.stream(paths).collect( Collectors.toList() );
+    }
+    
+    public static List<Path> pathList(String... paths) {
+        return Arrays.stream(paths).map(Paths::get).collect( Collectors.toList() );
     }
 }

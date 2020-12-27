@@ -31,6 +31,7 @@ import static com.owenfeehan.pathpatternfinder.patternelements.resolved.Resolved
 import static org.junit.Assert.assertEquals;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import org.apache.commons.io.IOCase;
 import org.junit.Test;
@@ -89,12 +90,14 @@ public class PathPatternFinderTest {
     @Test
     public void testNestedSubdirectory() {
 
+        Path pathWithout = Paths.get("D:", "Users", "owen", "Pictures", "P1210940.JPG");
+        Path pathWith = Paths.get("D:", "Users", "owen", "Pictures", "Album", "P1210904.JPG");
+        
         applyTest(
-                pathList(
-                        "D:\\Users\\owen\\Pictures\\P1210940.JPG",
-                        "D:\\Users\\owen\\Pictures\\Album\\P1210904.JPG"),
+                pathList(pathWithout, pathWith),
                 pattern(
-                        constant("D:\\"),
+                        constant("D:"),
+                        directorySeperator(),
                         constant("Users"),
                         directorySeperator(),
                         constant("owen"),
