@@ -22,6 +22,7 @@
       
       <version>1.4.5-SNAPSHOT</version>
 	  <description>a Java library to find naming-patterns in a list of strings or paths, using a particular set of rules. A command-line app for basic usage is also included.</description>
+
         <build>
             <plugins>
                 <plugin>
@@ -165,8 +166,12 @@
         </build>
 
         <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+		 <maven.compiler.source>1.8</maven.compiler.source>
+           <maven.compiler.target>1.8</maven.compiler.target>
+		   <!-- For connecting to SonarCloud. -->
+		  <sonar.projectKey>path-pattern-finder_path-pattern-finder</sonar.projectKey>
+		  <sonar.organization>path-pattern-finder</sonar.organization>
+		  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
       </properties>
       
       	<scm>
@@ -179,15 +184,15 @@
   
 	<distributionManagement>
         <snapshotRepository>
-            <id>anchor-snapshots</id>
-            <url>http://maven.anchoranalysis.org:8081/repository/anchor-snapshots</url>
+		   <id>github</id>
+            <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
         </snapshotRepository>	
 		 <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
         </repository>
 	</distributionManagement>
-     
+	
       <dependencies>
         <dependency>
           <groupId>junit</groupId>

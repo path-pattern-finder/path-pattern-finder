@@ -29,11 +29,7 @@ package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
 import static org.junit.Assert.assertEquals;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
-import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
-import com.owenfeehan.pathpatternfinder.trim.AndUnresolvedHelper;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -46,40 +42,6 @@ import org.junit.Test;
  * @author Owen Feehan
  */
 public class TrimConstantSubstringTest {
-
-    private static class ConstantStringsFixture {
-
-        private UnresolvedPatternElementFactory factory;
-
-        private static final String FIRST = "aaaconstantbbb";
-        private static final String SECOND_LOWER_CASE = "cccconstantddd";
-        private static final String SECOND_MIXED_CASE = "cccconsTANTddd";
-
-        public ConstantStringsFixture(UnresolvedPatternElementFactory factory) {
-            this.factory = factory;
-        }
-
-        public static List<String> genSource(boolean mixedCase, boolean prependFirst) {
-            return new ArrayList<>(
-                    Arrays.asList(multiplexFirst(prependFirst), multiplexSecond(mixedCase)));
-        }
-
-        public Pattern expectedPattern() {
-            Pattern pattern = new Pattern();
-            AndUnresolvedHelper.addUnresolved("aaa", "ccc", pattern, false, true, factory);
-            ResolvedPatternElementFactory.addConstantTo("constant", pattern);
-            AndUnresolvedHelper.addUnresolved("bbb", "ddd", pattern, true, false, factory);
-            return pattern;
-        }
-
-        private static String multiplexFirst(boolean prepend) {
-            return prepend ? "_" + FIRST : FIRST;
-        }
-
-        private static String multiplexSecond(boolean mixedCase) {
-            return mixedCase ? SECOND_MIXED_CASE : SECOND_LOWER_CASE;
-        }
-    }
 
     /** Test <i>non mixed case</i> expecting a successful outcome. */
     @Test
