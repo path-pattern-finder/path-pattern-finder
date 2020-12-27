@@ -85,21 +85,23 @@ public class TrimConstantString implements TrimOperation<String> {
         return Optional.of(common);
     }
 
-    /** If successful, then we create a pattern out of the commonality, and remove it from each string. */
+    /**
+     * If successful, then we create a pattern out of the commonality, and remove it from each
+     * string.
+     */
     private Pattern createPattern(List<String> source, String common) {
         List<PatternElement> elements = new ArrayList<>();
         SplitDirectoriesHelper.splitStringIntoElements(common, elements::add);
-        
+
         // Add all elements, and removing the number of characters from the remaining charrs
         return factory.createUnresolvedString(
-                elements,
-                removeFirstNCharsFrom(source, common.length()));
+                elements, removeFirstNCharsFrom(source, common.length()));
     }
 
     /**
      * Returns as many characters as possible (from the left) that are equal between source and to
      * intersect.
-     * 
+     *
      * <p>An empty string is returned if the left-most character is different in both strings.
      */
     private String intersect(String source, String toIntersect) {
@@ -126,7 +128,7 @@ public class TrimConstantString implements TrimOperation<String> {
         // Everything matches to we keep the source
         return source;
     }
-    
+
     private static List<String> removeFirstNCharsFrom(List<String> source, int n) {
         return source.stream().map(string -> string.substring(n)).collect(Collectors.toList());
     }

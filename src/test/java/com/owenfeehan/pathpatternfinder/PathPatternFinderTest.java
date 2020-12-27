@@ -30,6 +30,7 @@ import static com.owenfeehan.pathpatternfinder.VarArgsHelper.*;
 import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,22 +51,17 @@ class PathPatternFinderTest {
     void testAbsolute() {
 
         applyTest(
-                pathList(
-                        "/a/b/c.txt",
-                        "/a/d/c.txt",
-                        "/a/e/c.txt"),
+                pathList("/a/b/c.txt", "/a/d/c.txt", "/a/e/c.txt"),
                 pattern(
                         directorySeperator(),
                         constant("a"),
                         directorySeperator(),
                         string("b", "d", "e"),
                         directorySeperator(),
-                        constant("c.txt")
-                ),
+                        constant("c.txt")),
                 true);
     }
-    
-    
+
     /** Tests three relative-paths with a common first directory but are otherwise different. */
     @Test
     void testRelative() {
@@ -88,13 +84,16 @@ class PathPatternFinderTest {
                 true);
     }
 
-    /** Tests two absolute paths with nested subdirectories, where one has an additional sub-directory before the filename. */
+    /**
+     * Tests two absolute paths with nested subdirectories, where one has an additional
+     * sub-directory before the filename.
+     */
     @Test
     void testNestedSubdirectory() {
 
         Path pathWithout = Paths.get("D:", "Users", "owen", "Pictures", "P1210940.JPG");
         Path pathWith = Paths.get("D:", "Users", "owen", "Pictures", "Album", "P1210904.JPG");
-        
+
         applyTest(
                 pathList(pathWithout, pathWith),
                 pattern(
@@ -112,7 +111,7 @@ class PathPatternFinderTest {
                         constant(".JPG")),
                 true);
     }
-    
+
     /** Tests a single path. */
     @Test
     void testSinglePath() {
@@ -123,17 +122,17 @@ class PathPatternFinderTest {
                         directorySeperator(),
                         constant("somewhere"),
                         directorySeperator(),
-                        constant("file.txt")
-                        ),
+                        constant("file.txt")),
                 true);
     }
-    
+
     /** Tests behavior when an empty list of paths is passed. */
     @Test
     void testEmpty() {
-        assertThrows(IllegalArgumentException.class, () ->  // NOSONAR
-            PathPatternFinder.findPatternPaths(new ArrayList<>(), IOCase.INSENSITIVE)
-        );
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> // NOSONAR
+                PathPatternFinder.findPatternPaths(new ArrayList<>(), IOCase.INSENSITIVE));
     }
 
     private static void applyTest(

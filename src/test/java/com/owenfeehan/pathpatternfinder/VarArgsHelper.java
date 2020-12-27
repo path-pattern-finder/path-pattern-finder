@@ -45,10 +45,10 @@ class VarArgsHelper {
     }
 
     public static List<Path> pathList(Path... paths) {
-        return Arrays.stream(paths).collect( Collectors.toList() );
+        return Arrays.stream(paths).collect(Collectors.toList());
     }
-    
+
     public static List<Path> pathList(String... paths) {
-        return Arrays.stream(paths).map(Paths::get).collect( Collectors.toList() );
+        return Arrays.stream(paths).map(Paths::get).collect(Collectors.toList());
     }
 }
