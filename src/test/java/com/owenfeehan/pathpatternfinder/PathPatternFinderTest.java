@@ -29,7 +29,7 @@ package com.owenfeehan.pathpatternfinder;
 import static com.owenfeehan.pathpatternfinder.VarArgsHelper.*;
 import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
 import static org.junit.Assert.assertEquals;
-
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -104,7 +104,7 @@ public class PathPatternFinderTest {
                         directorySeperator(),
                         constant("Pictures"),
                         directorySeperator(),
-                        string("", "Album\\"),
+                        string("", "Album" + File.separator),
                         constant("P"),
                         integer(1210940, 1210904),
                         constant(".JPG")),
