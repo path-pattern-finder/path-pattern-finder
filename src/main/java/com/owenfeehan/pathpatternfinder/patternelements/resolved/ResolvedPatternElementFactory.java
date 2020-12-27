@@ -60,7 +60,7 @@ public class ResolvedPatternElementFactory {
      */
     public static PatternElement constant(String value) {
 
-        // Special case where we create a constant with a directory seperator only, then we convert
+        // Special case where we create a constant with a directory separator only, then we convert
         // it into a DirectorySeperator class for consistency in output patterns
         if (value.equals(File.separator)) {
             return directorySeperator();

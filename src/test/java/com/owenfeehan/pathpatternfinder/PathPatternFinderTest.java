@@ -29,9 +29,11 @@ package com.owenfeehan.pathpatternfinder;
 import static com.owenfeehan.pathpatternfinder.VarArgsHelper.*;
 import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.io.IOCase;
 import org.junit.jupiter.api.Test;
@@ -109,6 +111,29 @@ class PathPatternFinderTest {
                         integer(1210940, 1210904),
                         constant(".JPG")),
                 true);
+    }
+    
+    /** Tests a single path. */
+    @Test
+    void testSinglePath() {
+        applyTest(
+                pathList("arbitrary/somewhere/file.txt"),
+                pattern(
+                        constant("arbitrary"),
+                        directorySeperator(),
+                        constant("somewhere"),
+                        directorySeperator(),
+                        constant("file.txt")
+                        ),
+                true);
+    }
+    
+    /** Tests behavior when an empty list of paths is passed. */
+    @Test
+    void testEmpty() {
+        assertThrows(IllegalArgumentException.class, () ->  // NOSONAR
+            PathPatternFinder.findPatternPaths(new ArrayList<>(), IOCase.INSENSITIVE)
+        );
     }
 
     private static void applyTest(

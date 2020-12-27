@@ -27,6 +27,7 @@ package com.owenfeehan.pathpatternfinder.trim;
  */
 
 import com.owenfeehan.pathpatternfinder.Pattern;
+import com.owenfeehan.pathpatternfinder.SplitDirectoriesHelper;
 import com.owenfeehan.pathpatternfinder.commonpath.FindCommonPathElements;
 import com.owenfeehan.pathpatternfinder.commonpath.PathElements;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
@@ -60,11 +61,18 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
     @Override
     public Optional<Pattern> trim(List<Path> source) {
 
-        Optional<PathElements> commonElements =
-                FindCommonPathElements.findForFilePaths(source, factory.stringComparer());
+        if (source.size()>1) {
+            Optional<PathElements> commonElements =
+                    FindCommonPathElements.findForFilePaths(source, factory.stringComparer());
 
-        // If we have at least one common element... we convert
-        return commonElements.map(value -> createPatternFromCommonElements(value, source, factory));
+            // If we have at least one common element... we convert
+            return commonElements.map(value -> createPatternFromCommonElements(value, source, factory));            
+        } else {
+            // If there's only a single path, the we can treat it all as common, and treat it
+            // as constant (but taking care to extract any directory separators)
+            return Optional.of( SplitDirectoriesHelper.buildPatternFromPath(source.get(0)) );
+        }
+
     }
 
     private static Pattern createPatternFromCommonElements(
