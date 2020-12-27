@@ -161,6 +161,29 @@
 				</java>
 			  </configuration>
 			</plugin>
+			
+			
+			<!-- To generate code coverage reports that can be send to SonarCloud -->
+			 <plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<executions>
+				  <execution>
+					<id>prepare-agent</id>
+					<goals>
+					  <goal>prepare-agent</goal>
+					</goals>
+				  </execution>
+				  <execution>
+					<id>report</id>
+					  <phase>prepare-package</phase>
+					  <goals>
+						<goal>report</goal>
+					</goals>
+				  </execution>
+				</executions>
+			 </plugin>			
 		
             </plugins>
         </build>
