@@ -29,11 +29,9 @@ package com.owenfeehan.pathpatternfinder;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.commons.io.FilenameUtils;
 
 /** Helps create Patterns, Elements, Paths etc. based upon elements passed as variable arguments */
 class VarArgsHelper {

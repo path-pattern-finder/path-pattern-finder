@@ -26,14 +26,14 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import java.util.Arrays;
 import java.util.Optional;
 import org.apache.commons.io.IOCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests on {@code IntegerVariableElement}.

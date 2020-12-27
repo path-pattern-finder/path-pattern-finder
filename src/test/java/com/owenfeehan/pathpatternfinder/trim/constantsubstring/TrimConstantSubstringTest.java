@@ -26,7 +26,7 @@ package com.owenfeehan.pathpatternfinder.trim.constantsubstring;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import org.apache.commons.io.IOCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link TrimConstantSubstring} operation.
