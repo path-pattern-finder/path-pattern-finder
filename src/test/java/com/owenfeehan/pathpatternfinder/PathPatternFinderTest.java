@@ -41,11 +41,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class PathPatternFinderTest {
+class PathPatternFinderTest {
 
     /** Tests three absolute-paths with a common first directory but are otherwise different. */
     @Test
-    public void testAbsolute() {
+    void testAbsolute() {
 
         applyTest(
                 pathList(
@@ -66,7 +66,7 @@ public class PathPatternFinderTest {
     
     /** Tests three relative-paths with a common first directory but are otherwise different. */
     @Test
-    public void testRelative() {
+    void testRelative() {
 
         applyTest(
                 pathList(
@@ -88,7 +88,7 @@ public class PathPatternFinderTest {
 
     /** Tests two absolute paths with nested subdirectories, where one has an additional sub-directory before the filename. */
     @Test
-    public void testNestedSubdirectory() {
+    void testNestedSubdirectory() {
 
         Path pathWithout = Paths.get("D:", "Users", "owen", "Pictures", "P1210940.JPG");
         Path pathWith = Paths.get("D:", "Users", "owen", "Pictures", "Album", "P1210904.JPG");

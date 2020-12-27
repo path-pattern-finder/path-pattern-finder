@@ -39,11 +39,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class PatternTest {
+class PatternTest {
 
     /** Tests the {@link Pattern#reverse} method. */
     @Test
-    public void testReverse() {
+    void testReverse() {
 
         Pattern pattern = PatternFixture.pattern(false);
         pattern.reverse();
@@ -55,7 +55,7 @@ public class PatternTest {
 
     /** Tests the {@link Pattern#describeShort} method. */
     @Test
-    public void testDescribeShort() {
+    void testDescribeShort() {
 
         Pattern pattern = PatternFixture.pattern(false);
         checkPatternStr(pattern.describeShort());
@@ -63,7 +63,7 @@ public class PatternTest {
 
     /** Tests the {@link Pattern#describeDetailed} method. */
     @Test
-    public void testDescribeDetailed() {
+    void testDescribeDetailed() {
 
         Pattern pattern = PatternFixture.pattern(false);
 
@@ -79,7 +79,7 @@ public class PatternTest {
 
     /** Tests the {@link Pattern#fitAgainst} method. */
     @Test
-    public void testFitAgainst() {
+    void testFitAgainst() {
         Pattern pattern = PatternFixture.pattern(true);
 
         Optional<String[]> elementsOptional =

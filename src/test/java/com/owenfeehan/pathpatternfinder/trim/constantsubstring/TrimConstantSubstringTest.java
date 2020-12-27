@@ -41,23 +41,23 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class TrimConstantSubstringTest {
+class TrimConstantSubstringTest {
 
     /** Test <i>non mixed case</i> expecting a successful outcome. */
     @Test
-    public void testCaseIdenticalCase() {
+    void testCaseIdenticalCase() {
         applyTest(false, false, fixture -> Optional.of(fixture.expectedPattern()));
     }
 
     /** Test <i>mixed case</i> expecting a successful outcome. */
     @Test
-    public void testCaseMixedCase() {
+    void testCaseMixedCase() {
         applyTest(true, false, fixture -> Optional.of(fixture.expectedPattern()));
     }
 
     /** Test expecting failure. */
     @Test
-    public void testCaseFailure() {
+    void testCaseFailure() {
         applyTest(false, true, fixture -> Optional.empty());
     }
 

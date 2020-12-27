@@ -43,7 +43,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class TrimSpitByCharTest {
+class TrimSpitByCharTest {
 
     private static class ConstantStringsFixture {
 
@@ -79,19 +79,19 @@ public class TrimSpitByCharTest {
 
     /** Tests the operation to split strings by an <i>underscore</i> character. */
     @Test
-    public void testCaseUnderscoreSplit() {
+    void testCaseUnderscoreSplit() {
         applyTest('_', false, false, Optional.of(ConstantStringsFixture.expectedUnderscoreSplit()));
     }
 
     /** Tests the operation to split strings by a <i>hyphen</i> character. */
     @Test
-    public void testCaseHyphenSplit() {
+    void testCaseHyphenSplit() {
         applyTest('-', false, false, Optional.of(ConstantStringsFixture.expectedHyphenSplit()));
     }
 
     /** Tests the operation to split strings by a <i>comma</i> character. */
     @Test
-    public void testCaseCommaSplit() {
+    void testCaseCommaSplit() {
         applyTest(',', false, false, Optional.empty());
     }
 

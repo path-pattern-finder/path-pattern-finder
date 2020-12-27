@@ -39,18 +39,18 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class StringVariableElementTest {
+class StringVariableElementTest {
 
     /** Checks that it tries to fit the longer keys first, with empty keys last */
     @Test
-    public void testFitInCorrectOrder_Sensitive() {
+    void testFitInCorrectOrder_Sensitive() {
         PatternElement element = ResolvedPatternElementFactory.string("going", "go", "");
         testPattern("going", "goingaway", element, IOCase.SENSITIVE);
     }
 
     /** Checks that it tries to fit the longer keys first, with empty keys last */
     @Test
-    public void testFitInCorrectOrder_Insensitive() {
+    void testFitInCorrectOrder_Insensitive() {
         PatternElement element = ResolvedPatternElementFactory.string("aax", "AAaa", "Aa");
         testPattern("aaaa", "aaaab", element, IOCase.INSENSITIVE);
     }

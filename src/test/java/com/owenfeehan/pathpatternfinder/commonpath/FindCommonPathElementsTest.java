@@ -41,11 +41,11 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class FindCommonPathElementsTest {
+class FindCommonPathElementsTest {
 
     /** Finds a common-path with <b>case insensitivity</b> and <b>without a root</b>. */
     @Test
-    public void testCaseInsensitiveWithoutRoot() {
+    void testCaseInsensitiveWithoutRoot() {
         applyTest(IOCase.INSENSITIVE, false, false, Optional.of(PathListFixture::firstAndSecond));
     }
 
@@ -54,7 +54,7 @@ public class FindCommonPathElementsTest {
      * root</b>.
      */
     @Test
-    public void testCaseSensitiveWithoutRoot() {
+    void testCaseSensitiveWithoutRoot() {
         applyTest(IOCase.SENSITIVE, false, false, Optional.of(PathListFixture::first));
     }
 
@@ -63,13 +63,13 @@ public class FindCommonPathElementsTest {
      * <b>without a root</b>.
      */
     @Test
-    public void testCaseSensitiveChangeBoth() {
+    void testCaseSensitiveChangeBoth() {
         applyTest(IOCase.SENSITIVE, true, false, Optional.empty());
     }
 
     /** Finds a common-path with <b>case insensitivity</b> and <b>with a root</b>. */
     @Test
-    public void testCaseInsensitiveWithRoot() {
+    void testCaseInsensitiveWithRoot() {
         applyTest(
                 IOCase.INSENSITIVE,
                 false,
@@ -82,7 +82,7 @@ public class FindCommonPathElementsTest {
      * root</b>.
      */
     @Test
-    public void testCaseSensitiveWithRoot() {
+    void testCaseSensitiveWithRoot() {
         applyTest(IOCase.SENSITIVE, false, true, Optional.of(PathListFixture::firstWithRoot));
     }
 

@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class TrimConstantStringTest {
+class TrimConstantStringTest {
 
     private static class ConstantStringsFixture {
         private static final String FIRST_BASE = "aaa";
@@ -80,22 +80,22 @@ public class TrimConstantStringTest {
             return differentCase ? FIRST_DIFFERENT_CASE : FIRST_BASE;
         }
     }
-
+    
     /** Tests with <i>case-insensitivity</i> expecting a match. */
     @Test
-    public void testCaseInsensitiveExpectMatch() {
+    void testCaseInsensitiveExpectMatch() {
         applyTest_ExpectMatch(true, IOCase.INSENSITIVE);
     }
 
     /** Tests with <i>case-sensitivity</i> expecting a match. */
     @Test
-    public void testCaseSensitiveExpectMatch() {
+    void testCaseSensitiveExpectMatch() {
         applyTest_ExpectMatch(false, IOCase.SENSITIVE);
     }
 
     /** Tests with <i>case-sensitivity</i> expecting a match only of a single-character. */
     @Test
-    public void testCaseSensitiveExpectSingleCharMatchOnly() {
+    void testCaseSensitiveExpectSingleCharMatchOnly() {
         applyTest(true, IOCase.SENSITIVE, ConstantStringsFixture.commonString1(), 1);
     }
 

@@ -40,7 +40,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class TrimIntegerTest {
+class TrimIntegerTest {
 
     private static class ConstantStringsFixture {
 
@@ -84,13 +84,13 @@ public class TrimIntegerTest {
 
     /** Tests the operation when it is expected to succeed. */
     @Test
-    public void testCaseSuccess() {
+    void testCaseSuccess() {
         applyTest(false, Optional.of(expectedSucceedPattern()));
     }
 
     /** Tests the operation when it is expected to fail. */
     @Test
-    public void testCaseFail() {
+    void testCaseFail() {
         applyTest(true, Optional.empty());
     }
 

@@ -44,17 +44,17 @@ import org.junit.jupiter.api.Test;
  *
  * @author Owen Feehan
  */
-public class TrimCommonPathRootTest {
+class TrimCommonPathRootTest {
 
     /** Tests comparing paths with case-insensitivity. */
     @Test
-    public void testCaseInsensitive() {
+    void testCaseInsensitive() {
         applyTest(IOCase.INSENSITIVE, 2);
     }
 
     /** Tests comparing paths with case-sensitivity. */
     @Test
-    public void testCaseSensitive() {
+    void testCaseSensitive() {
         applyTest(IOCase.SENSITIVE, 1);
     }
 
