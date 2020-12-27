@@ -46,7 +46,7 @@ public abstract class VariableElement extends ResolvedPatternElement {
      *
      * @param values the values
      */
-    public VariableElement(List<String> values) {
+    protected VariableElement(List<String> values) {
         this.values = values;
     }
 

@@ -27,7 +27,6 @@ package com.owenfeehan.pathpatternfinder.commonpath;
  */
 
 import com.owenfeehan.pathpatternfinder.CasedStringComparer;
-import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;

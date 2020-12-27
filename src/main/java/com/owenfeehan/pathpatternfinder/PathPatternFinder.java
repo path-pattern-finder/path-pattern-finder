@@ -111,8 +111,7 @@ public class PathPatternFinder {
                 List<Path> paths = PathsFromArguments.pathsFromArgs(args);
                 findFilesAndPattern(paths);
             } catch (IOException e) {
-                System.err.println("An exception occurred"); // NOSONAR
-                e.printStackTrace();
+                System.err.println("An exception occurred: " + e.toString()); // NOSONAR
             }
         } else {
             System.err.println( // NOSONAR
