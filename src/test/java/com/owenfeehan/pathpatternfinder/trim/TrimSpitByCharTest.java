@@ -39,7 +39,7 @@ import org.apache.commons.io.IOCase;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests the {@link TrimSpitByCharTest} operation.
+ * Tests the {@link TrimSpitByChar} operation.
  *
  * @author Owen Feehan
  */
