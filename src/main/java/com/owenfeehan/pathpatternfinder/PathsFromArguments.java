@@ -68,13 +68,13 @@ class PathsFromArguments {
         return new ArrayList<>(out);
     }
 
-    private static List<Path> pathsFromSingleArg(String arg) throws IOException {
+    private static List<Path> pathsFromSingleArg(String argument) throws IOException {
         // If it has a wild-card, treat it as a glob
-        if (arg.contains("*")) {
-            return pathsFromWildcardGlob(arg);
+        if (argument.contains("*")) {
+            return pathsFromWildcardGlob(argument);
         }
 
-        Path path = Paths.get(arg).toAbsolutePath();
+        Path path = Paths.get(argument).toAbsolutePath();
         if (path.toFile().isDirectory()) {
             // Directory
             return pathsInDirectory(path);
@@ -83,16 +83,16 @@ class PathsFromArguments {
             return Arrays.asList(path);
         } else {
             // A path that doesn't exist
-            System.err.println(String.format("Warning! - Path does not exist: %s", path));
+            System.err.println(String.format("Warning! - Path does not exist: %s", path));  // NOSONAR
             return new ArrayList<>();
         }
     }
 
-    private static List<Path> pathsFromWildcardGlob(String filterStr) throws IOException {
-        return FindFilesRecursively.findFiles(Paths.get(""), Optional.of(filterStr));
+    private static List<Path> pathsFromWildcardGlob(String filterString) throws IOException {
+        return FindFilesRecursively.findFiles(Paths.get(""), Optional.of(filterString));
     }
 
-    private static List<Path> pathsInDirectory(Path dir) throws IOException {
-        return FindFilesRecursively.findFiles(dir, Optional.empty());
+    private static List<Path> pathsInDirectory(Path directory) throws IOException {
+        return FindFilesRecursively.findFiles(directory, Optional.empty());
     }
 }

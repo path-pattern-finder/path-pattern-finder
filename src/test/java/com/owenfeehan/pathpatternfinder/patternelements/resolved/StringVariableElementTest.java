@@ -26,31 +26,31 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import java.util.Optional;
 import org.apache.commons.io.IOCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@code StringVariableElement}.
  *
  * @author Owen Feehan
  */
-public class StringVariableElementTest {
+class StringVariableElementTest {
 
     /** Checks that it tries to fit the longer keys first, with empty keys last */
     @Test
-    public void testFitInCorrectOrder_Sensitive() {
+    void testFitInCorrectOrder_Sensitive() {
         PatternElement element = ResolvedPatternElementFactory.string("going", "go", "");
         testPattern("going", "goingaway", element, IOCase.SENSITIVE);
     }
 
     /** Checks that it tries to fit the longer keys first, with empty keys last */
     @Test
-    public void testFitInCorrectOrder_Insensitive() {
+    void testFitInCorrectOrder_Insensitive() {
         PatternElement element = ResolvedPatternElementFactory.string("aax", "AAaa", "Aa");
         testPattern("aaaa", "aaaab", element, IOCase.INSENSITIVE);
     }

@@ -21,11 +21,14 @@
       </organization>
       
       <version>1.4.5-SNAPSHOT</version>
+	  <description>a Java library to find naming-patterns in a list of strings or paths, using a particular set of rules. A command-line app for basic usage is also included.</description>
+
         <build>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+				 <version>3.8.1</version>
                     <configuration>
                         <source>8</source>
                         <target>8</target>
@@ -46,6 +49,19 @@
                       <skip>false</skip>
                    </configuration>
                 </plugin>
+				
+		    <plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-source-plugin</artifactId>
+			  <executions>
+				<execution>
+				  <id>attach-sources</id>
+				  <goals>
+					<goal>jar</goal>
+				  </goals>
+				</execution>
+			  </executions>
+			</plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -68,22 +84,21 @@
                         </execution>
                     </executions>
                 </plugin>
-		
-		<plugin>
-		  <groupId>org.apache.maven.plugins</groupId>
-		  <artifactId>maven-source-plugin</artifactId>
-		  <configuration>
-			<skipSource>true</skipSource>
-		</configuration>
-		  <executions>
-		    <execution>
-		      <id>attach-sources</id>
-		      <goals>
-			<goal>jar</goal>
-		      </goals>
-		    </execution>
-		  </executions>
-		</plugin>
+				
+			<!-- We specify a default location of test-data for the modules -->
+			<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.0.0-M5</version>
+					<configuration>
+					  <systemProperties>
+					    <property>
+					      <name>test.data.root</name>
+					      <value>${project.basedir}/src/test/resources</value>
+					    </property>
+					  </systemProperties>
+					</configuration>
+		      </plugin>				
 		
 		<plugin>
 			<groupId>org.codehaus.mojo</groupId>
@@ -146,13 +161,40 @@
 				</java>
 			  </configuration>
 			</plugin>
+			
+			
+			<!-- To generate code coverage reports that can be send to SonarCloud -->
+			 <plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<executions>
+				  <execution>
+					<id>prepare-agent</id>
+					<goals>
+					  <goal>prepare-agent</goal>
+					</goals>
+				  </execution>
+				  <execution>
+					<id>report</id>
+					  <phase>prepare-package</phase>
+					  <goals>
+						<goal>report</goal>
+					</goals>
+				  </execution>
+				</executions>
+			 </plugin>			
 		
             </plugins>
         </build>
 
         <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+		 <maven.compiler.source>1.8</maven.compiler.source>
+           <maven.compiler.target>1.8</maven.compiler.target>
+		   <!-- For connecting to SonarCloud. -->
+		  <sonar.projectKey>path-pattern-finder_path-pattern-finder</sonar.projectKey>
+		  <sonar.organization>path-pattern-finder</sonar.organization>
+		  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
       </properties>
       
       	<scm>
@@ -165,23 +207,24 @@
   
 	<distributionManagement>
         <snapshotRepository>
-            <id>anchor-snapshots</id>
-            <url>http://maven.anchoranalysis.org:8081/repository/anchor-snapshots</url>
+		   <id>github</id>
+            <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
         </snapshotRepository>	
 		 <repository>
             <id>github</id>
             <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
         </repository>
 	</distributionManagement>
-     
+	
       <dependencies>
+            
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
-          <scope>test</scope>
-        </dependency>
-
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-engine</artifactId>
+		    <version>5.7.0</version>
+		    <scope>test</scope>
+		</dependency>
+	
          <dependency>
            <groupId>org.apache.commons</groupId>
            <artifactId>commons-lang3</artifactId>

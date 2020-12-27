@@ -71,11 +71,18 @@ public class PathPatternFinder {
      */
     public static Pattern findPatternPaths(List<Path> paths, IOCase ioCase) {
 
-        // This pattern grows, as we apply the algorithm
-        Pattern pattern = new Pattern();
-        createFactory(ioCase).addUnresolvedPathsTo(paths, pattern);
-        pattern.resolve();
-        return pattern;
+        if (paths.size()>1) {
+            // This pattern grows, as we apply the algorithm
+            Pattern pattern = new Pattern();
+            createFactory(ioCase).addUnresolvedPathsTo(paths, pattern);
+            pattern.resolve();
+            return pattern;
+        } else if (paths.size()==1) {
+            // If there is only one path, this is an easier case
+            return SplitDirectoriesHelper.buildPatternFromPath(paths.get(0));
+        } else {
+            throw new IllegalArgumentException("The list of paths is empty(). It must contain at least one element.");
+        }
     }
 
     /**
@@ -111,8 +118,7 @@ public class PathPatternFinder {
                 List<Path> paths = PathsFromArguments.pathsFromArgs(args);
                 findFilesAndPattern(paths);
             } catch (IOException e) {
-                System.err.println("An exception occurred"); // NOSONAR
-                e.printStackTrace();
+                System.err.println("An exception occurred: " + e.toString()); // NOSONAR
             }
         } else {
             System.err.println( // NOSONAR
@@ -125,14 +131,14 @@ public class PathPatternFinder {
         printFiles(files);
 
         if (files.size() > 1) {
-            Pattern pp = findPatternPaths(files, IOCase.SYSTEM);
-            System.out.printf("Pattern is: %s%n", DescribePattern.apply(pp, true)); // NOSONAR
+            Pattern pattern = findPatternPaths(files, IOCase.SYSTEM);
+            System.out.printf("Pattern is: %s%n", DescribePattern.apply(pattern, true)); // NOSONAR
         }
     }
 
     private static void printFiles(List<Path> paths) {
-        for (Path p : paths) {
-            System.out.println(p); // NOSONAR
+        for (Path path : paths) {
+            System.out.println(path); // NOSONAR
         }
         System.out.printf("There are %d input paths in total%n", paths.size()); // NOSONAR
     }

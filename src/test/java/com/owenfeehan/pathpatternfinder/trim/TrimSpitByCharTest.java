@@ -26,7 +26,7 @@ package com.owenfeehan.pathpatternfinder.trim;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
@@ -36,14 +36,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.io.IOCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
- * Tests the {@link TrimSpitByCharTest} operation.
+ * Tests the {@link TrimSpitByChar} operation.
  *
  * @author Owen Feehan
  */
-public class TrimSpitByCharTest {
+class TrimSpitByCharTest {
 
     private static class ConstantStringsFixture {
 
@@ -79,19 +79,19 @@ public class TrimSpitByCharTest {
 
     /** Tests the operation to split strings by an <i>underscore</i> character. */
     @Test
-    public void testCaseUnderscoreSplit() {
+    void testCaseUnderscoreSplit() {
         applyTest('_', false, false, Optional.of(ConstantStringsFixture.expectedUnderscoreSplit()));
     }
 
     /** Tests the operation to split strings by a <i>hyphen</i> character. */
     @Test
-    public void testCaseHyphenSplit() {
+    void testCaseHyphenSplit() {
         applyTest('-', false, false, Optional.of(ConstantStringsFixture.expectedHyphenSplit()));
     }
 
     /** Tests the operation to split strings by a <i>comma</i> character. */
     @Test
-    public void testCaseCommaSplit() {
+    void testCaseCommaSplit() {
         applyTest(',', false, false, Optional.empty());
     }
 

@@ -26,21 +26,21 @@ package com.owenfeehan.pathpatternfinder.trim;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.owenfeehan.pathpatternfinder.Pattern;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
 import java.util.*;
 import org.apache.commons.io.IOCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the {@link TrimInteger} operation.
  *
  * @author Owen Feehan
  */
-public class TrimIntegerTest {
+class TrimIntegerTest {
 
     private static class ConstantStringsFixture {
 
@@ -84,13 +84,13 @@ public class TrimIntegerTest {
 
     /** Tests the operation when it is expected to succeed. */
     @Test
-    public void testCaseSuccess() {
+    void testCaseSuccess() {
         applyTest(false, Optional.of(expectedSucceedPattern()));
     }
 
     /** Tests the operation when it is expected to fail. */
     @Test
-    public void testCaseFail() {
+    void testCaseFail() {
         applyTest(true, Optional.empty());
     }
 

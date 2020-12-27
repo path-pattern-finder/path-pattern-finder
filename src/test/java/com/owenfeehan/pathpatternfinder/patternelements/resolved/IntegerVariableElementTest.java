@@ -26,43 +26,43 @@ package com.owenfeehan.pathpatternfinder.patternelements.resolved;
  * #L%
  */
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.owenfeehan.pathpatternfinder.patternelements.ExtractedElement;
 import com.owenfeehan.pathpatternfinder.patternelements.PatternElement;
 import java.util.Arrays;
 import java.util.Optional;
 import org.apache.commons.io.IOCase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests on {@code IntegerVariableElement}.
  *
  * @author Owen Feehan
  */
-public class IntegerVariableElementTest {
+class IntegerVariableElementTest {
 
     /** Checks that it can describe a contiguous range of numbers as a sequence. */
     @Test
-    public void testDescribeSequence() {
+    void testDescribeSequence() {
         testDescribeSequence("5", true);
     }
 
     /** Checks that it can detect a non-contiguous set of numbers. */
     @Test
-    public void testDescribeNotSequence() {
+    void testDescribeNotSequence() {
         testDescribeSequence("6", false);
     }
 
     /** Checks that it can extract an integer string without problems */
     @Test
-    public void testIntegerStringAll() {
+    void testIntegerStringAll() {
         testExtractElement("444", Optional.of("444"));
     }
 
     /** Checks that it can extract an integer string with text at the end */
     @Test
-    public void testIntegerStringPartial() {
+    void testIntegerStringPartial() {
         testExtractElement("444a", Optional.of("444"));
     }
 
@@ -71,7 +71,7 @@ public class IntegerVariableElementTest {
      * the string
      */
     @Test
-    public void testIntegerStringFailure() {
+    void testIntegerStringFailure() {
         testExtractElement("a444", Optional.empty());
     }
 
