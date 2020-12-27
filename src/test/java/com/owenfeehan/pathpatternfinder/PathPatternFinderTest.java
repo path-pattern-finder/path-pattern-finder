@@ -131,8 +131,9 @@ class PathPatternFinderTest {
     void testEmpty() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> // NOSONAR
-                PathPatternFinder.findPatternPaths(new ArrayList<>(), IOCase.INSENSITIVE));
+                () ->
+                        PathPatternFinder.findPatternPaths(
+                                new ArrayList<>(), IOCase.INSENSITIVE)); // NOSONAR
     }
 
     private static void applyTest(
