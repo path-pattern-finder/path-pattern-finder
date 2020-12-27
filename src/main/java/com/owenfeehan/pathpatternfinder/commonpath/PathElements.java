@@ -109,14 +109,14 @@ public class PathElements implements Iterable<String> {
     public int size() {
         return elements.size();
     }
-    
+
     /**
      * Number of path-elements in the prefix that <b>aren't a root</b>.
      *
      * @return the number of elements
      */
     public int sizeIgnoreRoot() {
-        if (firstPath.getRoot()!=null) {
+        if (firstPath.getRoot() != null) {
             return size() - 1;
         } else {
             return size();
@@ -151,17 +151,17 @@ public class PathElements implements Iterable<String> {
         }
         return elements;
     }
-    
+
     /** Adds elements from a root/string. */
     private static void addElementsFromRoot(String rootValue, List<String> toAddTo) {
         if (rootValue.equals(File.separator)) {
             toAddTo.add(File.separator);
         } else if (rootValue.endsWith(File.separator)) {
-            toAddTo.add(rootValue.substring(0, rootValue.length()-1));
+            toAddTo.add(rootValue.substring(0, rootValue.length() - 1));
             toAddTo.add(File.separator);
         } else {
             toAddTo.add(rootValue);
-        }        
+        }
     }
 
     /**

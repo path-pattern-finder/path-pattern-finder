@@ -75,8 +75,7 @@ public class UnresolvedPatternElementFactory {
     }
 
     /**
-     * Creates a {@link Pattern} with an elements on the left, and a unresolved-string on the
-     * right
+     * Creates a {@link Pattern} with an elements on the left, and a unresolved-string on the right
      *
      * @param left left-most elements
      * @param right right-most element
@@ -90,10 +89,9 @@ public class UnresolvedPatternElementFactory {
         }
         return pattern;
     }
-    
+
     /**
-     * Creates a {@link Pattern} with an element on the left, and a unresolved-string on the
-     * right
+     * Creates a {@link Pattern} with an element on the left, and a unresolved-string on the right
      *
      * @param left left-most element
      * @param right right-most element

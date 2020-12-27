@@ -80,7 +80,7 @@ class TrimConstantStringTest {
             return differentCase ? FIRST_DIFFERENT_CASE : FIRST_BASE;
         }
     }
-    
+
     /** Tests with <i>case-insensitivity</i> expecting a match. */
     @Test
     void testCaseInsensitiveExpectMatch() {
