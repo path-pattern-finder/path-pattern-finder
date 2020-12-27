@@ -48,7 +48,7 @@ import java.util.TreeSet;
 class PathsFromArguments {
 
     private PathsFromArguments() {
-        // Unused
+        // Static use only of the class
     }
 
     /**
@@ -83,8 +83,8 @@ class PathsFromArguments {
             return Arrays.asList(path);
         } else {
             // A path that doesn't exist
-            System.err.println(
-                    String.format("Warning! - Path does not exist: %s", path)); // NOSONAR
+            System.err.println( // NOSONAR
+                    String.format("Warning! - Path does not exist: %s", path));
             return new ArrayList<>();
         }
     }

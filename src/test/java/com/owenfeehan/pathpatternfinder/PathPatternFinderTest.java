@@ -129,10 +129,11 @@ class PathPatternFinderTest {
     /** Tests behavior when an empty list of paths is passed. */
     @Test
     void testEmpty() {
-        assertThrows(
+        assertThrows(   // NOSONAR
                 IllegalArgumentException.class,
-                () -> // NOSONAR
-                PathPatternFinder.findPatternPaths(new ArrayList<>(), IOCase.INSENSITIVE));
+                () ->
+                        PathPatternFinder.findPatternPaths(
+                                new ArrayList<>(), IOCase.INSENSITIVE));
     }
 
     private static void applyTest(
