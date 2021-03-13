@@ -27,9 +27,8 @@ package com.owenfeehan.pathpatternfinder.commonpath;
  */
 
 import com.owenfeehan.pathpatternfinder.CasedStringComparer;
-import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class PathElements implements Iterable<String> {
 
     /** The path used in the constructor, reused in {@link #toPath} to form an output-path. */
     private final Path firstPath;
-
+    
     /**
      * Creates from all directory elements in a complete file-path.
      *
@@ -56,7 +55,7 @@ public class PathElements implements Iterable<String> {
      */
     PathElements(Path path, CasedStringComparer comparer) {
         this.firstPath = path;
-        this.elements = pathElements(path);
+        this.elements = ElementsFromPath.pathElements(path);
         this.comparer = comparer;
     }
 
@@ -70,14 +69,15 @@ public class PathElements implements Iterable<String> {
         // If the path has less elements, we trim ours to match
         // We skip the file-name, and only consider directories
 
-        int numberElements = numberElementsForPath(path);
+        int numberElements = ElementsFromPath.numberElementsForPath(path);
+        
         if (numberElements < elements.size()) {
             trimTo(numberElements);
         }
 
         for (int i = 0; i < elements.size(); i++) {
 
-            if (!comparer.match(elements.get(i), extractPathElement(path, i))) {
+            if (!comparer.match(elements.get(i), ElementsFromPath.extractPathElement(path, i))) {
                 trimTo(i);
                 return;
             }
@@ -87,14 +87,21 @@ public class PathElements implements Iterable<String> {
     /**
      * Converts the elements to a path.
      *
+     * <p>If the path has no elements, then the current working directory is returned as <code>.</code>
      * @return a newly created path, including a root if it exists, and the common elements.
      */
     public Path toPath() {
-        if (firstPath.getRoot() != null) {
-            if (elements.size() > 1) {
-                return firstPath.getRoot().resolve(firstPath.subpath(0, elements.size() - 1));
+        if (isEmpty()) {
+            return Paths.get(".");
+        }
+        
+        Path root = firstPath.getRoot();
+        if (root != null) {
+            int numberRootElements = ElementsFromPath.numberElementsForRoot(root.toString());
+            if (elements.size() > numberRootElements) {
+                return root.resolve(firstPath.subpath(0, elements.size() - numberRootElements));
             } else {
-                return firstPath.getRoot();
+                return root;
             }
         } else {
             return firstPath.subpath(0, elements.size());
@@ -116,11 +123,21 @@ public class PathElements implements Iterable<String> {
      * @return the number of elements
      */
     public int sizeIgnoreRoot() {
-        if (firstPath.getRoot() != null) {
-            return size() - 1;
+        Path root = firstPath.getRoot();
+        if (root != null) {
+            return size() - ElementsFromPath.numberElementsForRoot(root.toString());
         } else {
             return size();
         }
+    }
+    
+    /**
+     * Are there no elements?
+     * 
+     * @return true if there are zero elements, false otherwise.
+     */
+    public boolean isEmpty() {
+        return elements.isEmpty();
     }
 
     /**
@@ -133,71 +150,5 @@ public class PathElements implements Iterable<String> {
 
     private void trimTo(int numberElementsFromLeft) {
         elements = elements.subList(0, numberElementsFromLeft);
-    }
-
-    /** A list of elements from a path, including a root if it exists. */
-    private static List<String> pathElements(Path path) {
-
-        List<String> elements = new ArrayList<>();
-
-        // If it has a root we include it
-        if (path.getRoot() != null) {
-            addElementsFromRoot(path.getRoot().toString(), elements);
-        }
-
-        // We skip the file-name, and only consider directories
-        for (int i = 0; i < path.getNameCount(); i++) {
-            elements.add(path.getName(i).toString());
-        }
-        return elements;
-    }
-
-    /** Adds elements from a root/string. */
-    private static void addElementsFromRoot(String rootValue, List<String> toAddTo) {
-        if (rootValue.equals(File.separator)) {
-            toAddTo.add(File.separator);
-        } else if (rootValue.endsWith(File.separator)) {
-            toAddTo.add(rootValue.substring(0, rootValue.length() - 1));
-            toAddTo.add(File.separator);
-        } else {
-            toAddTo.add(rootValue);
-        }
-    }
-
-    /**
-     * Extracts an element from a path
-     *
-     * <p>If the path has a root, this is treated as index 0, and elements become 1, 2, 3 etc.
-     *
-     * <p>If the path doesn't have a root, the elements already start at index 0.
-     *
-     * @param path the path to extract an element from
-     * @param index the index ranging {@code [0 to numberElements)} if a root exists or {@code [0 to
-     *     numberElements-1)} if no root exists.
-     * @return the extracted element
-     */
-    private static String extractPathElement(Path path, int index) {
-        if (path.getRoot() != null) {
-            if (index == 0) {
-                return path.getRoot().toString();
-            } else {
-                return path.getName(index - 1).toString();
-            }
-        } else {
-            return path.getName(index).toString();
-        }
-    }
-
-    /**
-     * The number of elements in this path, maybe also including the root as the first element if it
-     * exists.
-     *
-     * @param pathToFile a path, with or without a root
-     * @return the number of directory elements in the path, including the root as the first element
-     *     if it exists.
-     */
-    private static int numberElementsForPath(Path pathToFile) {
-        int numberRootElements = pathToFile.getRoot() != null ? 1 : 0;
-        return numberRootElements + pathToFile.getNameCount();
     }
 }
