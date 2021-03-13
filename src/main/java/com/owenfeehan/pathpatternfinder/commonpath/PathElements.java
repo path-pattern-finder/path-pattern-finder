@@ -123,8 +123,9 @@ public class PathElements implements Iterable<String> {
      * @return the number of elements
      */
     public int sizeIgnoreRoot() {
-        if (firstPath.getRoot() != null) {
-            return size() - 1;
+        Path root = firstPath.getRoot();
+        if (root != null) {
+            return size() - ElementsFromPath.numberElementsForRoot(root.toString());
         } else {
             return size();
         }

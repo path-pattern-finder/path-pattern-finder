@@ -32,6 +32,7 @@ import com.owenfeehan.pathpatternfinder.commonpath.FindCommonPathElements;
 import com.owenfeehan.pathpatternfinder.commonpath.PathElements;
 import com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory;
 import com.owenfeehan.pathpatternfinder.patternelements.unresolved.UnresolvedPatternElementFactory;
+import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -92,8 +93,16 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
     }
 
     private static void addPatternsTo(PathElements commonElements, Pattern pattern) {
+        boolean first = true;
         for (String stringElement : commonElements) {
-            ResolvedPatternElementFactory.addConstantAndDirectoryTo(stringElement, pattern);
+            
+            // Only allow a string element that is a directory seperator to be added if
+            // it's the very first element, otherwise we can assume a directory seperator
+            // will be present anyway from the previous element
+            if (first || !stringElement.equals(File.separator)) {
+                ResolvedPatternElementFactory.addConstantAndDirectoryTo(stringElement, pattern);
+            }
+            first = false;
         }
     }
 
@@ -118,18 +127,27 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
      * Immutably removes the first n elements from a path.
      *
      * <p>The elements are removed left-most i.e. closest to the root.
-     *
+     * 
+     * <p>If {@code numberElementsToRemove==0}, the existing path (including any root) is returned, unchanged.
+     * 
+     * <p>If all elements are removed, {@link Optional#empty} is returned.
      * @param pathToRemoveFrom the path to remove elements from
      * @param numberElementsToRemove the number of elements to remove (the root element should
      *     <b>not</b> be counted).
      * @return Path {@code path} with any root removed, and with the left-most {@code
      *     numberElementsToRemove} removed.
+     * @throws IllegalArgumentException if all or more elements are requested to be removed than exist in the path.
      */
     private static Path removeFirstNumberElements(
             Path pathToRemoveFrom, int numberElementsToRemove) {
-        if (numberElementsToRemove > 0) {
+        
+        int nameCount = pathToRemoveFrom.getNameCount();
+        
+        if (numberElementsToRemove>=nameCount) {
+            throw new IllegalArgumentException("Cannot remove all elements from a path.");
+        } else if (numberElementsToRemove > 0) {
             return pathToRemoveFrom.subpath(
-                    numberElementsToRemove, pathToRemoveFrom.getNameCount());
+                    numberElementsToRemove, nameCount);
         } else {
             return pathToRemoveFrom;
         }
