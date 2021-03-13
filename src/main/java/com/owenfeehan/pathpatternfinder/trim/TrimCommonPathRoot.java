@@ -66,14 +66,19 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
                     FindCommonPathElements.findForFilePaths(source, factory.stringComparer());
 
             // If we have at least one common element... we convert
-            return commonElements.map(
-                    value -> createPatternFromCommonElements(value, source, factory));
+            if (commonElements.isPresent() && !commonElements.get().isEmpty()) {
+                return Optional.of(
+                        createPatternFromCommonElements(commonElements.get(), source, factory));
+            } else {
+                return Optional.empty();
+            }
         } else {
             // If there's only a single path, the we can treat it all as common, and treat it
             // as constant (but taking care to extract any directory separators)
             return Optional.of(SplitDirectoriesHelper.buildPatternFromPath(source.get(0)));
         }
     }
+
 
     private static Pattern createPatternFromCommonElements(
             PathElements commonElements,

@@ -31,6 +31,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.owenfeehan.pathpatternfinder.CasedStringComparer;
 import com.owenfeehan.pathpatternfinder.PathListFixture;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import org.apache.commons.io.IOCase;
@@ -38,15 +41,22 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link FindCommonPathElements}.
+ * 
+ * <p>Two types of tests occur:
+ * <ul>
+ * <li>Tests on {@link PathListFixture} producing three paths with nested subdirectories and a filename,
+ * with different combinations of upper and lower case.
+ * <li>Test on static file-path strings.
+ * </ul>
  *
  * @author Owen Feehan
  */
 class FindCommonPathElementsTest {
-
+    
     /** Finds a common-path with <b>case insensitivity</b> and <b>without a root</b>. */
     @Test
     void testCaseInsensitiveWithoutRoot() {
-        applyTest(IOCase.INSENSITIVE, false, false, Optional.of(PathListFixture::firstAndSecond));
+        testWithFixture(IOCase.INSENSITIVE, false, false, PathListFixture::firstAndSecond);
     }
 
     /**
@@ -55,7 +65,7 @@ class FindCommonPathElementsTest {
      */
     @Test
     void testCaseSensitiveWithoutRoot() {
-        applyTest(IOCase.SENSITIVE, false, false, Optional.of(PathListFixture::first));
+        testWithFixture(IOCase.SENSITIVE, false, false, PathListFixture::first);
     }
 
     /**
@@ -64,17 +74,17 @@ class FindCommonPathElementsTest {
      */
     @Test
     void testCaseSensitiveChangeBoth() {
-        applyTest(IOCase.SENSITIVE, true, false, Optional.empty());
+        testWithFixture(IOCase.SENSITIVE, true, false, fixture -> Paths.get("."));
     }
 
     /** Finds a common-path with <b>case insensitivity</b> and <b>with a root</b>. */
     @Test
     void testCaseInsensitiveWithRoot() {
-        applyTest(
+        testWithFixture(
                 IOCase.INSENSITIVE,
                 false,
                 true,
-                Optional.of(PathListFixture::firstAndSecondWithRoot));
+                PathListFixture::firstAndSecondWithRoot);
     }
 
     /**
@@ -83,25 +93,85 @@ class FindCommonPathElementsTest {
      */
     @Test
     void testCaseSensitiveWithRoot() {
-        applyTest(IOCase.SENSITIVE, false, true, Optional.of(PathListFixture::firstWithRoot));
+        testWithFixture(IOCase.SENSITIVE, false, true, PathListFixture::firstWithRoot);
     }
-
-    private static void applyTest(
+    
+    /**
+     * Finds a common-path given two relative-paths.
+     */
+    @Test
+    void testTwoRelativePaths() {
+        testDirectlyStrings("arbitrary1", "somethingElse", IOCase.SENSITIVE, Optional.of("."));
+    }
+    
+    /**
+     * Finds a common-path given two relative-paths, each with <b>one leading period</b>.
+     */
+    @Test
+    void testWithLeadingPeriod() {
+        testDirectlyStrings("./arbitrary1", "./somethingElse", IOCase.SENSITIVE, Optional.of("."));
+    }
+    
+    /**
+     * Finds a common-path given two relative-paths, each with <b>two leading periods</b>.
+     */
+    @Test
+    void testWithLeadingTwoPeriods() {
+        testDirectlyStrings("../arbitrary1", "../somethingElse", IOCase.SENSITIVE, Optional.of(".."));
+    }
+    
+    /**
+     * Finds a common-path given two relative-paths, one with <b>one leading periods, and another with two</b>.
+     */
+    @Test
+    void testWithMixedLeadingPeriods() {
+        testDirectlyStrings("./arbitrary1", "../somethingElse", IOCase.SENSITIVE, Optional.of("."));
+    }
+    
+    /**
+     * Finds a common-path given two relative-paths.
+     */
+    @Test
+    void testTwoAbsolutePaths() {
+        testDirectlyStrings("/test1/test2/file1.lsm", "/test1/test2/compeltelyDifferentFIlename.png", IOCase.SENSITIVE, Optional.of("/test1/test2/"));
+    }
+    
+    /** Tests with paths determined from a fixture. */
+    private static void testWithFixture(
             IOCase ioCase,
             boolean changeFirstDirectoryCase,
             boolean includeRoot,
-            Optional<Function<PathListFixture, Path>> expectedCommon) {
+            Function<PathListFixture, Path> expectedCommon) {
 
         PathListFixture fixture =
                 new PathListFixture(
                         changeFirstDirectoryCase, ioCase.isCaseSensitive(), includeRoot);
 
+        testDirectly(fixture.createPaths(), ioCase, Optional.of(expectedCommon.apply(fixture)));
+    }
+    
+    /** Tests with two explicitly specified paths as strings */
+    private static void testDirectlyStrings(
+            String path1,
+            String path2,
+            IOCase ioCase,
+            Optional<String> expectedCommon) {
+        List<Path> paths = Arrays.asList( Paths.get(path1), Paths.get(path2) );
+        testDirectly(paths, ioCase, expectedCommon.map(Paths::get) );
+    }
+    
+    /** Tests with explicitly specified paths, and an expected common-path. */
+    private static void testDirectly(
+            List<Path> paths,
+            IOCase ioCase,
+            Optional<Path> expectedCommon) {
+
         Optional<PathElements> common =
                 FindCommonPathElements.findForFilePaths(
-                        fixture.createPaths(), new CasedStringComparer(ioCase));
+                        paths, new CasedStringComparer(ioCase));
 
         assertEquals(
-                expectedCommon.map(function -> function.apply(fixture)),
+                expectedCommon,
                 common.map(PathElements::toPath));
     }
 }
