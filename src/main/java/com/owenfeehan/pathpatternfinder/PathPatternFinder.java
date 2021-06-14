@@ -67,14 +67,17 @@ public class PathPatternFinder {
      *
      * @param paths a list of paths to match against
      * @param ioCase how to treat the case in paths
+     * @param avoidExtensionSplit if true, splits will be avoided in file extensions in the paths
+     *     (defined as anything after the right-most period)
      * @return the pattern-found
      */
-    public static Pattern findPatternPaths(List<Path> paths, IOCase ioCase) {
+    public static Pattern findPatternPaths(
+            List<Path> paths, IOCase ioCase, boolean avoidExtensionSplit) {
 
         if (paths.size() > 1) {
             // This pattern grows, as we apply the algorithm
             Pattern pattern = new Pattern();
-            createFactory(ioCase).addUnresolvedPathsTo(paths, pattern);
+            createFactory(ioCase).addUnresolvedPathsTo(paths, pattern, avoidExtensionSplit);
             pattern.resolve();
             return pattern;
         } else if (paths.size() == 1) {
@@ -96,7 +99,7 @@ public class PathPatternFinder {
     public static Pattern findPatternStrings(List<String> strings, IOCase ioCase) {
 
         Pattern pattern = new Pattern();
-        createFactory(ioCase).addUnresolvedStringsTo(strings, pattern);
+        createFactory(ioCase).addUnresolvedStringsTo(strings, pattern, false);
         pattern.resolve();
         return pattern;
     }
@@ -132,7 +135,7 @@ public class PathPatternFinder {
         printFiles(files);
 
         if (files.size() > 1) {
-            Pattern pattern = findPatternPaths(files, IOCase.SYSTEM);
+            Pattern pattern = findPatternPaths(files, IOCase.SYSTEM, true);
             System.out.printf("Pattern is: %s%n", DescribePattern.apply(pattern, true)); // NOSONAR
         }
     }

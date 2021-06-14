@@ -66,11 +66,13 @@ public class UnresolvedPatternElementFactory {
      * Creates a {@link Pattern} with a single-unresolved-string as element
      *
      * @param list input-list
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at
      * @return the newly created pattern
      */
-    public Pattern createUnresolvedString(List<String> list) {
+    public Pattern createUnresolvedString(List<String> list, boolean requiresPeriod) {
         Pattern pattern = new Pattern();
-        addUnresolvedStringsTo(list, pattern);
+        addUnresolvedStringsTo(list, pattern, requiresPeriod);
         return pattern;
     }
 
@@ -79,13 +81,16 @@ public class UnresolvedPatternElementFactory {
      *
      * @param left left-most elements
      * @param right right-most element
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at
      * @return the newly created pattern
      */
-    public Pattern createUnresolvedString(List<PatternElement> left, List<String> right) {
+    public Pattern createUnresolvedString(
+            List<PatternElement> left, List<String> right, boolean requiresPeriod) {
         Pattern pattern = new Pattern();
         left.forEach(pattern::add);
         if (StringUtilities.atLeastOneNonEmptyStr(right)) {
-            addUnresolvedStringsTo(right, pattern);
+            addUnresolvedStringsTo(right, pattern, requiresPeriod);
         }
         return pattern;
     }
@@ -95,13 +100,16 @@ public class UnresolvedPatternElementFactory {
      *
      * @param left left-most element
      * @param right right-most element
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at
      * @return the newly created pattern
      */
-    public Pattern createUnresolvedString(PatternElement left, List<String> right) {
+    public Pattern createUnresolvedString(
+            PatternElement left, List<String> right, boolean requiresPeriod) {
         Pattern pattern = new Pattern();
         pattern.add(left);
         if (StringUtilities.atLeastOneNonEmptyStr(right)) {
-            addUnresolvedStringsTo(right, pattern);
+            addUnresolvedStringsTo(right, pattern, requiresPeriod);
         }
         return pattern;
     }
@@ -111,9 +119,12 @@ public class UnresolvedPatternElementFactory {
      *
      * @param list paths to add
      * @param pattern pattern to add them to
+     * @param avoidExtensionSplit if true, splits will be avoided in file extensions in the paths
+     *     (defined as anything after the right-most period)
      */
-    public void addUnresolvedPathsTo(List<Path> list, Pattern pattern) {
-        pattern.add(new UnresolvedPathList(list, this));
+    public void addUnresolvedPathsTo(
+            List<Path> list, Pattern pattern, boolean avoidExtensionSplit) {
+        pattern.add(new UnresolvedPathList(list, this, avoidExtensionSplit));
     }
 
     /**
@@ -121,9 +132,11 @@ public class UnresolvedPatternElementFactory {
      *
      * @param list strings to add
      * @param pattern pattern to add them to
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at least one period (useful to prevent file-extensions) from being broken up.
      */
-    public void addUnresolvedStringsTo(List<String> list, Pattern pattern) {
-        pattern.add(new UnresolvedStringList(list, this));
+    public void addUnresolvedStringsTo(List<String> list, Pattern pattern, boolean requiresPeriod) {
+        pattern.add(new UnresolvedStringList(list, this, requiresPeriod));
     }
 
     /**
@@ -132,9 +145,12 @@ public class UnresolvedPatternElementFactory {
      *
      * @param list strings to add
      * @param pattern pattern to add them to
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at least one period (useful to prevent file-extensions) from being broken up.
      * @param skipper which types of operations to skip
      */
-    public void addUnresolvedStringsTo(List<String> list, Pattern pattern, Skipper skipper) {
-        pattern.add(new UnresolvedStringList(list, this, skipper));
+    public void addUnresolvedStringsTo(
+            List<String> list, Pattern pattern, boolean requiresPeriod, Skipper skipper) {
+        pattern.add(new UnresolvedStringList(list, this, requiresPeriod, skipper));
     }
 }

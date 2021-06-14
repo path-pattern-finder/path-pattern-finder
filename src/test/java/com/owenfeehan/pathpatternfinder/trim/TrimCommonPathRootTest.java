@@ -65,7 +65,7 @@ class TrimCommonPathRootTest {
         PathListFixture fixture = new PathListFixture(false, ioCase.isCaseSensitive(), false);
         List<Path> source = fixture.createPaths();
 
-        TrimCommonPathRoot common = new TrimCommonPathRoot(factory);
+        TrimCommonPathRoot common = new TrimCommonPathRoot(factory, false);
 
         Pattern expected =
                 expectedPattern(source.get(0), expectedDirectoriesCommon, source, factory, fixture);
@@ -93,7 +93,8 @@ class TrimCommonPathRootTest {
             addConstantTo(path.getName(i).toString(), expected);
             addDirectorySeperatorTo(expected);
         }
-        factory.addUnresolvedPathsTo(expectedTrimmedPaths(paths, numberElementsFromPath), expected);
+        factory.addUnresolvedPathsTo(
+                expectedTrimmedPaths(paths, numberElementsFromPath), expected, false);
         return expected;
     }
 

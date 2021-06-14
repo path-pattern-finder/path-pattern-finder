@@ -41,18 +41,19 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests {@link FindCommonPathElements}.
- * 
+ *
  * <p>Two types of tests occur:
+ *
  * <ul>
- * <li>Tests on {@link PathListFixture} producing three paths with nested subdirectories and a filename,
- * with different combinations of upper and lower case.
- * <li>Test on static file-path strings.
+ *   <li>Tests on {@link PathListFixture} producing three paths with nested subdirectories and a
+ *       filename, with different combinations of upper and lower case.
+ *   <li>Test on static file-path strings.
  * </ul>
  *
  * @author Owen Feehan
  */
 class FindCommonPathElementsTest {
-    
+
     /** Finds a common-path with <b>case insensitivity</b> and <b>without a root</b>. */
     @Test
     void testCaseInsensitiveWithoutRoot() {
@@ -80,11 +81,7 @@ class FindCommonPathElementsTest {
     /** Finds a common-path with <b>case insensitivity</b> and <b>with a root</b>. */
     @Test
     void testCaseInsensitiveWithRoot() {
-        testWithFixture(
-                IOCase.INSENSITIVE,
-                false,
-                true,
-                PathListFixture::firstAndSecondWithRoot);
+        testWithFixture(IOCase.INSENSITIVE, false, true, PathListFixture::firstAndSecondWithRoot);
     }
 
     /**
@@ -95,47 +92,45 @@ class FindCommonPathElementsTest {
     void testCaseSensitiveWithRoot() {
         testWithFixture(IOCase.SENSITIVE, false, true, PathListFixture::firstWithRoot);
     }
-    
-    /**
-     * Finds a common-path given two relative-paths.
-     */
+
+    /** Finds a common-path given two relative-paths. */
     @Test
     void testTwoRelativePaths() {
         testDirectlyStrings("arbitrary1", "somethingElse", IOCase.SENSITIVE, Optional.of("."));
     }
-    
-    /**
-     * Finds a common-path given two relative-paths, each with <b>one leading period</b>.
-     */
+
+    /** Finds a common-path given two relative-paths, each with <b>one leading period</b>. */
     @Test
     void testWithLeadingPeriod() {
         testDirectlyStrings("./arbitrary1", "./somethingElse", IOCase.SENSITIVE, Optional.of("."));
     }
-    
-    /**
-     * Finds a common-path given two relative-paths, each with <b>two leading periods</b>.
-     */
+
+    /** Finds a common-path given two relative-paths, each with <b>two leading periods</b>. */
     @Test
     void testWithLeadingTwoPeriods() {
-        testDirectlyStrings("../arbitrary1", "../somethingElse", IOCase.SENSITIVE, Optional.of(".."));
+        testDirectlyStrings(
+                "../arbitrary1", "../somethingElse", IOCase.SENSITIVE, Optional.of(".."));
     }
-    
+
     /**
-     * Finds a common-path given two relative-paths, one with <b>one leading periods, and another with two</b>.
+     * Finds a common-path given two relative-paths, one with <b>one leading periods, and another
+     * with two</b>.
      */
     @Test
     void testWithMixedLeadingPeriods() {
         testDirectlyStrings("./arbitrary1", "../somethingElse", IOCase.SENSITIVE, Optional.of("."));
     }
-    
-    /**
-     * Finds a common-path given two relative-paths.
-     */
+
+    /** Finds a common-path given two relative-paths. */
     @Test
     void testTwoAbsolutePaths() {
-        testDirectlyStrings("/test1/test2/file1.lsm", "/test1/test2/compeltelyDifferentFIlename.png", IOCase.SENSITIVE, Optional.of("/test1/test2/"));
+        testDirectlyStrings(
+                "/test1/test2/file1.lsm",
+                "/test1/test2/compeltelyDifferentFIlename.png",
+                IOCase.SENSITIVE,
+                Optional.of("/test1/test2/"));
     }
-    
+
     /** Tests with paths determined from a fixture. */
     private static void testWithFixture(
             IOCase ioCase,
@@ -149,29 +144,21 @@ class FindCommonPathElementsTest {
 
         testDirectly(fixture.createPaths(), ioCase, Optional.of(expectedCommon.apply(fixture)));
     }
-    
+
     /** Tests with two explicitly specified paths as strings */
     private static void testDirectlyStrings(
-            String path1,
-            String path2,
-            IOCase ioCase,
-            Optional<String> expectedCommon) {
-        List<Path> paths = Arrays.asList( Paths.get(path1), Paths.get(path2) );
-        testDirectly(paths, ioCase, expectedCommon.map(Paths::get) );
+            String path1, String path2, IOCase ioCase, Optional<String> expectedCommon) {
+        List<Path> paths = Arrays.asList(Paths.get(path1), Paths.get(path2));
+        testDirectly(paths, ioCase, expectedCommon.map(Paths::get));
     }
-    
+
     /** Tests with explicitly specified paths, and an expected common-path. */
     private static void testDirectly(
-            List<Path> paths,
-            IOCase ioCase,
-            Optional<Path> expectedCommon) {
+            List<Path> paths, IOCase ioCase, Optional<Path> expectedCommon) {
 
         Optional<PathElements> common =
-                FindCommonPathElements.findForFilePaths(
-                        paths, new CasedStringComparer(ioCase));
+                FindCommonPathElements.findForFilePaths(paths, new CasedStringComparer(ioCase));
 
-        assertEquals(
-                expectedCommon,
-                common.map(PathElements::toPath));
+        assertEquals(expectedCommon, common.map(PathElements::toPath));
     }
 }

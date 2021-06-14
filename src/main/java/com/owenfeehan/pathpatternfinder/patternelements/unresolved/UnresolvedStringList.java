@@ -43,25 +43,53 @@ class UnresolvedStringList extends UnresolvedPatternElement {
 
     private HelperStringList list;
 
-    /** First op tried: For trimming from the left or right */
-    private TrimOperation<String> firstOp;
+    /** First op tried for trimming from the left. */
+    private TrimOperation<String> firstOpLeft;
 
-    /** Second op tried: For splitting (direction irrelevant) */
+    /** First op tried for trimming from the right. */
+    private TrimOperation<String> firstOpRight;
+
+    /** Second op tried for splitting (direction irrelevant) */
     private TrimOperation<String> secondOp;
 
+    /** Third op tried. */
     private TrimOperation<String> thirdOp;
 
+    /** Skips certain kind of resolves operations if it is known a priori that they are unneeded. */
     private Skipper skipper;
 
-    public UnresolvedStringList(List<String> list, UnresolvedPatternElementFactory factory) {
-        this(list, factory, new Skipper());
+    /**
+     * Creates for a list of strings - without a {@link Skipper}.
+     *
+     * @param list the list
+     * @param factory a factory for creating new unresolved elements
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at least one period (useful to prevent file-extensions) from being broken up.
+     */
+    public UnresolvedStringList(
+            List<String> list, UnresolvedPatternElementFactory factory, boolean requiresPeriod) {
+        this(list, factory, requiresPeriod, new Skipper());
     }
 
+    /**
+     * Creates for a list of strings - with a {@link Skipper}.
+     *
+     * @param list the list
+     * @param factory a factory for creating new unresolved elements
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at least one period (useful to prevent file-extensions) from being broken up.
+     * @param skipper skips certain kind of resolves operations if it is known a priori that they
+     *     are unneeded.
+     */
     public UnresolvedStringList(
-            List<String> list, UnresolvedPatternElementFactory factory, Skipper skipper) {
+            List<String> list,
+            UnresolvedPatternElementFactory factory,
+            boolean requiresPeriod,
+            Skipper skipper) {
         this.list = new HelperStringList(list);
         assert (this.list.atLeastOneNonEmptyStr());
-        this.firstOp = StringTrimmerOps.createFirstOperation(factory);
+        this.firstOpLeft = StringTrimmerOps.createFirstOperation(factory, false);
+        this.firstOpRight = StringTrimmerOps.createFirstOperation(factory, requiresPeriod);
         this.secondOp =
                 StringTrimmerOps.createSecondOperation(factory, skipper.getStartSplitCharIndex());
         this.thirdOp = StringTrimmerOps.createThirdOperation(factory);
@@ -72,7 +100,7 @@ class UnresolvedStringList extends UnresolvedPatternElement {
     public Optional<Pattern> resolve() {
 
         if (skipper.includeLeftResolve()) {
-            Optional<Pattern> patternLeft = list.applyOperationFromLeft(firstOp);
+            Optional<Pattern> patternLeft = list.applyOperationFromLeft(firstOpLeft);
 
             if (patternLeft.isPresent()) {
                 return patternLeft;
@@ -80,7 +108,7 @@ class UnresolvedStringList extends UnresolvedPatternElement {
         }
 
         if (skipper.includeRightResolve()) {
-            Optional<Pattern> patternRight = list.applyOperationFromRight(firstOp);
+            Optional<Pattern> patternRight = list.applyOperationFromRight(firstOpRight);
 
             if (patternRight.isPresent()) {
                 return patternRight;

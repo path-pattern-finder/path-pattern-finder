@@ -91,7 +91,7 @@ public class TrimConstantSubstring implements TrimOperation<String> {
         return tracker.indexOfFirstTrueRange();
     }
 
-    /** Creates a pattern left+constant+right to represent the cmmon substring we found */
+    /** Creates a pattern left+constant+right to represent the common substring we found */
     private Pattern createPattern(List<String> source, IndexRange common) {
 
         List<String> left = new ArrayList<>();
@@ -117,12 +117,12 @@ public class TrimConstantSubstring implements TrimOperation<String> {
     private Pattern createPatternLeftRight(
             List<String> left, List<String> right, IndexRange common, String arbitrarySourceValue) {
         Pattern pattern = new Pattern();
-        factory.addUnresolvedStringsTo(left, pattern, new Skipper(false, true, 0));
+        factory.addUnresolvedStringsTo(left, pattern, false, new Skipper(false, true, 0));
         ResolvedPatternElementFactory.addConstantTo(
                 arbitrarySourceValue.substring(
                         common.getStartIndex(), common.getEndIndexExclusive()),
                 pattern);
-        factory.addUnresolvedStringsTo(right, pattern, new Skipper(true, false, 0));
+        factory.addUnresolvedStringsTo(right, pattern, false, new Skipper(true, false, 0));
         return pattern;
     }
 }

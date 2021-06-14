@@ -59,6 +59,7 @@ public class AndUnresolvedHelper {
         factory.addUnresolvedStringsTo(
                 new ArrayList<>(Arrays.asList(first, second)),
                 pattern,
+                false,
                 new Skipper(includeLeftResolve, includeRightResolve, 0));
     }
 }

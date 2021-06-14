@@ -53,13 +53,18 @@ public class TrimConstantString implements TrimOperation<String> {
 
     private UnresolvedPatternElementFactory factory;
 
+    private boolean requiresPeriod;
+
     /**
      * Creates given a factory for creating unresolved pattern-elements.
      *
      * @param factory the factory
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at least one period (useful to prevent file-extensions) from being broken up.
      */
-    public TrimConstantString(UnresolvedPatternElementFactory factory) {
+    public TrimConstantString(UnresolvedPatternElementFactory factory, boolean requiresPeriod) {
         this.factory = factory;
+        this.requiresPeriod = requiresPeriod;
     }
 
     @Override
@@ -95,7 +100,7 @@ public class TrimConstantString implements TrimOperation<String> {
 
         // Add all elements, and removing the number of characters from the remaining charrs
         return factory.createUnresolvedString(
-                elements, removeFirstNCharsFrom(source, common.length()));
+                elements, removeFirstNCharsFrom(source, common.length()), false);
     }
 
     /**
@@ -103,6 +108,9 @@ public class TrimConstantString implements TrimOperation<String> {
      * intersect.
      *
      * <p>An empty string is returned if the left-most character is different in both strings.
+     *
+     * <p>If {@code requiresPeriod} is selected, only strings that contain a period character are
+     * included.
      */
     private String intersect(String source, String toIntersect) {
 
@@ -112,7 +120,7 @@ public class TrimConstantString implements TrimOperation<String> {
 
             if (i == toIntersect.length()) {
                 // our intersection string is smaller, and it entirely matches
-                return toIntersect;
+                return emptyIfNonCompliant(toIntersect);
             }
 
             if (!comparer.match(source.charAt(i), toIntersect.charAt(i))) {
@@ -121,12 +129,33 @@ public class TrimConstantString implements TrimOperation<String> {
                     return "";
                 }
 
-                return source.substring(0, i);
+                return emptyIfNonCompliant(source.substring(0, i));
             }
         }
 
         // Everything matches to we keep the source
         return source;
+    }
+
+    /**
+     * Returns the string if it meets applicable conditions, otherwise an empty-string if it
+     * doesn't.
+     *
+     * <p>This condition may include requiring a period.
+     *
+     * @param str the string that is checked for compliance
+     * @return {@code str} if it's compliant, otherwise an empty string
+     */
+    private String emptyIfNonCompliant(String str) {
+        if (requiresPeriod) {
+            if (str.contains(".")) {
+                return str;
+            } else {
+                return "";
+            }
+        } else {
+            return str;
+        }
     }
 
     private static List<String> removeFirstNCharsFrom(List<String> source, int n) {

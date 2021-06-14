@@ -78,7 +78,7 @@ public class TrimInteger implements TrimOperation<String> {
         // string
         return Optional.of(
                 factory.createUnresolvedString(
-                        ResolvedPatternElementFactory.integer(foundIntegers), remainder));
+                        ResolvedPatternElementFactory.integer(foundIntegers), remainder, false));
     }
 
     private String readNumbersFromLeft(String str, List<String> remainder) {

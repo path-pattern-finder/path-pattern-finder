@@ -50,13 +50,15 @@ class StringTrimmerOps {
      * <p>This is the <i>first</i> step for a list of unresolved strings.
      *
      * @param factory for creating elements
+     * @param requiresPeriod if true, a constant string will only be trimmed from the right if it
+     *     includes at least one period (useful to prevent file-extensions) from being broken up.
      * @return the operation
      */
     public static TrimOperation<String> createFirstOperation(
-            UnresolvedPatternElementFactory factory) {
+            UnresolvedPatternElementFactory factory, boolean requiresPeriod) {
         List<TrimOperation<String>> list = new ArrayList<>();
         list.add(new TrimInteger(factory));
-        list.add(new TrimConstantString(factory));
+        list.add(new TrimConstantString(factory, requiresPeriod));
         return new TrimOperationOrList<>(list);
     }
 

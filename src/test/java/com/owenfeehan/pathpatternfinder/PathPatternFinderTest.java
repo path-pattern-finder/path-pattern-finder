@@ -59,6 +59,7 @@ class PathPatternFinderTest {
                         string("b", "d", "e"),
                         directorySeperator(),
                         constant("c.txt")),
+                true,
                 true);
     }
 
@@ -81,6 +82,7 @@ class PathPatternFinderTest {
                         directorySeperator(),
                         string("file21", "file23", "VERYDIFFERENTNAME"),
                         constant(".txt")),
+                true,
                 true);
     }
 
@@ -109,6 +111,7 @@ class PathPatternFinderTest {
                         constant("P"),
                         integer(1210940, 1210904),
                         constant(".JPG")),
+                true,
                 true);
     }
 
@@ -123,24 +126,58 @@ class PathPatternFinderTest {
                         constant("somewhere"),
                         directorySeperator(),
                         constant("file.txt")),
+                true,
                 true);
     }
 
     /** Tests behavior when an empty list of paths is passed. */
     @Test
     void testEmpty() {
-        assertThrows(   // NOSONAR
-                IllegalArgumentException.class,
-                () ->
-                        PathPatternFinder.findPatternPaths(
-                                new ArrayList<>(), IOCase.INSENSITIVE));
+        assertThrows( // NOSONAR
+                IllegalArgumentException.class, () -> findPattern(new ArrayList<>(), false, false));
+    }
+
+    /** Tests that a split is avoided in the file extension. */
+    @Test
+    void testFileExtension() {
+
+        List<Path> paths =
+                pathList("dir/Running", "dir/walking", "dir/somefile.png", "dir/file.png");
+
+        // Preventing the file-extension split
+        applyTest(
+                paths,
+                pattern(
+                        constant("dir"),
+                        directorySeperator(),
+                        string("Running", "walking", "somefile.png", "file.png")),
+                true,
+                true);
+
+        // Allowing the file extension split
+        applyTest(
+                paths,
+                pattern(
+                        constant("dir"),
+                        directorySeperator(),
+                        string("Runni", "walki", "somefile.p", "file.p"),
+                        constant("ng")),
+                true,
+                false);
     }
 
     private static void applyTest(
-            List<Path> paths, Pattern expectedPattern, boolean caseSensitive) {
-        Pattern pattern =
-                PathPatternFinder.findPatternPaths(
-                        paths, caseSensitive ? IOCase.SENSITIVE : IOCase.INSENSITIVE);
+            List<Path> paths,
+            Pattern expectedPattern,
+            boolean caseSensitive,
+            boolean avoidExtensionSplit) {
+        Pattern pattern = findPattern(paths, caseSensitive, avoidExtensionSplit);
         assertEquals(expectedPattern, pattern);
+    }
+
+    private static Pattern findPattern(
+            List<Path> paths, boolean caseSensitive, boolean avoidExtensionSplit) {
+        return PathPatternFinder.findPatternPaths(
+                paths, caseSensitive ? IOCase.SENSITIVE : IOCase.INSENSITIVE, avoidExtensionSplit);
     }
 }
