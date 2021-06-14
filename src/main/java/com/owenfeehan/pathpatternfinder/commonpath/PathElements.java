@@ -46,7 +46,7 @@ public class PathElements implements Iterable<String> {
 
     /** The path used in the constructor, reused in {@link #toPath} to form an output-path. */
     private final Path firstPath;
-    
+
     /**
      * Creates from all directory elements in a complete file-path.
      *
@@ -70,7 +70,7 @@ public class PathElements implements Iterable<String> {
         // We skip the file-name, and only consider directories
 
         int numberElements = ElementsFromPath.numberElementsForPath(path);
-        
+
         if (numberElements < elements.size()) {
             trimTo(numberElements);
         }
@@ -87,14 +87,16 @@ public class PathElements implements Iterable<String> {
     /**
      * Converts the elements to a path.
      *
-     * <p>If the path has no elements, then the current working directory is returned as <code>.</code>
+     * <p>If the path has no elements, then the current working directory is returned as <code>.
+     * </code>
+     *
      * @return a newly created path, including a root if it exists, and the common elements.
      */
     public Path toPath() {
         if (isEmpty()) {
             return Paths.get(".");
         }
-        
+
         Path root = firstPath.getRoot();
         if (root != null) {
             int numberRootElements = ElementsFromPath.numberElementsForRoot(root.toString());
@@ -130,10 +132,10 @@ public class PathElements implements Iterable<String> {
             return size();
         }
     }
-    
+
     /**
      * Are there no elements?
-     * 
+     *
      * @return true if there are zero elements, false otherwise.
      */
     public boolean isEmpty() {

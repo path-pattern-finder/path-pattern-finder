@@ -43,24 +43,43 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 class UnresolvedPathList extends UnresolvedPatternElement {
 
-    private List<Path> list;
+    private List<Path> paths;
     private UnresolvedPatternElementFactory factory;
+    private boolean avoidExtensionSplit;
 
-    public UnresolvedPathList(List<Path> list, UnresolvedPatternElementFactory factory) {
-        this.list = list;
+    /**
+     * Constructor
+     *
+     * @param paths paths that are yet to be resolved
+     * @param factory factory for creating unresolved elements
+     * @param avoidExtensionSplit if true, splits will be avoided in file extensions in the paths
+     *     (defined as anything after the right-most period)
+     */
+    public UnresolvedPathList(
+            List<Path> paths,
+            UnresolvedPatternElementFactory factory,
+            boolean avoidExtensionSplit) {
+        this.paths = paths;
         this.factory = factory;
+        this.avoidExtensionSplit = avoidExtensionSplit;
     }
 
     @Override
     public Optional<Pattern> resolve() {
-        Optional<Pattern> pattern = new TrimCommonPathRoot(factory).trim(list);
+        Optional<Pattern> pattern =
+                new TrimCommonPathRoot(factory, avoidExtensionSplit).trim(paths);
 
         if (pattern.isPresent()) {
             return pattern;
         }
 
+        List<String> pathsAsStrings = convert(paths);
+
+        // Does at least one file extension exist?
+        boolean requiresPeriod = avoidExtensionSplit && anyStringWithPeriod(pathsAsStrings);
+
         // Otherwise if we cannot find any common-path, we convert paths to strings
-        return Optional.of(factory.createUnresolvedString(convert(list)));
+        return Optional.of(factory.createUnresolvedString(pathsAsStrings, requiresPeriod));
     }
 
     @Override
@@ -81,7 +100,12 @@ class UnresolvedPathList extends UnresolvedPatternElement {
 
     @Override
     public String describe(int widthToDescribe) {
-        return String.format("unresolved paths with %d elements", list.size());
+        return String.format("unresolved paths with %d elements", paths.size());
+    }
+
+    /** Returns true iff at least one string contains at least one period. */
+    private static boolean anyStringWithPeriod(List<String> strings) {
+        return strings.stream().anyMatch(string -> string.contains("."));
     }
 
     private static List<String> convert(List<Path> paths) {

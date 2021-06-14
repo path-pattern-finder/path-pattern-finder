@@ -49,14 +49,19 @@ import java.util.stream.Collectors;
 public class TrimCommonPathRoot implements TrimOperation<Path> {
 
     private UnresolvedPatternElementFactory factory;
+    private boolean avoidExtensionSplit;
 
     /**
      * Create for a specific factory.
      *
      * @param factory the factory.
+     * @param avoidExtensionSplit if true, splits will be avoided in file extensions in the paths
+     *     (defined as anything after the right-most period)
      */
-    public TrimCommonPathRoot(UnresolvedPatternElementFactory factory) {
+    public TrimCommonPathRoot(
+            UnresolvedPatternElementFactory factory, boolean avoidExtensionSplit) {
         this.factory = factory;
+        this.avoidExtensionSplit = avoidExtensionSplit;
     }
 
     @Override
@@ -80,22 +85,22 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
         }
     }
 
-
-    private static Pattern createPatternFromCommonElements(
+    private Pattern createPatternFromCommonElements(
             PathElements commonElements,
             List<Path> source,
             UnresolvedPatternElementFactory factory) {
         Pattern pattern = new Pattern();
         addPatternsTo(commonElements, pattern);
 
-        factory.addUnresolvedPathsTo(removeFrom(source, commonElements.sizeIgnoreRoot()), pattern);
+        factory.addUnresolvedPathsTo(
+                removeFrom(source, commonElements.sizeIgnoreRoot()), pattern, avoidExtensionSplit);
         return pattern;
     }
 
     private static void addPatternsTo(PathElements commonElements, Pattern pattern) {
         boolean first = true;
         for (String stringElement : commonElements) {
-            
+
             // Only allow a string element that is a directory seperator to be added if
             // it's the very first element, otherwise we can assume a directory seperator
             // will be present anyway from the previous element
@@ -127,27 +132,29 @@ public class TrimCommonPathRoot implements TrimOperation<Path> {
      * Immutably removes the first n elements from a path.
      *
      * <p>The elements are removed left-most i.e. closest to the root.
-     * 
-     * <p>If {@code numberElementsToRemove==0}, the existing path (including any root) is returned, unchanged.
-     * 
+     *
+     * <p>If {@code numberElementsToRemove==0}, the existing path (including any root) is returned,
+     * unchanged.
+     *
      * <p>If all elements are removed, {@link Optional#empty} is returned.
+     *
      * @param pathToRemoveFrom the path to remove elements from
      * @param numberElementsToRemove the number of elements to remove (the root element should
      *     <b>not</b> be counted).
      * @return Path {@code path} with any root removed, and with the left-most {@code
      *     numberElementsToRemove} removed.
-     * @throws IllegalArgumentException if all or more elements are requested to be removed than exist in the path.
+     * @throws IllegalArgumentException if all or more elements are requested to be removed than
+     *     exist in the path.
      */
     private static Path removeFirstNumberElements(
             Path pathToRemoveFrom, int numberElementsToRemove) {
-        
+
         int nameCount = pathToRemoveFrom.getNameCount();
-        
-        if (numberElementsToRemove>=nameCount) {
+
+        if (numberElementsToRemove >= nameCount) {
             throw new IllegalArgumentException("Cannot remove all elements from a path.");
         } else if (numberElementsToRemove > 0) {
-            return pathToRemoveFrom.subpath(
-                    numberElementsToRemove, nameCount);
+            return pathToRemoveFrom.subpath(numberElementsToRemove, nameCount);
         } else {
             return pathToRemoveFrom;
         }

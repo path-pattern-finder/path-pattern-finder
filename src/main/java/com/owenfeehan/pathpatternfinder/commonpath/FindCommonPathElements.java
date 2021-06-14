@@ -75,14 +75,15 @@ public class FindCommonPathElements {
     /**
      * Finds the common (left-most) elements among {@link java.nio.file.Path}s, with a customizable
      * means via a {@link CasedStringComparer} for comparing strings.
-     * 
+     *
      * <p>If all are absolute paths, {@link Optional#empty} is returned if there are no common
      * elements.
-     * 
-     * <p>If all are relative paths, an empty collection of {@link PathElements} is returned if there are no common elements.
-     * 
-     * <p>If a mix of absolute paths and relative paths occur, {@link Optional#empty} is returned if there are no common
-     * elements.
+     *
+     * <p>If all are relative paths, an empty collection of {@link PathElements} is returned if
+     * there are no common elements.
+     *
+     * <p>If a mix of absolute paths and relative paths occur, {@link Optional#empty} is returned if
+     * there are no common elements.
      *
      * @param pathsToFiles paths to files
      * @param comparer how to compare two strings (whether to be case-sensitive or not).
@@ -98,14 +99,15 @@ public class FindCommonPathElements {
         if (!iterator.hasNext()) {
             throw new IllegalArgumentException("At least one path must exist.");
         }
-        
+
         Path pathFirst = iterator.next();
 
         // All elements of the first string are considered common
         PathElements commonElements = new PathElements(pathFirst, comparer);
 
         // We check every remaining string, to see if consistent
-        // It's important that intersectPaths is always called so it's the first part of the logical and.
+        // It's important that intersectPaths is always called so it's the first part of the logical
+        // and.
         boolean allRelative = intersectPaths(iterator, commonElements) && !pathFirst.isAbsolute();
 
         // If we have at least one common element... we convert
@@ -115,10 +117,10 @@ public class FindCommonPathElements {
             return Optional.empty();
         }
     }
-    
+
     /**
      * Intersects elements of {@link paths} with {@link commonElements}.
-     * 
+     *
      * @param paths the paths to intersect
      * @param commonElements some common elements to the paths (repeatedly further intersected)
      * @return true iff all the paths that were intersected were relative/paths

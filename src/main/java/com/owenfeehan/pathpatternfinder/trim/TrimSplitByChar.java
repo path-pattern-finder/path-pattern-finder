@@ -37,11 +37,11 @@ import java.util.Optional;
 /**
  * Attempts to split a string by finding a common special character in all strings.
  *
- * <p>It then creates two new UnresolvedStringList elements to the left, and right of the character,
- * as well as a ConstantElement representating the character itself.
+ * <p>It then creates two new <i>unresolved</i> elements to the left, and right of the character, as
+ * well as a <i>constant</i> element representing the character itself.
  *
  * <p>Note that we do not perform any case-sensitive matching on the assumption that the characters
- * used in splitChar will typically be special characters for which case is irrelevant.
+ * used in <code>splitChar</code> will typically be special characters for which case is irrelevant.
  *
  * @author Owen Feehan
  */
@@ -112,10 +112,10 @@ public class TrimSplitByChar implements TrimOperation<String> {
 
         Pattern pattern = new Pattern();
         factoryResolved.addUnresolvedStringsTo(
-                left, pattern, new Skipper(false, true, splitCharIndex));
+                left, pattern, false, new Skipper(false, true, splitCharIndex));
         ResolvedPatternElementFactory.addConstantTo(splitChar, pattern);
         factoryResolved.addUnresolvedStringsTo(
-                right, pattern, new Skipper(true, false, splitCharIndex));
+                right, pattern, false, new Skipper(true, false, splitCharIndex));
         return pattern;
     }
 }

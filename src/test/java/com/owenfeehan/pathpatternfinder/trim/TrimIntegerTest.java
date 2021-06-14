@@ -106,6 +106,7 @@ class TrimIntegerTest {
     private static Pattern expectedSucceedPattern() {
         return factory.createUnresolvedString(
                 ResolvedPatternElementFactory.integer(ConstantStringsFixture.digits()),
-                ConstantStringsFixture.suffices());
+                ConstantStringsFixture.suffices(),
+                false);
     }
 }
