@@ -20,7 +20,7 @@
 	<url>http://www.owenfeehan.com</url>
       </organization>
       
-      <version>1.7-SNAPSHOT</version>
+      <version>1.6-SNAPSHOT</version>
 	  <description>a Java library to find naming-patterns in a list of strings or paths, using a particular set of rules. A command-line app for basic usage is also included.</description>
 
         <build>
