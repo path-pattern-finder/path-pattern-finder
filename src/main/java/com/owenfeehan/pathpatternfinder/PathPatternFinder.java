@@ -85,7 +85,7 @@ public class PathPatternFinder {
             return SplitDirectoriesHelper.buildPatternFromPath(paths.get(0));
         } else {
             throw new IllegalArgumentException(
-                    "The list of paths is empty(). It must contain at least one element.");
+                    "The list of paths is empty. It must contain at least one element.");
         }
     }
 
