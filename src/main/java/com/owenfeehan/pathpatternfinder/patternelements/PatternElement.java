@@ -118,13 +118,28 @@ public abstract class PatternElement {
     public abstract Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase);
 
     /**
-     * Describe the element.
+     * Describe the element, summarized in a human-friendly way.
      *
      * @param widthToDescribe the maximum width that should be used to describe the pattern
      * @return the constant-value if it exists, otherwise a descriptive string describing the
      *     variable-element
      */
     public abstract String describe(int widthToDescribe);
+
+    /**
+     * The value of the element for a particular string used during pattern extraction.
+     *
+     * <p>When {{@link #hasConstantValue()} is true, the {@code index} is irrelevant, as the same
+     * value will always be returned.
+     *
+     * <p>The value exists when {{@link #isResolved()} is true, and should only be called on
+     * elements in this state. Otherwise, an {@link IllegalStateException} will be thrown.
+     *
+     * @param index the index (zero-valued) of the corresponding string (as passed during pattern
+     *     extraction to initialize elements) for which we wish to establish a value.
+     * @return the established value.
+     */
+    public abstract String valueAt(int index);
 
     @Override
     public String toString() {

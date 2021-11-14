@@ -69,4 +69,9 @@ class DirectorySeperator extends ResolvedPatternElement {
     public Optional<ExtractedElement> extractElementFrom(String str, IOCase ioCase) {
         return ExtractElementFrom.extractStringIfPossible(File.separator, str, ioCase);
     }
+
+    @Override
+    public String valueAt(int index) {
+        return File.separator;
+    }
 }

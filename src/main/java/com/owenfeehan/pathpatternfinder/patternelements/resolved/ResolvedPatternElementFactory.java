@@ -104,7 +104,7 @@ public class ResolvedPatternElementFactory {
     }
 
     /**
-     * Creates a varying string element of a list of strings.
+     * Creates a varying string element from a list of strings.
      *
      * @param values the strings that vary
      * @return a newly created element
@@ -114,7 +114,7 @@ public class ResolvedPatternElementFactory {
     }
 
     /**
-     * Creates an element representing a directory seperator.
+     * Creates an element representing a directory separator.
      *
      * <p>e.g. this is a forward-slash on Unix or a backslash on Windows.
      *
