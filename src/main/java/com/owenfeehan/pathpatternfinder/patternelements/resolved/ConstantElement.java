@@ -35,14 +35,20 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * A string that is constant among all strings.
+ * An element that is constant among all strings the pattern was extracted from.
  *
  * @author Owen Feehan
  */
 class ConstantElement extends ResolvedPatternElement {
 
+    /** The constant value. */
     private String value;
 
+    /**
+     * Create with the particular value is constant across all extracted strings.
+     *
+     * @param value the value of the constant elements.
+     */
     public ConstantElement(String value) {
         this.value = value;
     }
@@ -77,7 +83,20 @@ class ConstantElement extends ResolvedPatternElement {
         return ExtractElementFrom.extractStringIfPossible(value, str, ioCase);
     }
 
+    /**
+     * The constant value associated with the element.
+     *
+     * <p>It is constant, because the value is identical for all elements, from which a pattern was
+     * extracted.
+     *
+     * @return the value.
+     */
     public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String valueAt(int index) {
         return value;
     }
 }

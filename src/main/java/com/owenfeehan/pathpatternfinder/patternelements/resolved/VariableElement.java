@@ -39,12 +39,17 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 public abstract class VariableElement extends ResolvedPatternElement {
 
+    /**
+     * The varying values, respectively corresponding to each string from which the pattern was
+     * extracted.
+     */
     private List<String> values;
 
     /**
      * Creates for a list of values.
      *
-     * @param values the values
+     * @param values the varying values, respectively corresponding to each string from which the
+     *     pattern was extracted.
      */
     protected VariableElement(List<String> values) {
         this.values = values;
@@ -58,10 +63,6 @@ public abstract class VariableElement extends ResolvedPatternElement {
     @Override
     public void reverse() {
         this.values = StringUtilities.reverseStringsInList(values);
-    }
-
-    protected List<String> getValues() {
-        return values;
     }
 
     @Override
@@ -87,5 +88,19 @@ public abstract class VariableElement extends ResolvedPatternElement {
     @Override
     public int hashCode() {
         return new HashCodeBuilder().appendSuper(super.hashCode()).append(values).toHashCode();
+    }
+
+    @Override
+    public String valueAt(int index) {
+        return getValues().get(index);
+    }
+
+    /**
+     * The values that describe the variable element, identical to those passed to the constructor.
+     *
+     * @return the values.
+     */
+    protected List<String> getValues() {
+        return values;
     }
 }

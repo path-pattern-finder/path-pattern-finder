@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -213,14 +214,77 @@ public class Pattern implements Iterable<PatternElement> {
         return Optional.of(out);
     }
 
-    /** Replaces the element at a particular index, with all the elements in toReplace */
-    private void replace(int index, Pattern toReplace) {
-        elements.remove(index);
-        elements.addAll(index, toReplace.elements);
+    /**
+     * The value of the pattern for a particular string used during pattern extraction.
+     *
+     * <p>This uses the <i>memory</i> of the pattern-elements against the list of strings or paths,
+     * they were trained against.
+     *
+     * <p>The values exist only when all elements in the pattern are resolved, and should only be
+     * called when all elements are in this state. Otherwise, an {@link IllegalStateException} will
+     * be thrown.
+     *
+     * <p>The returned string may not be exactly visually identical to the string passed in, case or
+     * formatting differences might exist (e.g. different directory separators).
+     *
+     * @param indexString the index (zero-valued) of the corresponding string (as passed to pattern
+     *     extraction) for which we wish to establish the values.
+     * @return a newly-created array with the respective values for each pattern-element,
+     *     considering the string with {@code index} that was used for pattern extraction.
+     */
+    public String[] valuesAt(int indexString) {
+        return elements.stream()
+                .map(element -> element.valueAt(indexString))
+                .toArray(String[]::new);
+    }
+
+    /**
+     * Like {@link #valuesAt(int)} but extracts values only for a particular range of elements in
+     * the pattern.
+     *
+     * @param indexString the index (zero-valued) of the corresponding string (as passed to pattern
+     *     extraction) for which we wish to establish the values.
+     * @param patternIndexStartInclusive the index of the pattern element that is the start of the
+     *     range (inclusive).
+     * @param patternIndexEndExclusive the index of the pattern element that is the end of the range
+     *     (exclusive).
+     * @return a newly-created array with the respective values for each pattern-element in the
+     *     range, considering the string with {@code index} that was used for pattern extraction.
+     */
+    public String[] valuesAt(
+            int indexString, int patternIndexStartInclusive, int patternIndexEndExclusive) {
+        if (patternIndexStartInclusive < 0 || patternIndexStartInclusive >= size()) {
+            throw new IndexOutOfBoundsException(
+                    String.format(
+                            "patternIndexStartInclusive is outside the valid range for the pattern. No element exists at %d.",
+                            patternIndexStartInclusive));
+        }
+        if (patternIndexEndExclusive < 0 || patternIndexEndExclusive > size()) {
+            throw new IndexOutOfBoundsException(
+                    String.format(
+                            "patternIndexEndExclusive is outside the valid range for the pattern. No element exists at %d.",
+                            patternIndexEndExclusive));
+        }
+        if (patternIndexEndExclusive < patternIndexStartInclusive) {
+            throw new IllegalStateException(
+                    String.format(
+                            "patternIndexStartInclusive (%d) must be <= patternIndexEndExclusive (%d) but is not.",
+                            patternIndexStartInclusive, patternIndexEndExclusive));
+        }
+        return IntStream.range(patternIndexStartInclusive, patternIndexEndExclusive)
+                .mapToObj(elements::get)
+                .map(element -> element.valueAt(indexString))
+                .toArray(String[]::new);
     }
 
     @Override
     public Iterator<PatternElement> iterator() {
         return elements.iterator();
+    }
+
+    /** Replaces the element at a particular index, with all the elements in toReplace */
+    private void replace(int index, Pattern toReplace) {
+        elements.remove(index);
+        elements.addAll(index, toReplace.elements);
     }
 }

@@ -28,6 +28,7 @@ package com.owenfeehan.pathpatternfinder;
 
 import static com.owenfeehan.pathpatternfinder.VarArgsHelper.*;
 import static com.owenfeehan.pathpatternfinder.patternelements.resolved.ResolvedPatternElementFactory.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -50,6 +51,9 @@ class PathPatternFinderTest {
     @Test
     void testAbsolute() {
 
+        String[] expectedFirstValue =
+                new String[] {File.separator, "a", File.separator, "b", File.separator, "c.txt"};
+
         applyTest(
                 pathList("/a/b/c.txt", "/a/d/c.txt", "/a/e/c.txt"),
                 pattern(
@@ -60,13 +64,26 @@ class PathPatternFinderTest {
                         directorySeperator(),
                         constant("c.txt")),
                 true,
-                true);
+                true,
+                expectedFirstValue);
     }
 
     /** Tests three relative-paths with a common first directory but are otherwise different. */
     @Test
     void testRelative() {
 
+        String[] expectedFirstValue =
+                new String[] {
+                    "commonFirst",
+                    File.separator,
+                    "PREFIX_",
+                    "5671",
+                    "_",
+                    "aaaa",
+                    File.separator,
+                    "file21",
+                    ".txt"
+                };
         applyTest(
                 pathList(
                         "commonFirst/PREFIX_5671_aaaa/file21.txt",
@@ -83,7 +100,8 @@ class PathPatternFinderTest {
                         string("file21", "file23", "VERYDIFFERENTNAME"),
                         constant(".txt")),
                 true,
-                true);
+                true,
+                expectedFirstValue);
     }
 
     /**
@@ -95,6 +113,22 @@ class PathPatternFinderTest {
 
         Path pathWithout = Paths.get("D:", "Users", "owen", "Pictures", "P1210940.JPG");
         Path pathWith = Paths.get("D:", "Users", "owen", "Pictures", "Album", "P1210904.JPG");
+
+        String[] expectedFirstValue =
+                new String[] {
+                    "D:",
+                    File.separator,
+                    "Users",
+                    File.separator,
+                    "owen",
+                    File.separator,
+                    "Pictures",
+                    File.separator,
+                    "",
+                    "P",
+                    "1210940",
+                    ".JPG"
+                };
 
         applyTest(
                 pathList(pathWithout, pathWith),
@@ -112,12 +146,17 @@ class PathPatternFinderTest {
                         integer(1210940, 1210904),
                         constant(".JPG")),
                 true,
-                true);
+                true,
+                expectedFirstValue);
     }
 
     /** Tests a single path. */
     @Test
     void testSinglePath() {
+
+        String[] expectedFirstValue =
+                new String[] {"arbitrary", File.separator, "somewhere", File.separator, "file.txt"};
+
         applyTest(
                 pathList("arbitrary/somewhere/file.txt"),
                 pattern(
@@ -127,7 +166,8 @@ class PathPatternFinderTest {
                         directorySeperator(),
                         constant("file.txt")),
                 true,
-                true);
+                true,
+                expectedFirstValue);
     }
 
     /** Tests behavior when an empty list of paths is passed. */
@@ -152,7 +192,8 @@ class PathPatternFinderTest {
                         directorySeperator(),
                         string("Running", "walking", "somefile.png", "file.png")),
                 true,
-                true);
+                true,
+                new String[] {"dir", File.separator, "Running"});
 
         // Allowing the file extension split
         applyTest(
@@ -163,16 +204,23 @@ class PathPatternFinderTest {
                         string("Runni", "walki", "somefile.p", "file.p"),
                         constant("ng")),
                 true,
-                false);
+                false,
+                new String[] {"dir", File.separator, "Runni", "ng"});
     }
 
     private static void applyTest(
             List<Path> paths,
             Pattern expectedPattern,
             boolean caseSensitive,
-            boolean avoidExtensionSplit) {
+            boolean avoidExtensionSplit,
+            String[] expectedFirstValue) {
         Pattern pattern = findPattern(paths, caseSensitive, avoidExtensionSplit);
         assertEquals(expectedPattern, pattern);
+        assertArrayEquals(expectedFirstValue, pattern.valuesAt(0));
+
+        String[] expectedFirstValueSubrange =
+                new String[] {expectedFirstValue[1], expectedFirstValue[2]};
+        assertArrayEquals(expectedFirstValueSubrange, pattern.valuesAt(0, 1, 3));
     }
 
     private static Pattern findPattern(

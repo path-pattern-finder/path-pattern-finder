@@ -53,4 +53,10 @@ abstract class UnresolvedPatternElement extends PatternElement {
         throw new UnsupportedOperationException(
                 "extractElementFrom operation is usupported un unresolved path elements");
     }
+
+    @Override
+    public String valueAt(int index) {
+        throw new IllegalStateException(
+                "This method should not be called on an unresolved pattern element.");
+    }
 }
