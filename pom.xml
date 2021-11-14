@@ -20,7 +20,7 @@
 	<url>http://www.owenfeehan.com</url>
       </organization>
       
-      <version>1.7</version>
+      <version>1.8-SNAPSHOT</version>
 	  <description>a Java library to find naming-patterns in a list of strings or paths, using a particular set of rules. A command-line app for basic usage is also included.</description>
 
         <build>
@@ -201,7 +201,7 @@
 		<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
 		<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
-		<tag>path-pattern-finder-1.7</tag>
+		<tag>path-pattern-finder-1.1</tag>
 	</scm>
 	
   
