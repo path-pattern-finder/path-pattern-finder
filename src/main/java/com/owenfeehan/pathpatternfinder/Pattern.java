@@ -141,7 +141,7 @@ public class Pattern implements Iterable<PatternElement> {
      * Recursively convert any unresolved elements into resolved elements. This continues until all
      * elements are resolved (i.e. broken into the maximally atomic units).
      *
-     * @return true iff at least one change has been made to the pattern
+     * @return true iff at least one change has been made to the pattern.
      */
     public boolean resolve() {
 
