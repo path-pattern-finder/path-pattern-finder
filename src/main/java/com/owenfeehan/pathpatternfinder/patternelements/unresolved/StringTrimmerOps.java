@@ -57,8 +57,8 @@ class StringTrimmerOps {
     public static TrimOperation<String> createFirstOperation(
             UnresolvedPatternElementFactory factory, boolean requiresPeriod) {
         List<TrimOperation<String>> list = new ArrayList<>();
-        list.add(new TrimInteger(factory));
         list.add(new TrimConstantString(factory, requiresPeriod));
+        list.add(new TrimInteger(factory));
         return new TrimOperationOrList<>(list);
     }
 

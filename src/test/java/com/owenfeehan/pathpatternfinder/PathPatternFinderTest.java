@@ -208,6 +208,25 @@ class PathPatternFinderTest {
                 new String[] {"dir", File.separator, "Runni", "ng"});
     }
 
+    /** Tests that a split is avoided in the file extension. */
+    @Test
+    void testTrailingConstantInteger() {
+
+        List<Path> paths = pathList("dir/a_100", "dir/b_100", "dir/c_100", "dir/long_100");
+
+        // Preventing the file-extension split
+        applyTest(
+                paths,
+                pattern(
+                        constant("dir"),
+                        directorySeperator(),
+                        string("a", "b", "c", "long"),
+                        constant("_100")),
+                true,
+                true,
+                new String[] {"dir", File.separator, "a", "_100"});
+    }
+
     private static void applyTest(
             List<Path> paths,
             Pattern expectedPattern,
