@@ -1,0 +1,84 @@
+# 
+# This workflow will execute a maven command (or two sequential commands)
+#
+name: Maven command
+
+on:
+  workflow_call:
+    inputs:
+        # The first maven command to execute
+        maven-command:
+          required: true
+          type: string
+
+        # The second maven command to execute (ignored if empty)
+        maven-command-extra:
+            required: false
+            type: string
+
+        # What OS to run maven on
+        os:
+          required: true
+          type: string
+
+        # JDK version
+        java-version:
+          required: true
+          type: string
+
+        # Whether to expect a sonar directory and cache it
+        cache-sonar:
+          required: false
+          type: boolean
+
+    secrets:
+      SONAR_TOKEN:
+        required: true        
+
+jobs:
+    
+  maven:
+
+    runs-on: ${{inputs.os}}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK ${{inputs.java-version}}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{inputs.java-version}}
+
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+      if: ${{ inputs.cache-sonar }}          
+
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}-${{inputs.os}}
+        restore-keys: ${{ runner.os }}-m2
+    - name: Create settings.xml for Maven
+      uses: s4u/maven-settings-action@v2.2.0
+      with:
+        servers: |
+            [{
+                "id": "path-pattern-finder",
+                "username": "$GITHUB_ACTOR",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
+            }]    
+    - name: Maven command
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn --batch-mode --update-snapshots ${{ inputs.maven-command }}
+    - name: Additional maven command
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn --batch-mode ${{ inputs.maven-command-extra }}
+      if: ${{ inputs.maven-command-extra }}
