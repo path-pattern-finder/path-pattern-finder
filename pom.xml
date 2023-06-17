@@ -55,41 +55,7 @@
                       <skip>false</skip>
                    </configuration>
                 </plugin>
-				
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<executions>
-						<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-						</execution>
-					</executions>
-				</plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.2.0</version>
-					<configuration>
-						<source>1.8</source>
-						<detectJavaApiLink>true</detectJavaApiLink>
-						<noqualifier>java.lang:java.io</noqualifier>
-						<links>
-							<link>https://commons.apache.org/proper/commons-io/javadocs/api-2.5/</link>
-						</links>
-					</configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+                
 				
 				<!-- We specify a default location of test-data for the modules -->
 				<plugin>
@@ -106,21 +72,6 @@
 						</configuration>
 				</plugin>
 
-				<!-- Needed for publishing to maven central -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>1.5</version>
-					<executions>
-						<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-						</execution>
-					</executions>
-    			</plugin>
 		
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
