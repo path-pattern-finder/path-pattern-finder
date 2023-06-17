@@ -1,0 +1,28 @@
+# 
+# This workflow will run tests using maven
+#
+name: Test using maven
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+      java-version:
+        required: true
+        type: string                  
+    secrets:
+      SONAR_TOKEN:
+        required: true        
+
+jobs:
+
+  test:
+    uses: ./.github/workflows/_maven.yml
+    with:
+      maven-command: verify
+      os: ${{ inputs.os }}
+      java-version: ${{ inputs.java-version }}
+      publish-test-report: true
+    secrets: inherit    
