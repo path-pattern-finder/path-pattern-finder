@@ -225,64 +225,60 @@
         </build>
 
         <properties>
-		 <maven.compiler.source>1.8</maven.compiler.source>
-           <maven.compiler.target>1.8</maven.compiler.target>
-		   <!-- For connecting to SonarCloud. -->
-		  <sonar.projectKey>path-pattern-finder_path-pattern-finder</sonar.projectKey>
-		  <sonar.organization>path-pattern-finder</sonar.organization>
-		  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-      </properties>
+			<maven.compiler.source>1.8</maven.compiler.source>
+			<maven.compiler.target>1.8</maven.compiler.target>
+			<!-- For connecting to SonarCloud. -->
+			<sonar.projectKey>path-pattern-finder_path-pattern-finder</sonar.projectKey>
+			<sonar.organization>path-pattern-finder</sonar.organization>
+			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+      	</properties>
       
-      	<scm>
-		<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
-		<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
-		<tag>path-pattern-finder-1.1</tag>
-	</scm>
-	
-  
-	<distributionManagement>
-		<snapshotRepository>
-		<id>ossrh</id>
-		<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+		<scm>
+			<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
+			<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
+			<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
+			<tag>path-pattern-finder-1.1</tag>
+		</scm>
+	  
+		<distributionManagement>
+			<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+			</snapshotRepository>
+		</distributionManagement>
 
-
-
-	
-    <dependencies>
+    	<dependencies>
             
-        <dependency>
-		    <groupId>org.junit.jupiter</groupId>
-		    <artifactId>junit-jupiter-engine</artifactId>
-		    <version>5.7.0</version>
-		    <scope>test</scope>
-		</dependency>
-	
-         <dependency>
-           <groupId>org.apache.commons</groupId>
-           <artifactId>commons-lang3</artifactId>
-           <version>3.7</version>
-         </dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>5.7.0</version>
+				<scope>test</scope>
+			</dependency>
 
-          <dependency>
-              <groupId>commons-io</groupId>
-              <artifactId>commons-io</artifactId>
-              <version>2.7</version>
-          </dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.7</version>
+			</dependency>
 
-          <dependency>
-              <groupId>org.apache.commons</groupId>
-              <artifactId>commons-collections4</artifactId>
-              <version>4.1</version>
-          </dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.7</version>
+			</dependency>
 
-          <dependency>
-              <groupId>org.jline</groupId>
-              <artifactId>jline</artifactId>
-              <version>3.9.0</version>
-          </dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jline</groupId>
+				<artifactId>jline</artifactId>
+				<version>3.9.0</version>
+			</dependency>
 
       </dependencies>
     </project>
