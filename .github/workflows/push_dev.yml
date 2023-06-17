@@ -1,0 +1,43 @@
+# 
+# This workflow will build and test a Java project with Maven.
+#
+# It is only triggered on dev branch.
+#
+# The Maven and SonarCloud working directories are cached for future reuse, as downloading all packages from scratch takes significant time.
+#
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+#
+
+name: Java CI with Maven for Development
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  test:
+    uses: ./.github/workflows/_test.yml
+    
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        java: [8, 11]
+
+    with:
+      os: ${{ matrix.os }}
+      java-version: ${{ matrix.java }}
+
+    secrets: inherit
+
+    
+  sonarcloud:
+    uses: ./.github/workflows/_sonarcloud.yml
+    secrets: inherit
+     
+      
+  javadoc:
+      uses: ./.github/workflows/_clean_maven.yml
+      with:
+        maven-command: javadoc:javadoc
+      secrets: inherit    

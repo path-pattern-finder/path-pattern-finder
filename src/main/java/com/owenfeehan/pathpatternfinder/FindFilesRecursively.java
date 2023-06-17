@@ -78,7 +78,7 @@ public class FindFilesRecursively {
      *     java.nio.file.PathMatcher docs. If not defined, ignored.
      * @return list of all paths found
      * @throws IOException if root isn't a valid directory, or something goes wrong while walking
-     *     the three
+     *     the tree.
      */
     public static List<Path> findFiles(Path root, Optional<String> fileFilterPattern)
             throws IOException {

@@ -1,0 +1,21 @@
+# 
+# This workflow will scan and publish a python project to sonarcloud
+#
+name: Publish to sonarcloud
+
+on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true        
+
+jobs:
+        
+  sonarcloud:
+    uses: ./.github/workflows/_maven.yml
+    with:
+      maven-command: verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+      os: ubuntu-latest
+      java-version: 11
+      cache-sonar: true
+    secrets: inherit    

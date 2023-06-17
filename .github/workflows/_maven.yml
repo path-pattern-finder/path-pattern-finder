@@ -1,0 +1,91 @@
+# 
+# This workflow will execute a maven command (or two sequential commands)
+#
+name: Maven command
+
+on:
+  workflow_call:
+    inputs:
+        # The first maven command to execute
+        maven-command:
+          required: true
+          type: string
+
+        # The second maven command to execute (ignored if empty)
+        maven-command-extra:
+            required: false
+            type: string
+
+        # What OS to run maven on
+        os:
+          required: true
+          type: string
+
+        # JDK version
+        java-version:
+          required: true
+          type: string
+
+        # Whether to expect a sonar directory and cache it
+        cache-sonar:
+          required: false
+          type: boolean
+
+        # Whether to publish a test report
+        publish-test-report:
+          required: false
+          type: boolean          
+
+    secrets:
+      SONAR_TOKEN:
+        required: true        
+
+jobs:
+    
+  maven:
+
+    runs-on: ${{inputs.os}}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK ${{inputs.java-version}}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{inputs.java-version}}
+
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+      if: ${{ inputs.cache-sonar }}          
+
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}-jdk${{inputs.os}}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Maven command
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn --batch-mode --update-snapshots ${{ inputs.maven-command }}
+
+    - name: Additional maven command
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn --batch-mode ${{ inputs.maven-command-extra }}
+      if: ${{ inputs.maven-command-extra }}
+      
+    - name: Publish Test Report
+      uses: scacap/action-surefire-report@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        fail_on_test_failures: true 
+        fail_if_no_tests: false
+        check_name: Test Report - ${{inputs.os}} JDK ${{inputs.java-version}}
+      if: ${{ inputs.publish-test-report }}

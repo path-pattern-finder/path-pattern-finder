@@ -1,34 +1,40 @@
     <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-      <modelVersion>4.0.0</modelVersion>
+    	<modelVersion>4.0.0</modelVersion>
      
-      <groupId>com.owenfeehan.pathpatternfinder</groupId>
-      <artifactId>path-pattern-finder</artifactId>
+    	<groupId>com.owenfeehan.pathpatternfinder</groupId>
+    	<artifactId>path-pattern-finder</artifactId>
       
-        <developers>
-	<developer>
-		<name>Owen Feehan</name>
-	</developer>
-      </developers>
-      <licenses>
-        <license>
-          <name>The MIT License (MIT)</name>
-        </license>
-      </licenses>
-      <inceptionYear>2019</inceptionYear>
-      <organization>
-	<name>Owen Feehan</name>
-	<url>http://www.owenfeehan.com</url>
-      </organization>
+    	<name>com.owenfeehan.pathpatternfinder:path-pattern-finder</name>
+		<url>https://path-pattern-finder.github.io/</url>
+		<developers>
+			<developer>
+				<name>Owen Feehan</name>
+				<email>owen@owenfeehan.com</email>
+				<organization>N/A</organization>
+				<organizationUrl>http://www.owenfeehan.com</organizationUrl>
+			</developer>
+    	</developers>
+      	<licenses>
+        	<license>
+          		<name>The MIT License (MIT)</name>
+        	</license>
+      	</licenses>
+      	<inceptionYear>2019</inceptionYear>
+      	<organization>
+			<name>Owen Feehan</name>
+			<url>http://www.owenfeehan.com</url>
+      	</organization>
+	  	
       
-      <version>1.8-SNAPSHOT</version>
-	  <description>a Java library to find naming-patterns in a list of strings or paths, using a particular set of rules. A command-line app for basic usage is also included.</description>
+      	<version>1.7.1</version>
+	  	<description>a Java library to find naming-patterns in a list of strings or paths, using a particular set of rules. A command-line app for basic usage is also included.</description>
 
         <build>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-				 <version>3.8.1</version>
+				 	<version>3.8.1</version>
                     <configuration>
                         <source>8</source>
                         <target>8</target>
@@ -39,7 +45,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.5.3</version>
-                  </plugin>
+                </plugin>
 
                 <plugin>
                    <groupId>org.apache.maven.plugins</groupId>
@@ -49,205 +55,181 @@
                       <skip>false</skip>
                    </configuration>
                 </plugin>
+                
 				
-		    <plugin>
-			  <groupId>org.apache.maven.plugins</groupId>
-			  <artifactId>maven-source-plugin</artifactId>
-			  <executions>
-				<execution>
-				  <id>attach-sources</id>
-				  <goals>
-					<goal>jar</goal>
-				  </goals>
-				</execution>
-			  </executions>
-			</plugin>
+				<!-- We specify a default location of test-data for the modules -->
+				<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>3.0.0-M5</version>
+						<configuration>
+						<systemProperties>
+							<property>
+							<name>test.data.root</name>
+							<value>${project.basedir}/src/test/resources</value>
+							</property>
+						</systemProperties>
+						</configuration>
+				</plugin>
 
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-					<version>3.2.0</version>
-				<configuration>
-					<source>1.8</source>
-					<detectJavaApiLink>true</detectJavaApiLink>
-					<noqualifier>java.lang:java.io</noqualifier>
-					<links>
-						<link>https://commons.apache.org/proper/commons-io/javadocs/api-2.5/</link>
-					</links>
-				</configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-				
-			<!-- We specify a default location of test-data for the modules -->
-			<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.0.0-M5</version>
-					<configuration>
-					  <systemProperties>
-					    <property>
-					      <name>test.data.root</name>
-					      <value>${project.basedir}/src/test/resources</value>
-					    </property>
-					  </systemProperties>
-					</configuration>
-		      </plugin>				
 		
-		<plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>license-maven-plugin</artifactId>
-			<version>2.0.0</version>
-			<configuration>
-			  <verbose>false</verbose>
-			  <licenseName>mit</licenseName>
-			      <roots>
-				<root>src/main/java</root>
-				<root>src/test/java</root>
-			      </roots>
-			</configuration>
-			<executions>
-			  <execution>
-			    <id>first</id>
-			    <goals>
-			      <goal>update-file-header</goal>
-			    </goals>
-			    <phase>process-sources</phase>
-			 
-			  </execution>
-			</executions>
-	      </plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>license-maven-plugin</artifactId>
+					<version>2.0.0</version>
+					<configuration>
+					<verbose>false</verbose>
+					<licenseName>mit</licenseName>
+						<roots>
+						<root>src/main/java</root>
+						<root>src/test/java</root>
+						</roots>
+					</configuration>
+					<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+						<goal>update-file-header</goal>
+						</goals>
+						<phase>process-sources</phase>
+					
+					</execution>
+					</executions>
+				</plugin>
 		  
-		  <plugin>
-			  <groupId>com.diffplug.spotless</groupId>
-			  <artifactId>spotless-maven-plugin</artifactId>
-			  <version>2.0.1</version>
-			  <configuration>
-				<!-- optional: limit format enforcement to just the files changed by this feature branch -->
-				<ratchetFrom>origin/main</ratchetFrom>
-				<formats>
-				  <!-- you can define as many formats as you want, each is independent -->
-				  <format>
-					<!-- define the files to apply to -->
-					<includes>
-					  <include>*.md</include>
-					  <include>.gitignore</include>
-					</includes>
-					<!-- define the steps to apply to those files -->
-					<trimTrailingWhitespace />
-					<endWithNewline />
-					<indent>
-					  <tabs>true</tabs>
-					  <spacesPerTab>4</spacesPerTab>
-					</indent>
-				  </format>
-				</formats>
-				<!-- define a language-specific format -->
-				<java>
-				  <!-- no need to specify files, inferred automatically, but you can if you want -->
+				<plugin>
+					<groupId>com.diffplug.spotless</groupId>
+					<artifactId>spotless-maven-plugin</artifactId>
+					<version>2.0.1</version>
+					<configuration>
+						<!-- optional: limit format enforcement to just the files changed by this feature branch -->
+						<ratchetFrom>origin/main</ratchetFrom>
+						<formats>
+						<!-- you can define as many formats as you want, each is independent -->
+						<format>
+							<!-- define the files to apply to -->
+							<includes>
+							<include>*.md</include>
+							<include>.gitignore</include>
+							</includes>
+							<!-- define the steps to apply to those files -->
+							<trimTrailingWhitespace />
+							<endWithNewline />
+							<indent>
+							<tabs>true</tabs>
+							<spacesPerTab>4</spacesPerTab>
+							</indent>
+						</format>
+						</formats>
+						<!-- define a language-specific format -->
+						<java>
+						<!-- no need to specify files, inferred automatically, but you can if you want -->
 
-				  <!-- apply a specific flavor of google-java-format -->
-				  <googleJavaFormat>
-					<version>1.8</version>
-					<style>AOSP</style>
-				  </googleJavaFormat>
+						<!-- apply a specific flavor of google-java-format -->
+						<googleJavaFormat>
+							<version>1.8</version>
+							<style>AOSP</style>
+						</googleJavaFormat>
 
-				</java>
-			  </configuration>
-			</plugin>
+						</java>
+					</configuration>
+					</plugin>
 			
 			
-			<!-- To generate code coverage reports that can be send to SonarCloud -->
-			 <plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.6</version>
-				<executions>
-				  <execution>
-					<id>prepare-agent</id>
-					<goals>
-					  <goal>prepare-agent</goal>
-					</goals>
-				  </execution>
-				  <execution>
-					<id>report</id>
-					  <phase>prepare-package</phase>
-					  <goals>
-						<goal>report</goal>
-					</goals>
-				  </execution>
-				</executions>
-			 </plugin>			
+					<!-- To generate code coverage reports that can be send to SonarCloud -->
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.8.6</version>
+						<executions>
+						<execution>
+							<id>prepare-agent</id>
+							<goals>
+							<goal>prepare-agent</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>report</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+						</executions>
+					</plugin>		
+
+
+					<!-- to deploy to maven central -->	
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.6.7</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
 		
             </plugins>
         </build>
 
         <properties>
-		 <maven.compiler.source>1.8</maven.compiler.source>
-           <maven.compiler.target>1.8</maven.compiler.target>
-		   <!-- For connecting to SonarCloud. -->
-		  <sonar.projectKey>path-pattern-finder_path-pattern-finder</sonar.projectKey>
-		  <sonar.organization>path-pattern-finder</sonar.organization>
-		  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-      </properties>
+			<maven.compiler.source>1.8</maven.compiler.source>
+			<maven.compiler.target>1.8</maven.compiler.target>
+			<!-- For connecting to SonarCloud. -->
+			<sonar.projectKey>path-pattern-finder_path-pattern-finder</sonar.projectKey>
+			<sonar.organization>path-pattern-finder</sonar.organization>
+			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+      	</properties>
       
-      	<scm>
-		<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
-		<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
-		<tag>path-pattern-finder-1.1</tag>
-	</scm>
-	
-  
-	<distributionManagement>
-        <snapshotRepository>
-		   <id>github</id>
-            <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
-        </snapshotRepository>	
-		 <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/path-pattern-finder/path-pattern-finder</url>
-        </repository>
-	</distributionManagement>
-	
-      <dependencies>
+		<scm>
+			<connection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</connection>
+			<developerConnection>scm:git:ssh://git@github.com/path-pattern-finder/path-pattern-finder.git</developerConnection>
+			<url>https://github.com/path-pattern-finder/path-pattern-finder.git</url>
+			<tag>path-pattern-finder-1.1</tag>
+		</scm>
+	  
+		<distributionManagement>
+			<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+			</snapshotRepository>
+		</distributionManagement>
+
+    	<dependencies>
             
-        <dependency>
-		    <groupId>org.junit.jupiter</groupId>
-		    <artifactId>junit-jupiter-engine</artifactId>
-		    <version>5.7.0</version>
-		    <scope>test</scope>
-		</dependency>
-	
-         <dependency>
-           <groupId>org.apache.commons</groupId>
-           <artifactId>commons-lang3</artifactId>
-           <version>3.7</version>
-         </dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>5.7.0</version>
+				<scope>test</scope>
+			</dependency>
 
-          <dependency>
-              <groupId>commons-io</groupId>
-              <artifactId>commons-io</artifactId>
-              <version>2.7</version>
-          </dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.7</version>
+			</dependency>
 
-          <dependency>
-              <groupId>org.apache.commons</groupId>
-              <artifactId>commons-collections4</artifactId>
-              <version>4.1</version>
-          </dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.7</version>
+			</dependency>
 
-          <dependency>
-              <groupId>org.jline</groupId>
-              <artifactId>jline</artifactId>
-              <version>3.9.0</version>
-          </dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jline</groupId>
+				<artifactId>jline</artifactId>
+				<version>3.9.0</version>
+			</dependency>
 
       </dependencies>
     </project>
